@@ -1,10 +1,8 @@
-라이브러리 초기 세팅
-
 - axios
 - react-bootstrap bootstrap //app.jsx 파일에 상단에 붙여넣기 - import 'bootstrap/dist/css/bootstrap.min.css';
 - @tanstack/react-query
 - react-hook-form
 - framer-motion@5.0.0
 - react-router-dom@6
-- react-icons --save
+- react-icons —save
 - tailwind 공식문서 참고
