@@ -1,8 +1,7 @@
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { Outlet } from 'react-router-dom';
 
 function App() {
-  return <div className="text-3xl text-red-300">Hello World</div>;
+  return <Outlet />;
 }
 
 export default App;
