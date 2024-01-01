@@ -1,8 +1,15 @@
 import { Outlet } from "react-router-dom";
+import Header from "./Components/Header/Header";
+import HeaderBox from "./Components/Header/HeaderBox";
 
 function App() {
   return (
-  <Outlet/>
+    <>
+      <Header>
+        <HeaderBox />
+      </Header>
+      <Outlet />
+    </>
   );
 }
 

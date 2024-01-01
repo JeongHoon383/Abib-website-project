@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Main from "./Pages/Main";
+import Cart from "./Pages/Cart";
 
 const router = createBrowserRouter([
   {
@@ -14,11 +15,15 @@ const router = createBrowserRouter([
     children: [
       {
         index: "/",
-        element: <Main/>,
+        element: <Main />,
       },
       {
         path: "/product",
         element: <div>product</div>,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
       },
     ],
   },
@@ -26,7 +31,7 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-      <RouterProvider router={router} />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 
