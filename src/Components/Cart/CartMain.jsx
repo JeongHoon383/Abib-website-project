@@ -12,7 +12,7 @@ const CartMain = () => {
               type="checkbox"
             />
             <ul className="flex">
-              <li></li>
+              <li className="w-[104px]"></li>
               <li>PRODUCT</li>
               <li>UNIT PRICE</li>
               <li>QUANTITY</li>
