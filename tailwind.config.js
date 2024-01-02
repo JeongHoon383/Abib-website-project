@@ -1,13 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{js,jsx}"],
+  content: ['./src/**/*.{js,jsx}'],
   theme: {
     extend: {
       colors: {
-        font: "#2f3640",
-        back: "#f5f6fa",
-        main: "#00a8ff",
-        accent: "#0097e6",
+        font: '#2f3640',
+        back: '#f5f6fa',
+        main: '#00a8ff',
+        accent: '#0097e6',
       },
     },
     screens: {
@@ -24,6 +24,6 @@ module.exports = {
       // => @media (min-width: 1280px) { ... }
     },
   },
-  darkMode: "class",
+  darkMode: 'class',
   plugins: [],
 };
