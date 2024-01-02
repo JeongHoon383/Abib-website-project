@@ -4,14 +4,16 @@ import CartProduct from "./CartProduct";
 const CartMain = () => {
   return (
     <div>
-      <div className="border border-solid border-red-300 pt-[90px] max-w-[900px] mx-auto">
+      <div className="mx-auto max-w-[900px] border border-solid border-red-300 pt-[90px]">
         <div>
-          <div className="flex">
-            <input
-              className="flex-none w-[14px] h-[14px] rounded-none border border-solid border-gray-300 box-border mt-[5px] mx-[3px] mb-[7px]"
-              type="checkbox"
-            />
-            <ul className="flex">
+          <div>
+            <ul className="tex flex">
+              <li className="w-[20px] px-[5px] py-[12px]">
+                <input
+                  className="mx-[3px] mb-[7px] mt-[5px] box-border h-[14px] w-[14px] flex-none rounded-none border border-solid border-gray-300"
+                  type="checkbox"
+                />
+              </li>
               <li className="w-[104px]"></li>
               <li>PRODUCT</li>
               <li>UNIT PRICE</li>
