@@ -26,7 +26,7 @@ export default function ProductDetail() {
         <p className="mb-4 text-xs font-medium text-neutral-400">
           {product.productVolume}
         </p>
-        {product.priceSales && (
+        {product.priceSales ? (
           <p className="border-y py-3">
             <p className="text-base line-through">
               ₩{product.originalPrice.toLocaleString()}
@@ -41,8 +41,10 @@ export default function ProductDetail() {
               </span>
             </p>
           </p>
+        ) : (
+          <p className="text-base">₩{product.originalPrice.toLocaleString()}</p>
         )}
-        {/* <p className="text-base">₩{product.originalPrice.toLocaleString()}</p> */}
+
         <p className="mt-4 text-xs">{product.engTitle}</p>
 
         <form>

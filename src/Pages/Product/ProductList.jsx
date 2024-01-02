@@ -36,7 +36,8 @@ export default function ProductList() {
                 </Link>
                 <p className="mb-1 text-sm sm:mb-3">{item.title}</p>
                 <p className="mb-2 text-sm font-medium text-neutral-400 sm:mb-4">
-                  <span>{item.productVolume}</span> / <span>1ea</span>
+                  <span>{item.productVolume}</span>
+                  {item.prodOption && <span>/ {item.prodOption}</span>}
                 </p>
                 {item.priceSales ? (
                   <p className="text-sm">
