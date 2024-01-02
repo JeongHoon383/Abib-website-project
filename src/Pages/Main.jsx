@@ -1,11 +1,23 @@
 import React from "react";
+import MainCover from "../Components/Main/MainCover";
+import MainPromotion from "../Components/Main/MainPromotion";
+import MainVideo from "../Components/Main/MainVideo";
+import MainHeartleaf from "../Components/Main/MainHeartleaf";
+import MainLastCover from "../Components/Main/MainLastCover";
+import MainBrandStory from "../Components/Main/MainBrandStory";
 
 const Main = () => {
   return (
-    <div>
-      <div className="text-white px-4 sm:px-10 py-2 sm:py-3 bg-accent hover:bg-back md:h-15 md:bg-fuchsia-400">
-        메인페이지 asdasdasd hoon asdasd
-      </div>
+    <div className="overflow-x-hidden">
+      <MainCover />
+      <MainPromotion title={"프로모션"} />
+      <MainVideo />
+      <MainHeartleaf />
+      <MainPromotion title={"베스트"} />
+      <MainLastCover image={3} title={`Jericho rose`} />
+      <MainLastCover image={4} title={`Sedum hyaluron`} />
+      <MainPromotion title={"추천제품"} />
+      <MainBrandStory />
     </div>
   );
 };
