@@ -1,14 +1,63 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import Main from "./Pages/Main";
+import Cart from "./Pages/Cart";
+import SearchResult from "./Pages/Search/SearchResult";
+import ProductList from "./Pages/Product/ProductList";
+import ProductDetail from "./Pages/Product/ProductDetail";
+import Signup from "./Pages/Signup";
+import Admin from "./Pages/Admin";
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    errorElement: <div>not found</div>,
+    children: [
+      {
+        index: "/",
+        element: <Main />,
+      },
+      {
+        path: "/product",
+        children: [
+          {
+            path: "/product/list/",
+            element: <ProductList />,
+          },
+          {
+            path: "/product/detail/:pid",
+            element: <ProductDetail />,
+          },
+        ],
+      },
+      {
+        path: "/search",
+        element: <SearchResult />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
+      },
+      {
+        path: "/signup",
+        element: <Signup />,
+      },
+      {
+        path: "/admin",
+        element: <Admin />,
+      },
+    ],
+  },
+]);
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function
