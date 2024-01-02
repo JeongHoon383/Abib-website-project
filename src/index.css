@@ -3,5 +3,11 @@
 @tailwind utilities;
 
 body {
-  font-family: Arial, Helvetica, sans-serif
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.my-custom-swiper .swiper-scrollbar {
+  width: 50% !important;
+  left: 25% !important;
+  margin: 0 auto !important;
 }
