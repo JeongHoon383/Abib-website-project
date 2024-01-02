@@ -4,20 +4,22 @@ import CartProduct from "./CartProduct";
 const CartMain = () => {
   return (
     <div>
-      <div className="border border-solid border-red-300 mt-[10px] pt-[40px] max-w-[900px] mx-auto">
+      <div className="border border-solid border-red-300 pt-[90px] max-w-[900px] mx-auto">
         <div>
           <div className="flex">
             <input
-              className="flex-1 w-[14px] h-[14px] rounded-none "
+              className="flex-none w-[14px] h-[14px] rounded-none border border-solid border-gray-300 box-border mt-[5px] mx-[3px] mb-[7px]"
               type="checkbox"
             />
             <ul className="flex">
+              <li></li>
               <li>PRODUCT</li>
               <li>UNIT PRICE</li>
               <li>QUANTITY</li>
               <li>MILEAGE</li>
               <li>SHIP</li>
               <li>SUBTOTAL</li>
+              <li></li>
             </ul>
           </div>
           <CartProduct />
