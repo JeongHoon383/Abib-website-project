@@ -2,10 +2,10 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="flex  w-screen items-center justify-center overflow-x-hidden  bg-font">
-      <div className="flex h-2/3 w-10/12 flex-col justify-between text-center   md:flex-row ">
+    <div className="w-screen  bg-font flex items-center justify-center  ">
+      <div className="w-10/12 h-2/3 flex flex-col md:flex-row text-center   justify-between ">
         <div className="text-[11px]">
-          <div className="my-5 flex flex-col text-back">
+          <div className="text-back flex flex-col my-5">
             <span>The digital platform for ABIB CO.</span>
             <span>Manual for Freedom, REsearch and Creativity</span>
           </div>
@@ -24,9 +24,9 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-        <div className="my-5 hidden    space-x-32    text-[12px] text-gray-500 sm:flex  sm:flex-row  md:items-start md:justify-center md:text-[13px]">
+        <div className="sm:flex hidden    sm:flex-row    md:items-start md:justify-center space-x-32  my-5  text-[12px] md:text-[13px] text-gray-500">
           <ul className="space-y-3  ">
-            <li className="font-semibold text-back">주요메뉴</li>
+            <li className="text-back font-semibold">주요메뉴</li>
             <li>카테고리</li>
             <li>기능</li>
             <li>브랜드스토리</li>
@@ -34,7 +34,7 @@ const Footer = () => {
             <li>리뷰</li>
           </ul>
           <ul className="space-y-3   ">
-            <li className="font-semibold text-back">고객 서비스</li>
+            <li className="text-back font-semibold">고객 서비스</li>
             <li>주문조회</li>
             <li>문의</li>
             <li>자주 묻는 질문</li>
@@ -44,7 +44,7 @@ const Footer = () => {
             <li>개인정보처리방침</li>
           </ul>
           <ul className="space-y-3">
-            <li className="font-semibold text-back">소설</li>
+            <li className="text-back font-semibold">소설</li>
             <li>인스타그램</li>
             <li>페이스북</li>
             <li>유튜브</li>
