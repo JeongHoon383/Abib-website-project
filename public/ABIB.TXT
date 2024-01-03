@@ -1,0 +1,211 @@
+//1
+insert into product
+(title,
+engTitle,
+productVolume,
+originalPrice,
+priceSales,
+prodOption,
+cover,
+detailCover,
+functional,
+category,
+description) values
+('어성초 카밍 토너 스킨 부스터',
+'Heartleaf calming toner Skin booster',
+'200',
+'23000',
+'16100',
+'prodOption',
+'https://abib.com/web/product/medium/202312/154ef9d7e3ea2fd080510e6c2f00636f.jpg',
+'https://abib.com/web/product/small/202312/f8f0cc8aa4186008f2c654cf030b392f.jpg',
+'진정',
+'스킨케어',
+'지친 피부를 위한 촘촘한 보습 진정이 필요한 순간 어성초 토너');
+
+
+//2
+insert into product
+(title,
+engTitle,
+productVolume,
+originalPrice,
+priceSales,
+prodOption,
+cover,
+detailCover,
+functional,
+category,
+description) values
+('어성초 페이셜 미스트
+카밍 스프레이',
+'Heartleaf facial mist Calming spray',
+'150ml + 리필 파우치(150ml)',
+'23000',
+'13800',
+'prodOption',
+'https://abib.com/web/product/medium/202307/60d58aff7d718edf435c9205d43eee0e.jpg',
+'https://abib.com/web/product/small/202307/7ea95697846a770c3718047d2a2c8c98.jpg',
+'진정',
+'스킨케어',
+'편안하게 감싸주는 어성초 미스트
+수분 진정 케어 카밍 스프레이');
+
+//3
+insert into product
+(title,
+engTitle,
+productVolume,
+originalPrice,
+priceSales,
+prodOption,
+cover,
+detailCover,
+functional,
+category,
+description) values
+('리밸런싱 토너
+스킨 부스터',
+'Rebalancing toner Skin booster',
+'200',
+'29000',
+'0', (할인없음)
+'prodOption',
+'https://abib.com/web/product/medium/202212/3dc750141be8c4c1d2bae824d3188f71.jpg',
+'https://abib.com/web/product/small/202212/858e0789010a0bf8fd26c6fc2cea0ea1.jpg',
+'수분',
+'스킨케어',
+'#촉촉토너
+
+물이 다른 스킨 케어 물 오른 피부!
+해양 심층수로 만든 약산성 토너');
+
+
+//4
+insert into product
+(title,
+engTitle,
+productVolume,
+originalPrice,
+priceSales,
+prodOption,
+cover,
+detailCover,
+functional,
+category,
+description) values
+('리밸런싱 에멀전
+스킨 부스터',
+'Rebalancing emulsion Skin booster',
+'200',
+'32000',
+'0', (할인없음)
+'prodOption',
+'https://abib.com/web/product/medium/202212/1e8e4533588f5326b99e548b24477ef0.jpg',
+'https://abib.com/web/product/small/202212/f8272b533de1f949a424974832d4496b.jpg',
+'수분',
+'스킨케어',
+'#촘촘에멀전
+
+물이 다른 스킨 케어 물 오른 피부!
+해양 심층수로 만든 약산성 에멀전
+
+각종 미네랄 성분으로 유수분밸런스 회복!');
+
+
+//5
+insert into product
+(title,
+engTitle,
+productVolume,
+originalPrice,
+priceSales,
+prodOption,
+cover,
+detailCover,
+functional,
+category,
+description) values
+('어성초 카밍 토너 - 미니어쳐
+스킨 부스터',
+'Heartleaf calming toner (miniature) Skin booster',
+'30',
+'5000',
+'0', (할인없음)
+'prodOption',
+'https://abib.com/web/product/medium/202009/fcbbcc70c1a4c41956f67dc2a724b216.jpg',
+'https://abib.com/web/product/small/202009/878229062a2c1ad76d4a73f6b334fe37.jpg',
+'수분',
+'스킨케어',
+'지친 피부를 위한 촘촘한 보습
+진정이 필요한 순간 어성초 토너');
+
+
+// 에센스
+//1
+insert into product
+(title,
+engTitle,
+productVolume,
+originalPrice,
+priceSales,
+prodOption,
+cover,
+detailCover,
+functional,
+category,
+description) values	              `	`                                                   
+('부활초 비피다 세럼
+퍼밍 드롭',
+'Jericho rose bifida serum Firming drop',
+'50',
+'32000',
+'0', (할인없음)
+'prodOption',
+'https://abib.com/web/product/medium/202308/3525e4b1701f0668b6ca6a75571b185b.jpg',
+'https://abib.com/web/product/small/202308/9f425ba238de84c6d52ed5e49d71f703.jpg',
+'탄력/보습',
+'에센스',
+'탄탄하게 채워주는 부활초 세럼
+모공결 케어, 퍼밍 드롭');
+
+
+
+//2
+insert into product
+(title,
+engTitle,
+productVolume,
+originalPrice,
+priceSales,
+prodOption,
+cover,
+detailCover,
+functional,
+category,
+description) values	              `	`                                                   
+('어성초 에센스 카밍 펌프',
+'Heartleaf essence Calming pump',
+'50',
+'27000',
+'16200',
+'prodOption',
+'https://abib.com/web/product/medium/202212/5f17d6c7dae366bd32b9173be496b0ee.jpg',
+'https://abib.com/web/product/small/202212/bdc23fe2fa17011799fa27bb2952a5be.jpg',
+'진정',
+'에센스',
+'촉촉하게 감싸주는 어성초 에센스
+진정 케어 카밍 펌프');
+
+
+
+
+
+https://abib.com/web/product/medium/202212/4634b39cc0180165405f6c71b3fbe177.jpg
+
+
+https://abib.com/web/product/medium/202212/49b0191d6adfc226fa2a6b5cf9a463e8.jpg
+
+
+
+

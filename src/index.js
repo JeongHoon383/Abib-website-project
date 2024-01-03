@@ -11,6 +11,7 @@ import ProductList from "./Pages/Product/ProductList";
 import ProductDetail from "./Pages/Product/ProductDetail";
 import Signup from "./Pages/Signup";
 import Admin from "./Pages/Admin";
+import MyPageMain from "./Pages/MyPage/MyPageMain";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -50,6 +51,7 @@ const router = createBrowserRouter([
         path: "/admin",
         element: <Admin />,
       },
+      { path: "/mypagemain", element: <MyPageMain /> },
     ],
   },
 ]);
