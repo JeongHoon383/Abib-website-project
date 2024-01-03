@@ -30,7 +30,7 @@ export default function ProductDetail() {
           {product.productVolume}
         </p>
         {product.priceSales ? (
-          <p className="border-y py-3">
+          <div className="border-y py-3">
             <p className="text-base line-through">
               ₩{product.originalPrice && product.originalPrice.toLocaleString()}
             </p>
@@ -43,7 +43,7 @@ export default function ProductDetail() {
                 OFF)
               </span>
             </p>
-          </p>
+          </div>
         ) : (
           <p className="border-y py-3 text-base">
             ₩{product.originalPrice && product.originalPrice.toLocaleString()}

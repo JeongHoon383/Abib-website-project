@@ -28,39 +28,41 @@ export default function Review() {
           className="flex justify-evenly border-y border-gray-200 py-4"
         >
           <div className="flex flex-col items-center">
-            <div class="mb-1 h-14 w-2 bg-gray-100 dark:bg-gray-700">
-              <div class="h-14 w-2 bg-black" style={{ width: "95%" }}></div>
+            <div className="mb-1 h-14 w-2 bg-gray-100 dark:bg-gray-700">
+              <div className="h-14 w-2 bg-black" style={{ width: "95%" }}></div>
             </div>
             <span className="block text-sm font-semibold">5점</span>
-            <span class="text-sm text-gray-300 dark:text-gray-400">95%</span>
+            <span className="text-sm text-gray-300 dark:text-gray-400">
+              95%
+            </span>
           </div>
           <div className="flex flex-col items-center">
-            <div class="mb-1 flex h-14 w-2 items-end bg-gray-100 dark:bg-gray-700">
-              <div class="h-14 w-2 bg-black" style={{ width: "4%" }}></div>
+            <div className="mb-1 flex h-14 w-2 bg-gray-100 dark:bg-gray-700">
+              <div className="h-14 w-2 bg-black" style={{ width: "4%" }}></div>
             </div>
             <span className="block text-sm font-semibold">4점</span>
-            <span class="text-sm text-gray-300 dark:text-gray-400">4%</span>
+            <span className="text-sm text-gray-300 dark:text-gray-400">4%</span>
           </div>
           <div className="flex flex-col items-center">
-            <div class="mb-1 h-14 w-2 bg-gray-100 dark:bg-gray-700">
-              <div class="h-14 w-2 bg-black" style={{ width: "0%" }}></div>
+            <div className="mb-1 h-14 w-2 bg-gray-100 dark:bg-gray-700">
+              <div className="h-14 w-2 bg-black" style={{ width: "0%" }}></div>
             </div>
             <span className="block text-sm font-semibold">3점</span>
-            <span class="text-sm text-gray-300 dark:text-gray-400">0%</span>
+            <span className="text-sm text-gray-300 dark:text-gray-400">0%</span>
           </div>
           <div className="flex flex-col items-center">
-            <div class="mb-1 h-14 w-2 bg-gray-100 dark:bg-gray-700">
-              <div class="h-14 w-2 bg-black" style={{ width: "0%" }}></div>
+            <div className="mb-1 h-14 w-2 bg-gray-100 dark:bg-gray-700">
+              <div className="h-14 w-2 bg-black" style={{ width: "0%" }}></div>
             </div>
             <span className="block text-sm font-semibold">2점</span>
-            <span class="text-sm text-gray-300 dark:text-gray-400">0%</span>
+            <span className="text-sm text-gray-300 dark:text-gray-400">0%</span>
           </div>
           <div className="flex flex-col items-center">
-            <div class="mb-1 h-14 w-2 bg-gray-100 dark:bg-gray-700">
-              <div class="h-14 w-2 bg-black" style={{ width: "0%" }}></div>
+            <div className="mb-1 h-14 w-2 bg-gray-100 dark:bg-gray-700">
+              <div className="h-14 w-2 bg-black" style={{ width: "0%" }}></div>
             </div>
             <span className="block text-sm font-semibold">1점</span>
-            <span class="text-sm text-gray-300 dark:text-gray-400">0%</span>
+            <span className="text-sm text-gray-300 dark:text-gray-400">0%</span>
           </div>
         </div>
         <div>
@@ -69,7 +71,7 @@ export default function Review() {
           </p>
           <button
             type="button"
-            class="me-2 rounded-md border border-gray-200 bg-white px-5 py-1 text-xs font-light text-neutral-400 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+            className="me-2 rounded-md border border-gray-200 bg-white px-5 py-1 text-xs font-light text-neutral-400 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
           >
             리뷰 작성하기
           </button>
