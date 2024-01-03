@@ -1,14 +1,14 @@
 import React from "react";
-import MainCover from "../components/Main/MainCover";
-import MainPromotion from "../components/Main/MainPromotion";
-import MainVideo from "../components/Main/MainVideo";
-import MainHeartleaf from "../components/Main/MainHeartleaf";
-import MainLastCover from "../components/Main/MainLastCover";
-import MainBrandStory from "../components/Main/MainBrandStory";
+import MainCover from "../Components/Main/MainCover";
+import MainPromotion from "../Components/Main/MainPromotion";
+import MainVideo from "../Components/Main/MainVideo";
+import MainHeartleaf from "../Components/Main/MainHeartleaf";
+import MainLastCover from "../Components/Main/MainLastCover";
+import MainBrandStory from "../Components/Main/MainBrandStory";
 
 const Main = () => {
   return (
-    <div className="overflow-x-hidden">
+    <div className="m-0 box-border w-screen overflow-x-hidden p-0 ">
       <MainCover />
       <MainPromotion title={"프로모션"} />
       <MainVideo />
