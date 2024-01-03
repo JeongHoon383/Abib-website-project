@@ -1,9 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import ProductAccordion from "../../Components/Product/ProductAccordion";
 
 export default function ProductDetail() {
   const [product, setProduct] = useState({});
+
   const { pid } = useParams();
   const url = `http://127.0.0.1:9090/product/detail/${pid}`;
 
@@ -21,7 +23,7 @@ export default function ProductDetail() {
   return (
     <>
       <img className="mb-8" src={product.cover} alt="" />
-      <div className="m-auto w-11/12">
+      <div className="m-auto mb-36 w-11/12">
         <p className="mb-2">{product.title}</p>
         <p className="mb-4 text-xs font-medium text-neutral-400">
           {product.productVolume}
@@ -29,7 +31,7 @@ export default function ProductDetail() {
         {product.priceSales ? (
           <p className="border-y py-3">
             <p className="text-base line-through">
-              ₩{product.originalPrice.toLocaleString()}
+              ₩{product.originalPrice && product.originalPrice.toLocaleString()}
             </p>
             <p>
               <span className="mr-1 text-blue-500">
@@ -42,13 +44,15 @@ export default function ProductDetail() {
             </p>
           </p>
         ) : (
-          <p className="text-base">₩{product.originalPrice.toLocaleString()}</p>
+          <p className="border-y py-3 text-base">
+            ₩{product.originalPrice && product.originalPrice.toLocaleString()}
+          </p>
         )}
 
-        <p className="mt-4 text-xs">{product.engTitle}</p>
+        <p className="my-4 text-xs">{product.engTitle}</p>
 
-        <form>
-          <div class="relative flex max-w-[8rem] items-center">
+        <form className="mb-16">
+          <div className="relative flex max-w-[8rem] items-center">
             <button
               type="button"
               id="decrement-button"
@@ -64,9 +68,9 @@ export default function ProductDetail() {
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M1 1h16"
                 />
               </svg>
@@ -90,7 +94,7 @@ export default function ProductDetail() {
               className="h-11 rounded-e-lg border border-gray-300 bg-gray-100 p-3 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"
             >
               <svg
-                class="h-3 w-3 text-gray-900 dark:text-white"
+                className="h-3 w-3 text-gray-900 dark:text-white"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -98,15 +102,27 @@ export default function ProductDetail() {
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M9 1v16M1 9h16"
                 />
               </svg>
             </button>
           </div>
         </form>
+        <button className="mb-2 me-2 w-full border border-black bg-white px-5 py-2.5 text-sm font-medium text-gray-900 lg:hover:bg-gray-100 lg:focus:outline-none lg:focus:ring-4 lg:focus:ring-gray-200 lg:dark:border-gray-600 lg:dark:bg-gray-800 lg:dark:text-white lg:dark:hover:border-gray-600 lg:dark:hover:bg-gray-700 lg:dark:focus:ring-gray-700">
+          장바구니 담기 - ₩32,000 (1개)
+        </button>
+        <button className="mb-2 me-2 w-full border border-black bg-black px-5 py-2.5 text-sm font-medium text-white lg:dark:border-gray-600 lg:dark:bg-gray-800 lg:dark:text-white lg:dark:hover:border-gray-600 lg:dark:hover:bg-gray-700 lg:dark:focus:ring-gray-700">
+          구매하기
+        </button>
+      </div>
+      <div className="mb-24">
+        <img src={product.detailCover} alt="" />
+      </div>
+      <div>
+        <ProductAccordion product={product} />
       </div>
     </>
   );
