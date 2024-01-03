@@ -27,7 +27,7 @@ export default function ProductAccordion({ product }) {
             <button
               type="button"
               onClick={() => handleBtnClick(item.key)}
-              className="lg:dark:text-gray-40 flex w-full items-center justify-between border border-b-0 border-gray-200 p-5 font-medium text-gray-500 rtl:text-right dark:border-gray-700 dark:focus:ring-gray-800"
+              className="lg:dark:text-gray-40 flex w-full items-center justify-between p-5 font-medium text-black rtl:text-right dark:border-gray-700 dark:focus:ring-gray-800"
             >
               <span>{item.title}</span>
               <svg
@@ -56,7 +56,7 @@ export default function ProductAccordion({ product }) {
               expandedItems[item.key] ? "h-auto" : "h-0"
             }`}
           >
-            <div className="border border-b-0 border-gray-200 p-5 dark:border-gray-700 dark:bg-gray-900">
+            <div className="p-5 dark:border-gray-700 dark:bg-gray-900">
               {item.content}
             </div>
           </div>

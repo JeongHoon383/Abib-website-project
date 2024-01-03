@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ProductAccordion from "../../Components/Product/ProductAccordion";
+import Review from "../../Components/Product/Review";
 
 export default function ProductDetail() {
   const [product, setProduct] = useState({});
@@ -121,8 +122,11 @@ export default function ProductDetail() {
       <div className="mb-24">
         <img src={product.detailCover} alt="" />
       </div>
-      <div>
+      <div className="acco-wrap divide-y divide-black">
         <ProductAccordion product={product} />
+      </div>
+      <div className="review-wrap">
+        <Review />
       </div>
     </>
   );
