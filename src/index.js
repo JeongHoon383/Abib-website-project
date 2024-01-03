@@ -9,9 +9,11 @@ import Cart from "./Pages/Cart/Cart";
 import SearchResult from "./Pages/Search/SearchResult";
 import ProductList from "./Pages/Product/ProductList";
 import ProductDetail from "./Pages/Product/ProductDetail";
-import Signup from "./Pages/Signup";
+import Signup from "./Pages/Signup/Signup";
 import Admin from "./Pages/Admin/Admin";
 import MypageMain from "./Pages/MyPage/MyPageMain";
+import SignupMain from "./Components/Signup/SignupMain.jsx";
+import SignupForm from "./Components/Signup/SignupSignForm";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -46,6 +48,16 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <Signup />,
+        children: [
+          {
+            path: "/signup/",
+            element: <SignupMain />,
+          },
+          {
+            path: "/signup/join",
+            element: <SignupForm />,
+          },
+        ],
       },
       {
         path: "/admin",

@@ -12,4 +12,10 @@ body {
   margin: 0 auto !important;
 }
 
+.transition-input {
+  @apply h-10 border border-[#CCC] px-3 text-[12px] leading-10 transition duration-500 hover:border-black focus:border-black focus:outline-none;
+}
 
+.transition-btn {
+  @apply h-10 border-black bg-black leading-10 text-white transition duration-500 hover:border hover:bg-white hover:text-black;
+}
