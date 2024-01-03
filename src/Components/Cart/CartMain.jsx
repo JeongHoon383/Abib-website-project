@@ -3,25 +3,22 @@ import CartProduct from "./CartProduct";
 
 const CartMain = () => {
   return (
-    <div>
+    <div className="pb-[70px]">
       <div className="mx-auto max-w-[900px] pt-[90px] text-xs">
         <div>
           <div>
-            <ul className="flex w-full items-center justify-between border-b border-solid border-gray-300 font-bold">
+            <ul className="flex w-full items-center justify-between border-b border-solid border-gray-300 text-center font-bold">
               <li className="px-[5px] py-[12px]">
-                <input
-                  className="mx-[3px] mb-[7px] mt-[5px] flex-1"
-                  type="checkbox"
-                />
+                <input className="mx-[3px] mb-[7px] mt-[5px]" type="checkbox" />
               </li>
-              <li></li>
-              <li>PRODUCT</li>
-              <li>UNIT PRICE</li>
-              <li>QUANTITY</li>
-              <li>MILEAGE</li>
-              <li>SHIP</li>
-              <li>SUBTOTAL</li>
-              <li></li>
+              <li className="w-[105px]"></li>
+              <li className="hidden w-[129px] lg:block">PRODUCT</li>
+              <li className="w-[108px]">UNIT PRICE</li>
+              <li className="hidden w-[165px] lg:block">QUANTITY</li>
+              <li className="w-[99px]">MILEAGE</li>
+              <li className="w-[58px]">SHIP</li>
+              <li className="hidden w-[102px] lg:block">SUBTOTAL</li>
+              <li className="w-[101px]"></li>
             </ul>
           </div>
           <CartProduct />
@@ -41,22 +38,12 @@ const CartMain = () => {
             </ul>
           </div>
           <div className="flex flex-col items-center justify-center">
-            <div className="font-bold">총 할인금액 상세내역</div>
-            <div>$7,200원</div>
-            <div>기간할인 $7,200</div>
+            <div className="mb-[3px] font-bold">총 할인금액 상세내역</div>
+            <div className="mb-[3px] text-[11px]">₩7,200원</div>
+            <div className="text-[11px]">기간할인 ₩7,200</div>
           </div>
         </div>
       </div>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
     </div>
   );
 };
