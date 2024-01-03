@@ -1,5 +1,7 @@
 초기 세팅(yarn)
 
+- git config core.ignorecase false(git에서 파일 대소문자를 구별하게 글로벌 설정을 합니다)
+
 - axios
   
 - react-bootstrap bootstrap //app.jsx 파일에 상단에 붙여넣기 - import 'bootstrap/dist/css/bootstrap.min.css';
