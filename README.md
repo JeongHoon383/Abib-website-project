@@ -15,3 +15,5 @@
 - react-icons --save
   
 - tailwind 설치 공식 문서 참고 https://tailwindcss.com/docs/installation
+
+- swiper
