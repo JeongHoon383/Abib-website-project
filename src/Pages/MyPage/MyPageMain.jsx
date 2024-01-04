@@ -4,7 +4,7 @@ export default function MyPageMain() {
   return (
     <div className="mx-auto">
       <p className="@media (min-width: 768px)  @media (min-width: 1024px) p-16 text-center text-3xl">
-        {" "}
+    
         Account.
       </p>
       <div className="borer-t w-100 mx-auto border border-gray-600">
