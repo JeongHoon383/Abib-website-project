@@ -5,18 +5,19 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Main from "./Pages/Main";
-import Cart from "./Pages/Cart";
+import Cart from "./Pages/Cart/Cart";
 import SearchResult from "./Pages/Search/SearchResult";
 import ProductList from "./Pages/Product/ProductList";
 import ProductDetail from "./Pages/Product/ProductDetail";
-import Signup from "./Pages/Signup";
+import Signup from "./Pages/Signup/Signup";
 import Admin from "./Pages/Admin";
 import MyPageMain from "./Pages/MyPage/MyPageMain";
 import OrderList from "./Pages/MyPage/OrderList";
 import Inquiry from "./Pages/MyPage/Inquiry";
 import MemberInfo from "./Pages/MyPage/MemberInfo";
 import PrivateInquiry from "./Pages/MyPage/PrivateInquiry";
-
+import SignupForm from "./Components/Signup/SignupSignForm";
+import SignupMain from "./Components/Signup/SignupMain";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -51,6 +52,16 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <Signup />,
+        children: [
+          {
+            path: "/signup/",
+            element: <SignupMain />,
+          },
+          {
+            path: "/signup/join",
+            element: <SignupForm />,
+          },
+        ],
       },
       {
         path: "/admin",
