@@ -7,7 +7,7 @@ export default function SignupMain() {
     <div className="mb-20 w-full border-b border-black py-16 text-center text-[13px]">
       <Link
         to={"/signup/join"}
-        className="transition-btn mx-auto block  w-[90%] leading-10 sm:w-[600px]"
+        className="transition-btn mx-auto block  h-10 w-[90%] leading-10 sm:w-[600px]"
       >
         일반 회원가입
       </Link>
