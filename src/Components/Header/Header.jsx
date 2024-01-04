@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HeaderForm from "./HeaderForm";
 import HeaderLink from "./HeaderLink";
+import HeaderMLink from "./HeaderMLink";
 
 const searchVars = {
   //window.innerWidth를 사용 이게 픽셀로 주는것보다 더 좋을듯
@@ -39,6 +40,23 @@ const cateVars = {
   },
 };
 
+const mCateVars = {
+  start: {
+    x: "100vw",
+    opacity: 0.5,
+  },
+  end: {
+    x: 0,
+    opacity: 1,
+    transition: { duration: 0.5, type: "tween", ease: "linear" },
+  },
+  exit: {
+    x: "100vw",
+    opacity: 0,
+    transition: { duration: 0.5, type: "tween", ease: "linear" },
+  },
+};
+
 const Header = () => {
   const [leave, setLeave] = useState(false);
   const toggleLeave = () => setLeave((prev) => !prev);
@@ -46,6 +64,7 @@ const Header = () => {
   const [search, setSearch] = useState(false);
   const [hover, setHover] = useState(false);
   const [cateHover, setCateHover] = useState();
+  const [mToggle, setMToggle] = useState(false);
   return (
     <div
       onMouseLeave={() => setHover(false)}
@@ -99,9 +118,9 @@ const Header = () => {
           <div className="flex w-[33%] items-center lg:hidden">
             <span
               onClick={() => navigate("/cart")}
-              className=" flex items-center justify-center text-[12px]"
+              className=" flex items-center justify-center space-x-0.5 text-[12px]"
             >
-              카트
+              <span>카트</span>
               <span className="ml-1 flex h-4 w-4 items-center justify-center rounded-full bg-font text-xs font-bold text-white">
                 0
               </span>
@@ -142,9 +161,9 @@ const Header = () => {
             <span className="cursor-pointer">언어</span>
             <span
               onClick={() => navigate("/cart")}
-              className=" flex cursor-pointer items-center justify-center text-[12px]"
+              className=" flex cursor-pointer items-center justify-center space-x-0.5 text-[12px]"
             >
-              카트
+              <span>카트</span>
               <span className="flex h-4 w-4 items-center justify-center rounded-full bg-font text-xs font-bold text-white">
                 0
               </span>
@@ -154,20 +173,44 @@ const Header = () => {
           </div>
           <div className="flex w-[33%]  items-center justify-end lg:hidden lg:w-0">
             <span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="h-7 w-7"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                />
-              </svg>
+              {mToggle === false && (
+                <svg
+                  onClick={() => {
+                    setMToggle(true);
+                  }}
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="h-7 w-7 cursor-pointer "
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                  />
+                </svg>
+              )}
+              {mToggle === true && (
+                <svg
+                  onClick={() => {
+                    setMToggle(false);
+                  }}
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="h-7 w-7 cursor-pointer"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18 18 6M6 6l12 12"
+                  />
+                </svg>
+              )}
             </span>
           </div>
         </div>
@@ -199,6 +242,18 @@ const Header = () => {
           </motion.div>
         ) : (
           <></>
+        )}
+        {mToggle && (
+          <motion.div
+            key={3}
+            variants={mCateVars}
+            initial="start"
+            animate="end"
+            exit="exit"
+            className="fixed z-10 h-[85vh] w-screen bg-back lg:hidden"
+          >
+            <HeaderMLink />
+          </motion.div>
         )}
       </AnimatePresence>
     </div>

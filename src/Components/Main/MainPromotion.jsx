@@ -7,7 +7,7 @@ import "swiper/css/scrollbar";
 
 const MainPromotion = ({ title }) => {
   return (
-    <div className="  h-[90vh] w-screen overflow-x-hidden overflow-y-clip md:h-[95vh] lg:h-[100vh] xl:h-[110vh] ">
+    <div className="     w-screen overflow-x-hidden    pb-5 ">
       <div className="mx-auto  mt-16 text-center text-4xl font-bold lg:mt-32">
         {title}
       </div>
@@ -15,17 +15,27 @@ const MainPromotion = ({ title }) => {
         <Swiper
           className="my-custom-swiper"
           modules={[Scrollbar]}
-          spaceBetween={10}
-          slidesPerView={4.5}
+          spaceBetween={20}
+          slidesPerView={1.5}
           scrollbar={{ draggable: true }}
+          breakpoints={{
+            768: {
+              slidesPerView: 2.5,
+              spaceBetween: 15,
+            },
+            1024: {
+              slidesPerView: 3.5,
+              spaceBetween: 10,
+            },
+          }}
         >
           <ul className="flex w-7/12 border border-red-500">
             {[1, 2, 3, 4, 5, 6].map((v, i) => (
-              <SwiperSlide>
-                <li className="group w-full  pb-8" key={i}>
-                  <figure className=" mt-14  w-[20vw]">
+              <SwiperSlide key={i}>
+                <li className="group w-full  pb-8">
+                  <figure className=" mt-14 h-[50vw] w-full md:h-[30vw]   lg:h-[25vw] ">
                     <img
-                      className="w-full  cursor-pointer"
+                      className="h-full w-full  cursor-pointer"
                       src="https://www.abib.com/web/product/medium/202312/154ef9d7e3ea2fd080510e6c2f00636f.jpg"
                       alt=""
                     />
