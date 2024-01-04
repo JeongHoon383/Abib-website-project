@@ -46,14 +46,23 @@ export default function PrivateInquiry() {
 
       <input
         type="text"
+        value={val}
+        onChange={handleChange}
         className="mx-auto flex h-60 w-full max-w-lg border border-gray-300 text-center hover:border-gray-600"
       />
 
-      <div className="mx-auto text-center">
+      <div className="text-center">
         <h5>Letters counted : {val.length}</h5>
         <h5>Words counted : {word}/5</h5>
-        <input type="text" value={val} onChange={handleChange} />
       </div>
     </>
   );
 }
+
+/*
+<div className="mx-auto text-center">
+<h5>Letters counted : {val.length}</h5>
+<h5>Words counted : {word}/5</h5>
+<input type="text" />
+</div>
+*/
