@@ -3,9 +3,9 @@ import ProductInfo from "./ProductInfo";
 import ProductIngredients from "./ProductIngredients";
 import ProductCaution from "./ProductCaution";
 
-export default function ProductAccordion({ product }) {
+export default function ProductAccordion() {
   const [container, setContainer] = useState([
-    { key: 1, title: "제품 정보", content: <ProductInfo product={product} /> },
+    { key: 1, title: "제품 정보", content: <ProductInfo /> },
     { key: 2, title: "전성분", content: <ProductIngredients /> },
     { key: 3, title: "사용할 때의 주의사항", content: <ProductCaution /> },
   ]);
@@ -52,11 +52,11 @@ export default function ProductAccordion({ product }) {
           </h2>
           <div
             id={`accordion-collapse-body-${item.key}`}
-            className={`w-full overflow-hidden ${
+            className={`mx-auto w-11/12 overflow-hidden ${
               expandedItems[item.key] ? "h-auto" : "h-0"
             }`}
           >
-            <div className="p-5 dark:border-gray-700 dark:bg-gray-900">
+            <div className="border-t border-gray-200 py-4 dark:border-gray-700 dark:bg-gray-900">
               {item.content}
             </div>
           </div>
