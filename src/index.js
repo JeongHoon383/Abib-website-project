@@ -13,8 +13,11 @@ import Signup from "./Pages/Signup/Signup";
 import Admin from "./Pages/Admin/Admin";
 import MypageMain from "./Pages/MyPage/MyPageMain";
 import SignupMain from "./Components/Signup/SignupMain.jsx";
-import SignupForm from "./Components/Signup/SignupForm";
+import SignupPCForm from "./Components/Signup/SignupPCForm";
 import Order from "./Pages/Order/Order";
+import SignupMobileForm from "./Components/Signup/SignupMobileForm";
+import Login from "./Pages/Login/Login";
+import SignupComplete from "./Components/Signup/SignupComplete";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -60,9 +63,21 @@ const router = createBrowserRouter([
           },
           {
             path: "/signup/join",
-            element: <SignupForm />,
+            element: <SignupPCForm />,
+          },
+          {
+            path: "/signup/mobile/join",
+            element: <SignupMobileForm />,
+          },
+          {
+            path: "/signup/complete",
+            element: <SignupComplete />,
           },
         ],
+      },
+      {
+        path: "/login",
+        element: <Login />,
       },
       {
         path: "/admin",
