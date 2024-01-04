@@ -2,8 +2,8 @@ import React from "react";
 
 export default function ProductIngredients() {
   return (
-    <ul>
-      <li>
+    <ul className="text-[10px] text-neutral-600">
+      <li className="mb-4">
         Water, Methylpropanediol, Sedum Sarmentosum Extract, Glycerin,
         1,2-Hexanediol, Propanediol, Sodium Hyaluronate, Cynanchum Atratum
         Extract, Althaea Rosea Flower Extract, Hydrolyzed Hyaluronic Acid,
@@ -17,7 +17,7 @@ export default function ProductIngredients() {
         Hydrolyzed Sodium Hyaluronate, Potassium Hyaluronate, Cellulose Gum,
         Caffeine, Disodium EDTA, Xanthan Gum
       </li>
-      <li>
+      <li className="mb-4">
         정제수, 메틸프로판다이올, 돌나물추출물, 글리세린, 1,2-헥산다이올,
         프로판다이올, 소듐하이알루로네이트, 백미꽃추출물, 접시꽃추출물,
         하이드롤라이즈드하이알루로닉애씨드, 하이알루로닉애씨드,
