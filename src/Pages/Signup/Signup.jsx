@@ -16,7 +16,6 @@ const Signup = () => {
         </button>
         <h2 className="mt-auto text-xl lg:text-3xl">회원가입</h2>
       </div>
-
       <Outlet />
     </section>
   );
