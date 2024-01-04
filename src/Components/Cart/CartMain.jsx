@@ -23,8 +23,12 @@ const CartMain = () => {
           </div>
           <CartProduct />
           <div className="flex flex-row-reverse px-[10px] pb-[17px] pt-[15px] underline">
-            <div>장바구니비우기</div>
-            <div className="mr-[15px]">선택삭제</div>
+            <div className="transition-text hover:underline">
+              장바구니비우기
+            </div>
+            <div className="transition-text mr-[15px] hover:underline">
+              선택삭제
+            </div>
           </div>
           <div className="mb-[50px]">
             <ul className="flex justify-center px-[10px] pb-[17px] pt-[15px]">
