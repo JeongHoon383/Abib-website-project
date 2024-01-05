@@ -29,7 +29,7 @@ export default function Login() {
                 : "border-black"
             }`}
           >
-            기존 회원이세요?
+            회원 로그인
           </button>
           <button
             onClick={() => setTabSwitch(true)}

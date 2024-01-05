@@ -23,7 +23,7 @@ export default function SignupTerms({
           className="border border-black"
           onClick={() => setTermsToggle(!termsToggle)}
         >
-          <span className="block w-full cursor-pointer border-b border-black text-center leading-5">
+          <span className="block w-full cursor-pointer border-b border-black text-center text-[11px] leading-5">
             전체보기
           </span>
           <div
@@ -63,7 +63,7 @@ export default function SignupTerms({
           className="border border-black"
           onClick={() => setInfoToggle(!infoToggle)}
         >
-          <span className="block w-full cursor-pointer border-b border-black text-center leading-5">
+          <span className="block w-full cursor-pointer border-b border-black text-center text-[11px] leading-5">
             전체보기
           </span>
           <div
