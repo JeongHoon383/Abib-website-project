@@ -5,21 +5,13 @@ const OrderMain = () => {
   return (
     <div>
       <div>
-        <img src="../../../cart/orderMainImage.jpeg" alt="" />
+        <img
+          src="../../../cart/orderMainImage.jpeg"
+          alt=""
+          className="pb-[60px]"
+        />
       </div>
-      <br />
-      <br />
       <OrderForm />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
     </div>
   );
 };

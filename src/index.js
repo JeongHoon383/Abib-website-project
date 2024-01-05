@@ -11,10 +11,17 @@ import ProductList from "./Pages/Product/ProductList";
 import ProductDetail from "./Pages/Product/ProductDetail";
 import Signup from "./Pages/Signup/Signup";
 import Admin from "./Pages/Admin/Admin";
-import MypageMain from "./Pages/MyPage/MyPageMain";
-import SignupMain from "./Components/Signup/SignupMain.jsx";
-import SignupForm from "./Components/Signup/SignupForm";
 import Order from "./Pages/Order/Order";
+import MyPageMain from "./Pages/MyPage/MyPageMain";
+import OrderList from "./Pages/MyPage/OrderList";
+import Inquiry from "./Pages/MyPage/Inquiry";
+import MemberInfo from "./Pages/MyPage/MemberInfo";
+import PrivateInquiry from "./Pages/MyPage/PrivateInquiry";
+import SignupPCForm from "./Components/Signup/SignupPCForm";
+import SignupMain from "./Components/Signup/SignupMain";
+import SignupMobileForm from "./Components/Signup/SignupMobileForm";
+import Login from "./Pages/Login/Login";
+import SignupComplete from "./Components/Signup/SignupComplete";
 import { Provider } from "react-redux";
 import store from "./store.js";
 const router = createBrowserRouter([
@@ -62,9 +69,21 @@ const router = createBrowserRouter([
           },
           {
             path: "/signup/join",
-            element: <SignupForm />,
+            element: <SignupPCForm />,
+          },
+          {
+            path: "/signup/mobile/join",
+            element: <SignupMobileForm />,
+          },
+          {
+            path: "/signup/complete",
+            element: <SignupComplete />,
           },
         ],
+      },
+      {
+        path: "/login",
+        element: <Login />,
       },
       {
         path: "/admin",
@@ -72,7 +91,23 @@ const router = createBrowserRouter([
       },
       {
         path: "/mypage",
-        element: <MypageMain />,
+        element: <MyPageMain />,
+      },
+      {
+        path: "/inquiry",
+        element: <Inquiry />,
+      },
+      {
+        path: "/memberinfo",
+        element: <MemberInfo />,
+      },
+      {
+        path: "/orderlist",
+        element: <OrderList />,
+      },
+      {
+        path: "/privateinquiry",
+        element: <PrivateInquiry />,
       },
     ],
   },

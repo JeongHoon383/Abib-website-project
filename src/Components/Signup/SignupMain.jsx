@@ -1,12 +1,29 @@
 import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import "../../index.css";
 
 export default function SignupMain() {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    // 컴포넌트가 마운트될 때 resize 이벤트 리스너 추가
+    window.addEventListener("resize", handleResize);
+
+    // 컴포넌트가 언마운트될 때 resize 이벤트 리스너 제거
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <div className="mb-20 w-full border-b border-black py-16 text-center text-[13px]">
       <Link
-        to={"/signup/join"}
+        to={windowWidth > 1024 ? "/signup/join" : "/signup/mobile/join"}
         className="transition-btn mx-auto block  h-10 w-[90%] leading-10 sm:w-[600px]"
       >
         일반 회원가입
@@ -18,7 +35,7 @@ export default function SignupMain() {
         </span>
       </p>
 
-      <Link className="mx-auto mb-5 flex h-10 w-[90%] items-center justify-center bg-[#FEE500] sm:w-[600px]">
+      <Link className="mx-auto mb-5 flex h-10 w-[90%] items-center justify-center bg-[#FEE500] transition duration-500 hover:text-[#AAA] sm:w-[600px]">
         <RiKakaoTalkFill className="mr-[5px] h-[20px] w-[20px]" />
         카카오 회원가입
       </Link>
