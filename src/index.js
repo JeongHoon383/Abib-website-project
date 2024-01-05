@@ -1,6 +1,6 @@
+import "./index.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
@@ -11,10 +11,14 @@ import ProductList from "./Pages/Product/ProductList";
 import ProductDetail from "./Pages/Product/ProductDetail";
 import Signup from "./Pages/Signup/Signup";
 import Admin from "./Pages/Admin/Admin";
-import MypageMain from "./Pages/MyPage/MyPageMain";
-import SignupMain from "./Components/Signup/SignupMain.jsx";
-import SignupForm from "./Components/Signup/SignupForm";
 import Order from "./Pages/Order/Order";
+import MyPageMain from "./Pages/MyPage/MyPageMain";
+import OrderList from "./Pages/MyPage/OrderList";
+import Inquiry from "./Pages/MyPage/Inquiry";
+import MemberInfo from "./Pages/MyPage/MemberInfo";
+import PrivateInquiry from "./Pages/MyPage/PrivateInquiry";
+import SignupForm from "./Components/Signup/SignupForm";
+import SignupMain from "./Components/Signup/SignupMain";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -70,7 +74,23 @@ const router = createBrowserRouter([
       },
       {
         path: "/mypage",
-        element: <MypageMain />,
+        element: <MyPageMain />,
+      },
+      {
+        path: "/inquiry",
+        element: <Inquiry />,
+      },
+      {
+        path: "/memberinfo",
+        element: <MemberInfo />,
+      },
+      {
+        path: "/orderlist",
+        element: <OrderList />,
+      },
+      {
+        path: "/privateinquiry",
+        element: <PrivateInquiry />,
       },
     ],
   },
