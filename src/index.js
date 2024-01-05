@@ -11,18 +11,14 @@ import ProductList from "./Pages/Product/ProductList";
 import ProductDetail from "./Pages/Product/ProductDetail";
 import Signup from "./Pages/Signup/Signup";
 import Admin from "./Pages/Admin/Admin";
-import MypageMain from "./Pages/MyPage/MyPageMain";
 import SignupMain from "./Components/Signup/SignupMain.jsx";
 import SignupForm from "./Components/Signup/SignupForm";
 import Order from "./Pages/Order/Order";
-import Admin from "./Pages/Admin";
 import MyPageMain from "./Pages/MyPage/MyPageMain";
 import OrderList from "./Pages/MyPage/OrderList";
 import Inquiry from "./Pages/MyPage/Inquiry";
 import MemberInfo from "./Pages/MyPage/MemberInfo";
 import PrivateInquiry from "./Pages/MyPage/PrivateInquiry";
-import SignupForm from "./Components/Signup/SignupSignForm";
-import SignupMain from "./Components/Signup/SignupMain";
 const router = createBrowserRouter([
   {
     path: "/",
