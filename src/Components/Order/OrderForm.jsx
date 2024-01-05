@@ -308,37 +308,38 @@ const OrderForm = () => {
           <div className="mt-[60px] text-[14px] font-bold">ORDER REVIEW</div>
           <div className="mt-[40px] border-b border-t border-solid border-gray-300">
             <div className="border-b border-solid border-gray-300">
-              <ul className="flex h-[43px] items-center justify-between font-bold">
-                <li className="basis-1/2 px-[12px] py-[5px] text-left">
+              <ul className="flex h-[43px] w-full items-center justify-between font-bold">
+                <li className="w-[70px] px-[12px] py-[5px] text-left">
                   PRODUCT
                 </li>
-                <li className="px-[12px] py-[5px]">UNIT PRICE</li>
-                <li className="px-[12px] py-[5px]">QUANTITY</li>
-                <li className="hidden px-[12px] py-[5px] lg:block">MILEAGE</li>
-                <li className="px-[12px] py-[5px]">SUBTOTAL</li>
+                <li className="w-[409px] px-[12px] py-[5px]"></li>
+                <li className="w-[105px] px-[12px] py-[5px]">UNIT PRICE</li>
+                <li className="w-[99px] px-[12px] py-[5px]">QUANTITY</li>
+                <li className="hidden w-[96px] px-[12px] py-[5px] lg:block">
+                  MILEAGE
+                </li>
+                <li className="w-[99px] px-[12px] py-[5px]">SUBTOTAL</li>
               </ul>
             </div>
             <div>
-              <ul className="flex h-[133px] w-full items-center justify-between py-[5px] text-center">
-                <li className="flex w-[479px] items-center text-left">
-                  <div className="w-[70px]">
-                    <img
-                      src="../../../cart/cartCover.jpeg"
-                      alt=""
-                      className="h-[60px] w-[60px]"
-                    />
-                  </div>
-                  <div className="transition-text w-[429px]">
-                    여성초 스팟 패드 카밍 터치
-                  </div>
+              <ul className="flex h-[133px] w-full items-center justify-between py-[5px] pl-[10px] text-center">
+                <li className="">
+                  <img
+                    src="../../../cart/cartCover.jpeg"
+                    alt=""
+                    className="h-[60px] max-w-[60px]"
+                  />
                 </li>
-                <li className="w-[105px]">
+                <li className="transition-text w-[409px] pl-[10px] text-left">
+                  여성초 스팟 패드 카밍 터치
+                </li>
+                <li className="w-[105px] min-w-[60px]">
                   <div>24,000</div>
                   <div>₩16,800</div>
                 </li>
-                <li className="w-[99px]">2</li>
+                <li className="w-[99px] min-w-[85px]">2</li>
                 <li className="hidden w-[96px] lg:block">₩1,680</li>
-                <li className="w-[99px]">33,600</li>
+                <li className="w-[99px] min-w-[88px]">33,600</li>
               </ul>
             </div>
           </div>
@@ -361,7 +362,9 @@ const OrderForm = () => {
                 <div className="basis-[30%] py-[15px] text-left">
                   총 할인금액
                 </div>
-                <div className="basis-[70%] py-[15px] text-right">-₩14,400</div>
+                <div className="basis-[70%] py-[15px] text-right">
+                  - ₩14,400
+                </div>
               </div>
             </div>
             <div className="pl-[5px] pr-[25px] pt-[30px]">
