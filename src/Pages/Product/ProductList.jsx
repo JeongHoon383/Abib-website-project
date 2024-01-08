@@ -13,19 +13,17 @@ export default function ProductList() {
     dispatch(getProduct(category));
   }, [dispatch, category]);
 
+  const replaceCategory = category.includes("_")
+    ? category.replace("_", "/")
+    : category;
   return (
     <>
       <div className="categoryName">
-        <h2 className="p-20 text-center text-3xl">
-          {category.includes("_") ? category.replace("_", "/") : category}
-        </h2>
+        <h2 className="p-20 text-center text-3xl">{replaceCategory}</h2>
       </div>
       <div className="m-auto w-11/12">
         <div className="categoryPath mb-4 sm:mb-8">
-          <span className="text-xs">
-            Abib / 카테고리 /{" "}
-            {category.includes("_") ? category.replace("_", "/") : category}
-          </span>
+          <span className="text-xs">Abib / 카테고리 / {replaceCategory}</span>
         </div>
         <div className="mb-52 grid grid-cols-2 gap-5 px-2 sm:grid-cols-3">
           {productList.map((item) => (
