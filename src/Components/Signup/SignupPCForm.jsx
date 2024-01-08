@@ -2,6 +2,7 @@ import { useState } from "react";
 import SignupTerms from "./SignupTerms";
 import { Link } from "react-router-dom";
 import SignupFormContent from "./SignupFormContent";
+import { useFormContext } from "react-hook-form";
 
 export default function SignupForm() {
   const [termsAgreement, setTermsAgreement] = useState(false);
@@ -15,8 +16,17 @@ export default function SignupForm() {
     setInfoAgreement(data);
   };
 
+  const { handleSubmit } = useFormContext();
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
   return (
-    <form className="mx-auto w-[90%] py-16 text-[11px] lg:w-[600px]">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="mx-auto w-[90%] py-16 text-[11px] lg:w-[600px]"
+    >
       <SignupFormContent />
 
       <SignupTerms

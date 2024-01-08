@@ -168,8 +168,15 @@ const Header = () => {
                 0
               </span>
             </span>
-            <span className="cursor-pointer">회원가입</span>
-            <span className="cursor-pointer">로그인</span>
+            <span
+              onClick={() => navigate("/signup/")}
+              className="cursor-pointer"
+            >
+              회원가입
+            </span>
+            <span onClick={() => navigate("/login")} className="cursor-pointer">
+              로그인
+            </span>
           </div>
           <div className="flex w-[33%]  items-center justify-end lg:hidden lg:w-0">
             <span>

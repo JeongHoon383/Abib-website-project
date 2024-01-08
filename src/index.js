@@ -17,11 +17,10 @@ import OrderList from "./Pages/MyPage/OrderList";
 import Inquiry from "./Pages/MyPage/Inquiry";
 import MemberInfo from "./Pages/MyPage/MemberInfo";
 import PrivateInquiry from "./Pages/MyPage/PrivateInquiry";
-import SignupPCForm from "./Components/Signup/SignupPCForm";
-import SignupMain from "./Components/Signup/SignupMain";
-import SignupMobileForm from "./Components/Signup/SignupMobileForm";
 import Login from "./Pages/Login/Login";
+import SignupMain from "./Components/Signup/SignupMain";
 import SignupComplete from "./Components/Signup/SignupComplete";
+import SignupForm from "./Components/Signup/SignupForm";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -67,11 +66,7 @@ const router = createBrowserRouter([
           },
           {
             path: "/signup/join",
-            element: <SignupPCForm />,
-          },
-          {
-            path: "/signup/mobile/join",
-            element: <SignupMobileForm />,
+            element: <SignupForm />,
           },
           {
             path: "/signup/complete",
