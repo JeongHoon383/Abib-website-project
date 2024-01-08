@@ -1,6 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const HeaderLink = ({ cateHover }) => {
+  const category = ["스킨케어", "에센스", "크림", "패드", "마스크팩"];
+  const fc = ["진정", "수분", "미백", "탄력_보습"];
+
   return (
     <>
       {" "}
@@ -13,24 +17,21 @@ const HeaderLink = ({ cateHover }) => {
               <li className="font-semibold text-main">신규회원한정</li>
               <li className="font-semibold text-main">베스트</li>
               <li className="font-semibold text-main">이벤트</li>
-              <li>스킨케어</li>
-              <li>에센스</li>
-              <li>크림</li>
-              <li>패드</li>
-              <li>마스크팩</li>
-              <li>클렌저</li>
-              <li>선케어</li>
-              <li>바디케어</li>
-              <li>파운데이션</li>
-              <li>립</li>
-              <li>세트</li>
+              {category.map((v, i) => (
+                <li key={i}>
+                  <Link to={`/product/list/${v}`}>{v}</Link>
+                </li>
+              ))}
             </ul>
             <ul className="space-y-1 text-xs">
               <li className="my-3 font-bold text-font">기능</li>
-              <li>진정</li>
-              <li>수분</li>
-              <li>미백</li>
-              <li>탄력/보습</li>
+              {fc.map((v, i) => (
+                <li key={i}>
+                  <Link to={`/product/list/${v}`}>
+                    {v.includes("_") ? v.replace("_", "/") : v}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </>
         ) : null}

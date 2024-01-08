@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const CartProduct = () => {
+  const navigate = useNavigate();
   return (
     <div>
       <ul className="flex w-full items-center justify-between border-b border-solid border-gray-300 py-[12px] text-center text-xs">
@@ -9,13 +11,17 @@ const CartProduct = () => {
         </li>
         <li className="w-[105px]">
           <img
+            onClick={() => navigate("/product/detail/:pid")}
             src="../../../cart/cartCover.jpeg"
-            className="ml-[30px] h-[60px] w-[60px]"
+            className="ml-[30px] h-[60px] w-[60px] cursor-pointer"
             alt=""
           />
         </li>
         <li className="hidden w-[129px] lg:block">
-          <div className="flex flex-col items-center">
+          <div
+            onClick={() => navigate("/product/detail/:pid")}
+            className="transition-text flex flex-col items-center"
+          >
             <p className="ml-[10px]">여성초 스팟 패드</p>
             <p className="ml-[10px]">카밍 터치</p>
             <div>
@@ -41,7 +47,7 @@ const CartProduct = () => {
         <li className="w-[101px]">
           <button
             type="button"
-            className="h-[35px] w-[60px] border border-solid border-black font-bold "
+            className="h-[35px] w-[60px] border border-solid border-black font-bold transition duration-500 hover:bg-gray-100"
           >
             삭제
           </button>
