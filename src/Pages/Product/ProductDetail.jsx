@@ -49,7 +49,11 @@ export default function ProductDetail() {
       <div className="sm:p-16 lg:p-20 xl:px-96">
         <div className="sm:flex sm:w-full">
           <div className="imgBox sm:mr-4">
-            <img className="mb-8 w-full sm:m-0" src={product.cover} alt="" />
+            <img
+              className="mb-8 w-full sm:m-0"
+              src={`http://127.0.0.1:9090/uploads/${product.cover}`}
+              alt=""
+            />
           </div>
           <div className="m-auto mb-36 w-11/12">
             <p className="mb-2">{product.title}</p>

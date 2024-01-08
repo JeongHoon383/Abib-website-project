@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const HeaderLink = ({ cateHover }) => {
   const category = ["스킨케어", "에센스", "크림", "패드", "마스크팩"];
-  const fc = ["진정", "수분", "미백", "탄력/보습"];
+  const fc = ["진정", "수분", "미백", "탄력_보습"];
 
   return (
     <>
@@ -27,7 +27,9 @@ const HeaderLink = ({ cateHover }) => {
               <li className="my-3 font-bold text-font">기능</li>
               {fc.map((v, i) => (
                 <li key={i}>
-                  <Link to={`/product/list/${v}`}>{v}</Link>
+                  <Link to={`/product/list/${v}`}>
+                    {v.includes("_") ? v.replace("_", "/") : v}
+                  </Link>
                 </li>
               ))}
             </ul>
