@@ -8,7 +8,7 @@ const HeaderLink = ({ cateHover }) => {
   return (
     <>
       {" "}
-      <div className="flex h-full  w-full items-start space-x-[10%] px-8 pt-10 text-gray-400">
+      <div className="flex h-full  w-full items-start space-x-[10%] px-8 pt-10 text-gray-400 dark:bg-black dark:text-white">
         {cateHover === "제품" ? (
           <>
             {" "}
