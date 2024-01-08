@@ -2,13 +2,32 @@ import React from "react";
 
 import { Form } from "react-bootstrap";
 import { IoIosArrowDropright } from "react-icons/io";
-import { FaCloud } from "react-icons/fa";
+import { FaCloud, FaFileUpload, FaQq } from "react-icons/fa";
 import { useState } from "react";
-
+import axios from "axios";
+import Axios from "axios";
 import { RiAdminFill } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
+
+Axios.defaults.baseURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL + "/api";
+Axios.defaults.withCredentials = true;
 
 export default function Admin() {
   const [open, setOpen] = useState(true);
+
+  const [form, setForm] = useState({
+    title: "",
+    engTitle: "",
+    productVolume: "",
+    originalPrice: "",
+    priceSales: "",
+    prodOption: "",
+    cover: [],
+    functional: "",
+    category: "",
+    description: "",
+  });
+  const navigate = useNavigate();
 
   const Menus = [
     { title: "Dashboard", src: "Chartfill" },
@@ -20,6 +39,52 @@ export default function Admin() {
     { title: "Analytics", src: "Chart" },
     { title: "Setting", src: "Setting" },
   ];
+
+  const FileUpload = (e) => {
+    const files = e.target.files;
+    setForm((prevForm) => ({
+      ...prevForm,
+      // cover: [...prevForm.cover, ...files],
+      cover: files,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("upload 버튼 클릭햇다!!!!!!");
+
+    try {
+      const formData = new FormData();
+      for (const key in form) {
+        if (key === "cover") {
+          // 이미지 여러개면 반복 추가
+
+          formData.append(key, form[key]);
+        } else {
+          formData.append(key, form[key]);
+        }
+      }
+
+      const result = axios.post("http://localhost:9090/admin", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (result.data === "insert success") {
+        alert("제품이 등록되었습니다");
+
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("에러 발생:", error);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  };
 
   return (
     <>
@@ -71,27 +136,39 @@ export default function Admin() {
 
         <div className="h-screen flex-1 p-7">
           <h1 className="text-2xl font-semibold ">Product</h1>
+          <br></br>
 
-          <form action="">
+          <form action="" onSubmit={handleSubmit}>
             <p>
-              title : <input type="text" placeholder="title" />
+              title : <input type="text" name="title" placeholder="title" />
             </p>
             <p>
-              eng title : <input type="text" placeholder="eng title" />
+              eng title :{" "}
+              <input type="text" name="eng title" placeholder="eng title" />
             </p>
             <p>
               product volume :{" "}
-              <input type="text" placeholder="product volume" />
+              <input
+                type="text"
+                name="product volume"
+                placeholder="product volume"
+              />
             </p>
             <p>
               original price :{" "}
-              <input type="text" placeholder="original price" />
+              <input
+                type="text"
+                name="original price"
+                placeholder="original price"
+              />
             </p>
             <p>
-              price sales : <input type="text" placeholder="price sales" />
+              price sales :{" "}
+              <input type="text" name="price sales" placeholder="price sales" />
             </p>
             <p>
-              prod option : <input type="text" placeholder="prod option" />
+              prod option :{" "}
+              <input type="text" name="prod option" placeholder="prod option" />
             </p>
             <p>
               cover :{" "}
@@ -99,6 +176,10 @@ export default function Admin() {
                 type="file"
                 className="shadow-none"
                 accept="image/*"
+                multiple
+                onChange={(e) => {
+                  FileUpload(e);
+                }}
               ></Form.Control>
             </p>
 
@@ -113,10 +194,11 @@ export default function Admin() {
             </p>
 
             <button
-              type="button"
+              type="submit"
+              onSubmit={handleSubmit}
               className="focus:shadow-outline-blue rounded bg-gray-500 px-3 py-1 font-bold text-white hover:bg-blue-700 focus:outline-none active:bg-blue-800"
             >
-              Save
+              Upload
             </button>
           </form>
         </div>
