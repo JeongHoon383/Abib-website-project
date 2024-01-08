@@ -8,7 +8,7 @@ import MainBrandStory from "../Components/Main/MainBrandStory";
 
 const Main = () => {
   return (
-    <div className="m-0 box-border w-screen overflow-x-hidden p-0 ">
+    <div className="m-0 box-border w-full overflow-x-hidden p-0 dark:bg-black dark:text-white ">
       <MainCover />
       <MainPromotion title={"프로모션"} />
       <MainVideo />

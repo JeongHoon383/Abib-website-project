@@ -3,7 +3,7 @@ import HeaderForm from "./HeaderForm";
 
 const HeaderMLink = () => {
   return (
-    <div className="mx-auto w-10/12">
+    <div className="  mx-auto w-10/12 dark:bg-black dark:text-white ">
       <HeaderForm />
       <div className="flex h-full  w-full items-start space-x-[10%] px-8 pt-10 text-gray-400">
         <>

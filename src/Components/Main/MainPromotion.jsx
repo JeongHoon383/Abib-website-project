@@ -7,7 +7,7 @@ import "swiper/css/scrollbar";
 
 const MainPromotion = ({ title }) => {
   return (
-    <div className="     w-screen overflow-x-hidden    pb-5 ">
+    <div className="w-screen overflow-x-hidden     pb-5 dark:bg-black    dark:text-white ">
       <div className="mx-auto  mt-16 text-center text-4xl font-bold lg:mt-32">
         {title}
       </div>

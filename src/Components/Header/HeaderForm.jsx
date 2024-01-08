@@ -2,7 +2,7 @@ import React from "react";
 
 const HeaderForm = ({ setSearch }) => {
   return (
-    <form className="  z-50 flex w-full items-end  p-5 lg:h-full lg:w-1/2   lg:items-center lg:p-0  ">
+    <form className="  z-50 flex w-full items-end  p-5 lg:h-full lg:w-1/2   lg:items-center lg:p-0  dark:bg-black dark:text-white">
       <div className="hidden  h-1/2 w-[6%] items-end justify-center border-b  border-black pb-1 lg:flex">
         <svg
           onClick={() => setSearch((prev) => !prev)}
@@ -36,9 +36,9 @@ const HeaderForm = ({ setSearch }) => {
           />
         </svg>
       </div>
-      <div className="flex h-1/2 w-full items-end justify-center border-b border-black pb-1 pl-3 sm:pl-0">
+      <div className="flex h-1/2 w-full items-end justify-center border-b border-black pb-1 pl-3 sm:pl-0 dark:border-white">
         <input
-          className="w-full border-none bg-transparent outline-none"
+          className="w-full border-none bg-transparent outline-none  "
           type="text"
         />
         <button type="submit" className="hidden"></button>
