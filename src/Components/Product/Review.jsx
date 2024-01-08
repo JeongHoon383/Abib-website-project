@@ -7,12 +7,11 @@ import "rc-pagination/assets/index.css";
 import "../../custom.css";
 
 export default function Review() {
-  const textLimit = useRef(100);
+  const textLimit = useRef(150);
   const reviewItems = [
     {
       id: 1,
-      content:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Alias quasi pariatur vel ducimus fugit expedita vero optio, laborum, natus, veniam ipsum dolorum nulla suscipit voluptate at. Blanditiis iure rem facere.",
+      content: "Lorem ipsum, dolor sit amet consectetur",
       img: "https://i.pinimg.com/564x/6b/2c/d6/6b2cd67bb34ca4ad57ab98a9d64e74fd.jpg",
     },
     {
@@ -64,7 +63,7 @@ export default function Review() {
   const [pageSize, setPageSize] = useState(5); //페이지 당 데이터 수
 
   return (
-    <div className="mx-auto mb-12 w-11/12">
+    <div className="mx-auto mb-12 w-11/12 sm:w-10/12">
       <h3 className="mt-16 text-center text-2xl lg:mt-32">Review.</h3>
       <div className="mb-4 border border-gray-200 p-4 text-center">
         <p className="text-sm font-light text-neutral-800">상품만족도</p>
@@ -195,7 +194,7 @@ export default function Review() {
           </div>
           <span className="text-sm text-gray-400">36423***</span>
           <div>
-            <span className="text-sm">
+            <span className="mb-1 inline-block text-sm">
               {item.content.length > textLimit.current
                 ? isShowMores[item.id]
                   ? item.content

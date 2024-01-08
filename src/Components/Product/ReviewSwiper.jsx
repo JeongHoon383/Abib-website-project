@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Pagination, Navigation, Grid } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -22,19 +22,16 @@ export default function ReviewSwiper() {
         navigation={true}
         pagination={{
           clickable: true,
-          type: "bullets",
-          renderBullet: function (index, className) {
-            return '<span class="' + className + '">' + (index + 1) + "</span>";
-          },
         }}
-        style={{
-          "--swiper-navigation-size": "22px",
-          "--swiper-navigation-sides-offset": "3px",
-          "--swiper-pagination-bottom": "-12px",
+        breakpoints={{
+          768: {
+            slidesPerView: 5,
+            grid: { rows: 1 },
+          },
         }}
       >
         <>
-          {[1, 2, 3, 4, 5].map((v, i) => (
+          {[1, 2, 3, 4, 5, 6, 7, 8].map((v, i) => (
             <SwiperSlide key={i}>
               <div className="w-full border border-gray-200">
                 <img
@@ -44,14 +41,16 @@ export default function ReviewSwiper() {
                 />
                 <div className="p-3">
                   <ReviewStar />
-                  <p className="... mb-1 truncate text-neutral-800">
+                  <p className="... mb-1 mt-1 truncate font-thin text-neutral-700 sm:text-sm">
                     샘플 한 번 써보고 괜찮아서 세일하길래 구매해봤어요 트러블
                     없이 잘 맞네요
                   </p>
-                  <span className="... mr-3 inline-block w-10 truncate align-bottom text-gray-500">
+                  <span className="... mr-3 inline-block w-10 truncate align-bottom font-thin text-gray-500 sm:align-text-top sm:text-sm">
                     sjaglaemfek
                   </span>
-                  <span className="text-gray-500">12.19</span>
+                  <span className="font-thin text-gray-500 sm:text-sm">
+                    12.19
+                  </span>
                 </div>
               </div>
             </SwiperSlide>

@@ -1,5 +1,4 @@
 /* rc-pagination */
-
 .rc-pagination {
   margin: 16px;
 }
@@ -13,3 +12,29 @@
 .rc-pagination-item {
   border: none;
 }
+
+/* swiper-pagination */
+/* .reviewSwiper .swiper {
+  position: relative;
+  overflow: visible;
+}
+
+.swiper-custom-pagination {
+  position: absolute;
+  bottom: -20px;
+  z-index: 999;
+  text-align: center;
+}
+
+.reviewSwiper .swiper-custom-bullet {
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+}
+
+.reviewSwiper .swiper-custom-bullet.swiper-custom-bullet-active {
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  color: #007aff;
+} */
