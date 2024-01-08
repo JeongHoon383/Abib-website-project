@@ -1,43 +1,54 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import { getProduct } from "../../Modules/Products";
 
 export default function ProductList() {
-  const [data, setData] = useState([]);
-  const url = "http://127.0.0.1:9090/product/list";
+  const { category } = useParams();
+  const dispatch = useDispatch();
+  const productList = useSelector((state) => state.productSlice.list);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await axios.get(url);
-        setData(result.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
-  }, [url]);
+    // 서버에서 데이터를 불러오는 createAsyncThunk 호출
+    dispatch(getProduct(category));
+  }, [dispatch, category]);
 
   return (
     <>
       <div className="categoryName">
-        <h2 className="p-20 text-center text-3xl">스킨케어</h2>
+        <h2 className="p-20 text-center text-3xl">{category}</h2>
       </div>
       <div className="m-auto w-11/12">
         <div className="categoryPath mb-4 sm:mb-8">
-          <span className="text-xs">Abib / 카테고리 / 스킨케어</span>
+          <span className="text-xs">Abib / 카테고리 / {category}</span>
         </div>
         <div className="mb-52 grid grid-cols-2 gap-5 px-2 sm:grid-cols-3">
-          {data.map((item) => (
+          {productList.map((item) => (
             <div key={item.pid} className="group/btn group/list">
-              <div className="sm:group-hover/list:opacity-45 sm:group-hover/list:transition-all">
+              <div className="relative sm:group-hover/list:opacity-45 sm:group-hover/list:transition-all">
                 <Link to={`/product/detail/${item.pid}`}>
-                  <img src={item.cover} alt="" className="mb-7" />
+                  {item.priceSales && (
+                    <img
+                      src={"/product/saleImg.png"}
+                      alt=""
+                      className="absolute left-3 top-3 w-[35px] sm:top-4 sm:w-[50px] lg:left-4 lg:w-[70px]"
+                    />
+                  )}
+                  <img
+                    src={`http://127.0.0.1:9090/uploads/${item.cover}`}
+                    alt=""
+                    className="mb-7"
+                  />
                 </Link>
-                <p className="mb-1 text-sm sm:mb-3">{item.title}</p>
+                <span className="block text-sm">
+                  {item.title.split("/")[0]}
+                </span>
+                <span className="mb-1 block text-sm font-bold sm:mb-3">
+                  {item.title.split("/")[1]}
+                </span>
                 <p className="mb-2 text-sm font-medium text-neutral-400 sm:mb-4">
                   <span>{item.productVolume}</span>
-                  {item.prodOption && <span>/ {item.prodOption}</span>}
+                  {item.prodOption && <span> / {item.prodOption}</span>}
                 </p>
                 {item.priceSales ? (
                   <p className="text-sm">

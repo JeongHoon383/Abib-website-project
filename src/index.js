@@ -22,8 +22,9 @@ import SignupMain from "./Components/Signup/SignupMain";
 import SignupMobileForm from "./Components/Signup/SignupMobileForm";
 import Login from "./Pages/Login/Login";
 import SignupComplete from "./Components/Signup/SignupComplete";
+import store from "./Modules/rootReducer";
 import { Provider } from "react-redux";
-import store from "./store.js";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -38,7 +39,7 @@ const router = createBrowserRouter([
         path: "/product",
         children: [
           {
-            path: "/product/list/",
+            path: "/product/list/:category",
             element: <ProductList />,
           },
           {
