@@ -6,26 +6,49 @@ import axios from "axios";
 export default function ReviewModal({ setModalOpen }) {
   const [rate, setRate] = useState(0);
   const [textCount, setTextCount] = useState(0);
-  const [uploadedImg, setUploadedImg] = useState("");
+  const [uploadedImg, setUploadedImg] = useState({ preview: "", data: "" });
+  const [reviewText, setReviewText] = useState("");
 
   let product = useContext(ProductContext);
 
-  const handleChange = (e) => {
-    const formData = new FormData(); // 서버로 이미지를 보낼 때 폼 데이터라는 객체에 담아서 보내야함
-    formData.append("file", e.target.files[0]);
-    axios
-      .post("http://127.0.0.1:9090/upload/review", formData)
-      .then((result) => {
-        setUploadedImg(result.data);
-      });
+  const handleImgChange = (e) => {
+    let reader = new FileReader();
+    if (e.target.files[0]) reader.readAsDataURL(e.target.files[0]);
+    reader.onloadend = () => {
+      const previewImgUrl = reader.result;
+      if (previewImgUrl)
+        setUploadedImg({ data: e.target.files[0], preview: previewImgUrl });
+    };
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    let formData = new FormData(); // 서버로 이미지를 보낼 때 폼 데이터라는 객체에 담아서 보내야함
+    formData.append("rcover", uploadedImg.data);
+    formData.append("pid", product.pid);
+    formData.append("mid", "abcd1234");
+    formData.append("point", rate);
+    formData.append("content", reviewText);
+
+    axios
+      .post("http://127.0.0.1:9090/save-review", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((result) => {
+        console.log(`then 이후 -->${formData}`);
+        if (result.data === "success") {
+          alert("리뷰가 등록되었습니다");
+          window.location.reload();
+        }
+      })
+      .catch((error) => console.log(error));
   };
 
-  const handleTextLength = (e) => {
+  const handleTextChange = (e) => {
     setTextCount(e.target.value.length);
+    setReviewText(e.target.value);
   };
 
   const closeModal = () => {
@@ -73,7 +96,11 @@ export default function ReviewModal({ setModalOpen }) {
           </div>
           <span className="text-xs">{product.title}</span>
         </div>
-        <form className="flex flex-col" onSubmit={handleSubmit}>
+        <form
+          className="flex flex-col"
+          onSubmit={handleSubmit}
+          encType="multipart/form-data"
+        >
           <div className="border-b p-2 sm:flex sm:justify-between">
             <div className="mb-1 mt-2 text-sm">
               <span className="mr-1 font-semibold">상품은 어떠셨나요?</span>
@@ -92,22 +119,20 @@ export default function ReviewModal({ setModalOpen }) {
                   alt=""
                 />
               </div>
-              {uploadedImg ? (
+              {uploadedImg.preview && (
                 <div className="h-[84px] w-[84px]">
                   <img
                     className="h-full w-full"
-                    src={`http://127.0.0.1:9090/${uploadedImg}`}
+                    src={uploadedImg.preview}
                     alt=""
                   />
                 </div>
-              ) : (
-                ""
               )}
             </label>
             <input
               type="file"
               id="uploadImg"
-              onChange={(e) => handleChange(e)}
+              onChange={handleImgChange}
               accept="image/jpg, image/png, image/jpeg"
               className="absolute -m-1 h-0 w-0 overflow-hidden border-0 p-0"
             />
@@ -115,7 +140,7 @@ export default function ReviewModal({ setModalOpen }) {
           <div className="relative border-b p-2">
             <textarea
               minLength={15}
-              onChange={handleTextLength}
+              onChange={handleTextChange}
               className="h-[100px] w-full resize-none border-0 bg-white p-2 placeholder:text-sm"
               rows="10"
               placeholder="최소 15자 이상 작성해주세요."
