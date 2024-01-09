@@ -2,7 +2,7 @@ import React from "react";
 
 export default function ProductCaution() {
   return (
-    <ul className="text-[10px] leading-loose">
+    <ul className="text-[10px] leading-loose sm:text-[14px]">
       <li className="mb-2 font-semibold">
         <p>[사용할 때의 주의사항]</p>
       </li>
