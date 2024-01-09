@@ -32,7 +32,9 @@ export default function ProductInfo() {
         <span className="text-neutral-600">(주)포컴퍼니</span>
       </li>
       <li className="mb-3">
-        <span className="mb-3 block w-52 font-bold">유통기한</span>
+        <span className="mb-3 block w-52 font-bold sm:mb-0 sm:inline-block">
+          유통기한
+        </span>
         <span className="text-neutral-600">
           상품 발송일 기준으로 유통기한 180 이상 남은 상품만을 판매합니다.
         </span>
@@ -46,7 +48,9 @@ export default function ProductInfo() {
         <span className="text-neutral-600">개봉일로부터 12개월</span>
       </li>
       <li className="mb-3">
-        <span className="mb-3 block w-52 font-bold">주의사항</span>
+        <span className="mb-3 block w-52 font-bold sm:mb-0 sm:inline-block">
+          주의사항
+        </span>
         <span className="text-neutral-600">
           고온 또는 저온의 장소 및 직사광선이 닿는 곳에는 보관하지 말 것
         </span>

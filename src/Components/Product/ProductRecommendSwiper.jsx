@@ -15,6 +15,12 @@ export default function ProductRecommendSwiper() {
           spaceBetween={10}
           slidesPerView={1.5}
           scrollbar={{ draggable: true }}
+          breakpoints={{
+            768: {
+              slidesPerView: 3.5,
+              spaceBetween: 30,
+            },
+          }}
         >
           <ul>
             {[1, 2, 3, 4, 5].map((v, i) => (
