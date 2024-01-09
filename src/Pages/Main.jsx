@@ -5,6 +5,7 @@ import MainVideo from "../Components/Main/MainVideo";
 import MainHeartleaf from "../Components/Main/MainHeartleaf";
 import MainLastCover from "../Components/Main/MainLastCover";
 import MainBrandStory from "../Components/Main/MainBrandStory";
+import CartModal from "../Components/Cart/CartModal";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 
@@ -20,6 +21,7 @@ const Main = () => {
 
   return (
     <div className="m-0 box-border w-full overflow-x-hidden p-0 dark:bg-black dark:text-white ">
+      <CartModal />
       <MainCover />
       <MainPromotion title={"프로모션"} data={promotionData} />
       <MainVideo />
