@@ -26,10 +26,12 @@ export default function SignupForm() {
         handleInfoAgreement={handleInfoAgreement}
       />
 
-      <button className="transition-btn mb-3 h-12 w-full">회원가입</button>
+      <button className="transition-btn dark:bg-slate-4 mb-3 h-12 w-full dark:border-white">
+        회원가입
+      </button>
       <Link
         to={"/"}
-        className="block h-10 w-full border border-black text-center leading-10 transition duration-500 hover:bg-back"
+        className="block h-10 w-full border border-black text-center leading-10 transition duration-500 hover:bg-back dark:border-white dark:bg-slate-400"
       >
         취소
       </Link>

@@ -20,11 +20,13 @@ export default function SignupFormContent() {
       <h3 className="mb-7 text-center font-bold">MOBILE IDENTIFICATION</h3>
 
       <div className="mb-7">
-        <p className="flex items-center">
+        <p className="flex items-center ">
           <IoCheckboxSharp className="h-4 w-4" />
           휴대폰인증
         </p>
-        <button className="transition-btn h-10 w-full">휴대폰 인증</button>
+        <button className="transition-btn dark:bg-slate-4 h-10 w-full   dark:bg-slate-400">
+          휴대폰 인증
+        </button>
         <p>본인 명의의 휴대폰으로 본인인증을 진행합니다.</p>
       </div>
 
@@ -43,7 +45,7 @@ export default function SignupFormContent() {
               className="transition-input w-[80%]"
               maxLength={16}
             />
-            <button className="transition-btn h-10 w-[20%] font-normal">
+            <button className="transition-btn h-10 w-[20%] font-normal   dark:bg-slate-400">
               중복 확인
             </button>
           </p>
@@ -116,7 +118,9 @@ export default function SignupFormContent() {
           </div>
           <div className="w-[28%]">
             <span className="text-[12px] font-semibold">우편번호 찾기</span>
-            <button className="transition-btn h-10 w-full">POSTAL CODE</button>
+            <button className="transition-btn h-10 w-full   dark:bg-slate-400">
+              POSTAL CODE
+            </button>
           </div>
         </div>
 
@@ -184,7 +188,7 @@ export default function SignupFormContent() {
             <select
               name="domain"
               id="domain"
-              className="transition-input w-[31.6%]"
+              className="transition-input w-[31.6%] dark:text-black"
               onChange={(e) => handleSelectDomain(e)}
               defaultValue=""
             >
@@ -198,8 +202,10 @@ export default function SignupFormContent() {
           </div>
         </div>
 
-        <div>
-          <span className="block text-[12px] font-semibold">생년월일</span>
+        <div className="dark:text-black">
+          <span className="block text-[12px] font-semibold dark:text-black">
+            생년월일
+          </span>
 
           <select
             name="year"

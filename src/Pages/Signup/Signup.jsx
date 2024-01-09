@@ -6,7 +6,7 @@ const Signup = () => {
   const navigate = useNavigate();
 
   return (
-    <main>
+    <main className="dark:border dark:border-white  dark:bg-black dark:text-white">
       <div className="relative flex w-full items-center justify-center border-b border-black py-4 lg:pb-10 lg:pt-[70px]">
         <button
           className={"absolute left-5 lg:hidden"}
