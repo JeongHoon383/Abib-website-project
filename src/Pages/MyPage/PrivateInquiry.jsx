@@ -106,6 +106,3 @@ export default function PrivateInquiry() {
     </>
   );
 }
-
-// 게사판
-// https://bigexecution.tistory.com/8
