@@ -9,9 +9,6 @@ import Axios from "axios";
 import { RiAdminFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 
-Axios.defaults.baseURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL + "/api";
-Axios.defaults.withCredentials = true;
-
 export default function Admin() {
   const [open, setOpen] = useState(true);
 

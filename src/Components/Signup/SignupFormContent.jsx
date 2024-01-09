@@ -1,57 +1,78 @@
-import { useState } from "react";
-import { IoCheckboxSharp } from "react-icons/io5";
+import { useState, useEffect } from "react";
+import { useFormContext } from "react-hook-form";
+import axios from "axios";
 
 export default function SignupFormContent() {
-  const [domainValue, setDomainValue] = useState("");
   const [isDomainReadOnly, setIsDomainReadOnly] = useState(false);
+  const [emailId, setEmailId] = useState("");
+  const [domain, setDomain] = useState("");
+
+  const {
+    register,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useFormContext();
+
+  const phoneValue = watch("phone");
 
   const handleSelectDomain = (e) => {
     if (e.target.value !== "") {
-      setDomainValue(e.target.value);
+      setDomain(e.target.value);
       setIsDomainReadOnly(true);
     } else {
-      setDomainValue("");
+      setDomain("");
       setIsDomainReadOnly(false);
     }
   };
 
+  const handlePhoneCertification = () => {
+    axios
+      .post("http://127.0.0.1:9090/certification/", { phoneValue })
+      .then((result) => {
+        if (result.data === "failure") {
+          alert("인증 번호 전송에 실패했습니다. 다시 시도해주세요.");
+        } else {
+          alert("인증 번호가 전송되었습니다.");
+          //인증번호 입력란, 확인버튼 활성화
+          //인증번호 비교
+          //맞으면 맞았다고 하기 틀리면 틀렸다고 하기
+        }
+      });
+  };
+
+  useEffect(() => {
+    setValue("email", emailId + "@" + domain);
+  }, [emailId, domain]);
+
   return (
     <div>
-      <h3 className="mb-7 text-center font-bold">MOBILE IDENTIFICATION</h3>
-
-      <div className="mb-7">
-        <p className="flex items-center">
-          <IoCheckboxSharp className="h-4 w-4" />
-          휴대폰인증
-        </p>
-        <button className="transition-btn h-10 w-full">휴대폰 인증</button>
-        <p>본인 명의의 휴대폰으로 본인인증을 진행합니다.</p>
-      </div>
-
       <h3 className="mb-7 text-center font-bold">LOGIN INFORMATION</h3>
 
       <div className="mb-7 w-full">
-        <div className="mb-5 w-full">
+        <div className="mb-7 w-full">
           <label htmlFor="id" className="block text-[12px] font-semibold">
             아이디
           </label>
-          <p className="flex">
+          <div className="flex">
             <input
               type="text"
               id="id"
               name="id"
               className="transition-input w-[80%]"
               maxLength={16}
+              placeholder="영문 소문자/숫자, 4~16자"
+              {...register("id", { required: true })}
             />
-            <button className="transition-btn h-10 w-[20%] font-normal">
+            <button className="transition-btn h-10 w-[20%] font-normal   dark:bg-slate-400">
               중복 확인
             </button>
-          </p>
-          <p className="text-[10px]">(영문소문자/숫자, 4~16자)</p>
+          </div>
+          <p className="absolute">{errors.id && errors.id.message}</p>
         </div>
 
-        <div className="w-full justify-between lg:flex">
-          <div className="w-full lg:w-[49%]">
+        <div className="w-full">
+          <div className="mb-7 w-full">
             <label htmlFor="password" className="text-[12px] font-semibold">
               비밀번호
             </label>
@@ -61,33 +82,40 @@ export default function SignupFormContent() {
               name="password"
               className="transition-input w-full"
               maxLength={16}
+              placeholder="영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 8자~16자"
+              {...register("password", { required: true })}
             />
-            <p className="text-[10px]">
-              (영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 8자~16자)
+            <p className="absolute">
+              {errors.password && errors.password.message}
             </p>
           </div>
-          <div className="w-full lg:w-[49%]">
+          <div className="w-full">
             <label
-              htmlFor="passwordRepeat"
+              htmlFor="confirmPassword"
               className="text-[12px] font-semibold"
             >
               비밀번호확인
             </label>
             <input
               type="password"
-              id="passwordRepeat"
-              name="passwordRepeat"
+              id="confirmPassword"
+              name="confirmPassword"
               className="transition-input w-full"
               maxLength={16}
+              placeholder="********"
+              {...register("confirmPassword", { required: true })}
             />
           </div>
+          <p className="absolute">
+            {errors.confirmPassword && errors.confirmPassword.message}
+          </p>
         </div>
       </div>
 
       <h3 className="mb-7 text-center font-bold">PERSONAL INFORMATION</h3>
 
       <div>
-        <div className="mb-5">
+        <div className="mb-7">
           <label htmlFor="name" className="block text-[12px] font-semibold">
             이름
           </label>
@@ -95,57 +123,13 @@ export default function SignupFormContent() {
             type="text"
             id="name"
             name="name"
-            readOnly
-            className="transition-input"
+            className="transition-input w-1/2"
+            {...register("name", { required: true })}
           />
+          <p className="absolute">{errors.name && errors.name.message}</p>
         </div>
 
-        <div className="mb-5 flex w-full justify-between">
-          <div className="w-[70%]">
-            <label
-              htmlFor="postalCode"
-              className="block text-[12px] font-semibold"
-            >
-              우편번호
-            </label>
-            <input
-              type="text"
-              readOnly
-              className="transition-input h-10 w-full"
-            />
-          </div>
-          <div className="w-[28%]">
-            <span className="text-[12px] font-semibold">우편번호 찾기</span>
-            <button className="transition-btn h-10 w-full">POSTAL CODE</button>
-          </div>
-        </div>
-
-        <div className="mb-5">
-          <label htmlFor="address1" className="text-[12px] font-semibold">
-            기본주소
-          </label>
-          <input
-            type="text"
-            id="address1"
-            name="address1"
-            className="transition-input w-full"
-            readOnly
-          />
-        </div>
-
-        <div className="mb-5">
-          <label htmlFor="address2" className="text-[12px] font-semibold">
-            나머지주소
-          </label>
-          <input
-            type="text"
-            id="address2"
-            name="address2"
-            className="transition-input w-full"
-          />
-        </div>
-
-        <div className="mb-5">
+        <div className="mb-7">
           <label htmlFor="phone" className="block text-[12px] font-semibold">
             휴대폰
           </label>
@@ -155,35 +139,68 @@ export default function SignupFormContent() {
             name="phone"
             className="transition-input w-1/2"
             maxLength={11}
+            {...register("phone", { required: true })}
           />
-          <p className="text-[10px]">('-'를 제외하고 입력해주세요.)</p>
+          <button
+            type="button"
+            onClick={handlePhoneCertification}
+            className="transition-btn h-10 w-1/4 "
+          >
+            인증 번호 전송
+          </button>
+          <p className="absolute">{errors.phone && errors.phone.message}</p>
         </div>
 
-        <div className="mb-5">
+        <div className="mb-7">
+          <label
+            htmlFor="birthdate"
+            className="block text-[12px] font-semibold"
+          >
+            생년월일
+          </label>
+          <input
+            type="text"
+            id="birthdate"
+            name="birthdate"
+            className="transition-input w-1/2"
+            placeholder="YYYYMMDD"
+            maxLength={8}
+            {...register("birthdate", { required: true })}
+          />
+          <p className="absolute">
+            {errors.birthdate && errors.birthdate.message}
+          </p>
+        </div>
+
+        <div className="mb-7">
           <label htmlFor="email" className="block text-[12px] font-semibold">
             이메일
           </label>
 
           <div className="flex items-center lg:w-3/4">
             <input
-              type="email"
+              type="hidden"
               id="email"
               name="email"
+              {...register("email", { required: true })}
+            />
+            <input
+              type="text"
               className="transition-input w-[31.6%]"
+              value={emailId}
+              onChange={(e) => setEmailId(e.target.value)}
             />
             <span className="inline-block w-[4%] text-center">@</span>
             <input
               type="text"
-              id="domain"
-              name="domain"
               className="transition-input mr-[1%] w-[31.6%]"
               readOnly={isDomainReadOnly}
-              value={domainValue}
-              onChange={(e) => setDomainValue(e.target.value)}
+              value={domain}
+              onChange={(e) => setDomain(e.target.value)}
             />
             <select
-              name="domain"
-              id="domain"
+              name="domain2"
+              id="domain2"
               className="transition-input w-[31.6%]"
               onChange={(e) => handleSelectDomain(e)}
               defaultValue=""
@@ -198,48 +215,56 @@ export default function SignupFormContent() {
           </div>
         </div>
 
-        <div>
-          <span className="block text-[12px] font-semibold">생년월일</span>
+        <div className="mb-7 flex w-full">
+          <div className="w-3/4">
+            <label
+              htmlFor="postalCode"
+              className="block text-[12px] font-semibold"
+            >
+              우편번호
+            </label>
+            <input
+              type="text"
+              id="postalCode"
+              name="postalCode"
+              readOnly
+              className="transition-input h-10 w-full"
+              {...register("postalCode", { required: true })}
+            />
+          </div>
+          <div className="w-1/4">
+            <span className="text-[12px] font-semibold">우편번호 찾기</span>
+            <button type="button" className="transition-btn h-10 w-full">
+              POSTAL CODE
+            </button>
+          </div>
+        </div>
 
-          <select
-            name="year"
-            id="year"
-            className="transition-input mr-1 lg:w-[20%]"
-            defaultValue="출생연도"
-          >
-            <option value="출생연도" disabled>
-              출생연도
-            </option>
-          </select>
-          <label htmlFor="year" className="hidden">
-            년
+        <div className="mb-7">
+          <label htmlFor="address1" className="text-[12px] font-semibold">
+            기본주소
           </label>
-          <select
-            name="month"
-            id="month"
-            className="transition-input mr-1 lg:w-[12%]"
-            defaultValue="월"
-          >
-            <option value="월" disabled>
-              월
-            </option>
-          </select>
-          <label htmlFor="month" className="hidden">
-            월
+          <input
+            type="text"
+            id="address1"
+            name="address1"
+            readOnly
+            className="transition-input w-full"
+            {...register("address1", { required: true })}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="address2" className="text-[12px] font-semibold">
+            나머지주소
           </label>
-          <select
-            name="day"
-            id="day"
-            className="transition-input lg:w-[12%]"
-            defaultValue="일"
-          >
-            <option value="일" disabled>
-              일
-            </option>
-          </select>
-          <label htmlFor="day" className="hidden">
-            일
-          </label>
+          <input
+            type="text"
+            id="address2"
+            name="address2"
+            className="transition-input w-full"
+            {...register("address2", { required: true })}
+          />
         </div>
       </div>
     </div>

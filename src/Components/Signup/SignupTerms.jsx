@@ -20,10 +20,10 @@ export default function SignupTerms({
       <div className="mb-7">
         <h3 className="mb-7 text-center font-bold">이용약관 동의</h3>
         <div
-          className="border border-black"
+          className="border border-black dark:border-white"
           onClick={() => setTermsToggle(!termsToggle)}
         >
-          <span className="block w-full cursor-pointer border-b border-black text-center text-[11px] leading-5">
+          <span className="block w-full cursor-pointer border-b border-black text-center text-[11px] leading-5 dark:border-white">
             전체보기
           </span>
           <div
@@ -60,10 +60,10 @@ export default function SignupTerms({
           개인정보 수집 및 이용 동의
         </h3>
         <div
-          className="border border-black"
+          className="border border-black dark:border-white"
           onClick={() => setInfoToggle(!infoToggle)}
         >
-          <span className="block w-full cursor-pointer border-b border-black text-center text-[11px] leading-5">
+          <span className="block w-full cursor-pointer border-b border-black text-center text-[11px] leading-5 dark:border-white">
             전체보기
           </span>
           <div

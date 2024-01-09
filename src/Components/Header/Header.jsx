@@ -115,14 +115,29 @@ const Header = ({ setDark, dark }) => {
               멤버십
             </span>
           </div>
-          <div className="flex w-[33%] items-center lg:hidden">
+          <div className="flex w-[33%] items-center space-x-4 lg:hidden">
+            <motion.span
+              layout
+              onClick={() => {
+                setDark((dark) => !dark);
+              }}
+              className="cursor-pointer"
+            >
+              {dark ? (
+                <IoMoonSharp style={{ fontSize: "15px" }} />
+              ) : (
+                <IoSunnySharp style={{ fontSize: "15px" }} />
+              )}
+            </motion.span>
             <span
               onClick={() => navigate("/cart")}
-              className=" flex items-center justify-center space-x-0.5 text-[12px]"
+              className=" flex items-center justify-center text-[12px]"
             >
-              <span>카트</span>
-              <span className="ml-1 flex h-4 w-4 items-center justify-center rounded-full bg-font text-xs font-bold text-white">
-                0
+              <span className="flex h-full items-center">
+                카트
+                <span className="relative bottom-[0.5px] flex h-4 w-4   items-center justify-center rounded-full   bg-font text-xs font-bold text-white">
+                  0
+                </span>
               </span>
             </span>
           </div>
@@ -158,7 +173,8 @@ const Header = ({ setDark, dark }) => {
                 />
               </svg>
             </span>
-            <span
+            <motion.span
+              layout
               onClick={() => {
                 setDark((dark) => !dark);
               }}
@@ -169,7 +185,7 @@ const Header = ({ setDark, dark }) => {
               ) : (
                 <IoSunnySharp style={{ fontSize: "15px" }} />
               )}
-            </span>
+            </motion.span>
             <span
               onClick={() => navigate("/cart")}
               className=" flex cursor-pointer items-center justify-center space-x-0.5 text-[12px]"
@@ -179,8 +195,15 @@ const Header = ({ setDark, dark }) => {
                 0
               </span>
             </span>
-            <span className="cursor-pointer">회원가입</span>
-            <span className="cursor-pointer">로그인</span>
+            <span
+              onClick={() => navigate("/signup/")}
+              className="cursor-pointer"
+            >
+              회원가입
+            </span>
+            <span onClick={() => navigate("/login")} className="cursor-pointer">
+              로그인
+            </span>
           </div>
           <div className="flex w-[33%]  items-center justify-end lg:hidden lg:w-0">
             <span>
@@ -235,7 +258,7 @@ const Header = ({ setDark, dark }) => {
             initial="start"
             animate="end"
             exit="exit"
-            className="fixed flex h-[11vh]  w-screen justify-center bg-back dark:bg-black dark:text-white"
+            className="fixed hidden h-[11vh] w-screen  justify-center bg-back  lg:flex dark:bg-black dark:text-white"
           >
             <HeaderForm setSearch={setSearch} />
           </motion.div>
@@ -249,7 +272,7 @@ const Header = ({ setDark, dark }) => {
             exit="exit"
             className="fixed z-10 h-[70vh] w-screen bg-back"
           >
-            <HeaderLink cateHover={cateHover} />
+            <HeaderLink setHover={setHover} cateHover={cateHover} />
           </motion.div>
         ) : (
           <></>
@@ -263,7 +286,7 @@ const Header = ({ setDark, dark }) => {
             exit="exit"
             className="fixed z-10 h-[85vh] w-screen bg-back lg:hidden dark:bg-black"
           >
-            <HeaderMLink />
+            <HeaderMLink setMToggle={setMToggle} />
           </motion.div>
         )}
       </AnimatePresence>

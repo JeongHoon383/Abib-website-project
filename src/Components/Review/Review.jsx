@@ -5,8 +5,15 @@ import ReviewStar from "./ReviewStar";
 
 import "rc-pagination/assets/index.css";
 import "../../custom.css";
+import ReviewModal from "./ReviewModal";
 
 export default function Review() {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const showModal = () => {
+    setModalOpen(true);
+  };
+
   const textLimit = useRef(150);
   const reviewItems = [
     {
@@ -130,12 +137,16 @@ export default function Review() {
           <p className="mb-1 mt-4 text-xs text-neutral-800">
             당신의 경험을 공유해주세요!
           </p>
-          <button
-            type="button"
-            className="me-2 rounded-md border border-gray-200 bg-white px-5 py-1 text-xs font-light text-neutral-400 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
-          >
-            리뷰 작성하기
-          </button>
+          <div>
+            <button
+              type="button"
+              onClick={showModal}
+              className="me-2 rounded-md border border-gray-200 bg-white px-5 py-1 text-xs font-light text-neutral-400 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+            >
+              리뷰 작성하기
+            </button>
+            {modalOpen && <ReviewModal setModalOpen={setModalOpen} />}
+          </div>
         </div>
       </div>
       <ReviewSwiper />
