@@ -17,13 +17,13 @@ import OrderList from "./Pages/MyPage/OrderList";
 import Inquiry from "./Pages/MyPage/Inquiry";
 import MemberInfo from "./Pages/MyPage/MemberInfo";
 import PrivateInquiry from "./Pages/MyPage/PrivateInquiry";
-import SignupPCForm from "./Components/Signup/SignupPCForm";
-import SignupMain from "./Components/Signup/SignupMain";
-import SignupMobileForm from "./Components/Signup/SignupMobileForm";
 import Login from "./Pages/Login/Login";
+import SignupMain from "./Components/Signup/SignupMain";
 import SignupComplete from "./Components/Signup/SignupComplete";
+import SignupForm from "./Components/Signup/SignupForm";
 import store from "./Modules/rootReducer";
 import { Provider } from "react-redux";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const router = createBrowserRouter([
   {
@@ -70,11 +70,7 @@ const router = createBrowserRouter([
           },
           {
             path: "/signup/join",
-            element: <SignupPCForm />,
-          },
-          {
-            path: "/signup/mobile/join",
-            element: <SignupMobileForm />,
+            element: <SignupForm />,
           },
           {
             path: "/signup/complete",
@@ -113,12 +109,15 @@ const router = createBrowserRouter([
     ],
   },
 ]);
+const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
+    </QueryClientProvider>
   </React.StrictMode>,
 );
 

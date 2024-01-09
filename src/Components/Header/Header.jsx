@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import HeaderForm from "./HeaderForm";
 import HeaderLink from "./HeaderLink";
 import HeaderMLink from "./HeaderMLink";
-
+import { IoSunnySharp, IoMoonSharp } from "react-icons/io5";
 const searchVars = {
   //window.innerWidth를 사용 이게 픽셀로 주는것보다 더 좋을듯
   start: {
@@ -57,7 +57,7 @@ const mCateVars = {
   },
 };
 
-const Header = () => {
+const Header = ({ setDark, dark }) => {
   const [leave, setLeave] = useState(false);
   const toggleLeave = () => setLeave((prev) => !prev);
   const navigate = useNavigate();
@@ -68,9 +68,9 @@ const Header = () => {
   return (
     <div
       onMouseLeave={() => setHover(false)}
-      className="relative mt-[15vh] overflow-x-hidden"
+      className=" relative mt-[15vh] w-full overflow-x-hidden dark:bg-black dark:text-white "
     >
-      <div className=" fixed top-0   z-20 h-[15vh] w-full border-b border-gray-300 bg-back">
+      <div className=" fixed top-0   z-20 h-[15vh] w-full border-b border-gray-300 bg-back dark:bg-black dark:text-white">
         <div className="flex   h-[4vh] items-center justify-center bg-font text-back">
           <div className="flex items-center justify-center text-center text-[12px]">
             <span>카카오 플러스 친구 추가 시 5,000원 쿠폰 증정</span>
@@ -115,14 +115,29 @@ const Header = () => {
               멤버십
             </span>
           </div>
-          <div className="flex w-[33%] items-center lg:hidden">
+          <div className="flex w-[33%] items-center space-x-4 lg:hidden">
+            <motion.span
+              layout
+              onClick={() => {
+                setDark((dark) => !dark);
+              }}
+              className="cursor-pointer"
+            >
+              {dark ? (
+                <IoMoonSharp style={{ fontSize: "15px" }} />
+              ) : (
+                <IoSunnySharp style={{ fontSize: "15px" }} />
+              )}
+            </motion.span>
             <span
               onClick={() => navigate("/cart")}
-              className=" flex items-center justify-center space-x-0.5 text-[12px]"
+              className=" flex items-center justify-center text-[12px]"
             >
-              <span>카트</span>
-              <span className="ml-1 flex h-4 w-4 items-center justify-center rounded-full bg-font text-xs font-bold text-white">
-                0
+              <span className="flex h-full items-center">
+                카트
+                <span className="relative bottom-[0.5px] flex h-4 w-4   items-center justify-center rounded-full   bg-font text-xs font-bold text-white">
+                  0
+                </span>
               </span>
             </span>
           </div>
@@ -158,7 +173,19 @@ const Header = () => {
                 />
               </svg>
             </span>
-            <span className="cursor-pointer">언어</span>
+            <motion.span
+              layout
+              onClick={() => {
+                setDark((dark) => !dark);
+              }}
+              className="cursor-pointer"
+            >
+              {dark ? (
+                <IoMoonSharp style={{ fontSize: "15px" }} />
+              ) : (
+                <IoSunnySharp style={{ fontSize: "15px" }} />
+              )}
+            </motion.span>
             <span
               onClick={() => navigate("/cart")}
               className=" flex cursor-pointer items-center justify-center space-x-0.5 text-[12px]"
@@ -168,8 +195,15 @@ const Header = () => {
                 0
               </span>
             </span>
-            <span className="cursor-pointer">회원가입</span>
-            <span className="cursor-pointer">로그인</span>
+            <span
+              onClick={() => navigate("/signup/")}
+              className="cursor-pointer"
+            >
+              회원가입
+            </span>
+            <span onClick={() => navigate("/login")} className="cursor-pointer">
+              로그인
+            </span>
           </div>
           <div className="flex w-[33%]  items-center justify-end lg:hidden lg:w-0">
             <span>
@@ -224,7 +258,7 @@ const Header = () => {
             initial="start"
             animate="end"
             exit="exit"
-            className="fixed  flex h-[11vh] w-screen justify-center bg-back"
+            className="fixed hidden h-[11vh] w-screen  justify-center bg-back  lg:flex dark:bg-black dark:text-white"
           >
             <HeaderForm setSearch={setSearch} />
           </motion.div>
@@ -238,7 +272,7 @@ const Header = () => {
             exit="exit"
             className="fixed z-10 h-[70vh] w-screen bg-back"
           >
-            <HeaderLink cateHover={cateHover} />
+            <HeaderLink setHover={setHover} cateHover={cateHover} />
           </motion.div>
         ) : (
           <></>
@@ -250,9 +284,9 @@ const Header = () => {
             initial="start"
             animate="end"
             exit="exit"
-            className="fixed z-10 h-[85vh] w-screen bg-back lg:hidden"
+            className="fixed z-10 h-[85vh] w-screen bg-back lg:hidden dark:bg-black"
           >
-            <HeaderMLink />
+            <HeaderMLink setMToggle={setMToggle} />
           </motion.div>
         )}
       </AnimatePresence>
