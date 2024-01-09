@@ -196,7 +196,7 @@ const Header = ({ setDark, dark }) => {
               </span>
             </span>
             <span
-              onClick={() => navigate("/signup")}
+              onClick={() => navigate("/signup/")}
               className="cursor-pointer"
             >
               회원가입
