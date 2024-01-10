@@ -1,5 +1,5 @@
 import Pagination from "rc-pagination";
-import React, { useEffect, useRef, useState, createContext } from "react";
+import React, { createContext, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ReviewSwiper from "./ReviewSwiper";
@@ -10,41 +10,26 @@ import { getReview } from "../../Modules/Review";
 import "rc-pagination/assets/index.css";
 import "../../custom.css";
 
-export const ModalContext = createContext({}); // 조부모->자식 전달 용도
+export const ReviewContext = createContext({});
 
 export default function Review() {
   const { pid } = useParams();
   const dispatch = useDispatch();
-  const reviewList = useSelector((state) => state.reviewSlice.list);
-  const photoReview = reviewList.filter((review) => review.rcover !== null);
-
-  useEffect(() => {
-    // 서버에서 데이터를 불러오는 createAsyncThunk 호출
-    dispatch(getReview(pid));
-  }, [dispatch, pid]);
-
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const showModal = () => {
-    setModalOpen(true);
-    document.body.style.overflow = "hidden";
-  };
-
   const textLimit = useRef(150);
-
+  const reviewList = useSelector((state) => state.review.reviews.list);
+  const [modalOpen, setModalOpen] = useState(false);
   const [isShowMores, setIsShowMores] = useState(
     reviewList.reduce((acc, item) => {
       acc[item.rid] = false;
       return acc;
     }, {}),
   );
+  //페이징 처리
+  const [currentPage, setCurrentPage] = useState(1); //현재 페이지 번호
+  const [totalCount, setTotalCount] = useState(6); //전체 데이터 수
+  const [pageSize, setPageSize] = useState(5); //페이지 당 데이터 수
 
-  const toggleShowMore = (id) => {
-    setIsShowMores((prevIsShowMores) => ({
-      ...prevIsShowMores,
-      [id]: !prevIsShowMores[id],
-    }));
-  };
+  const photoReview = reviewList.filter((review) => review.rcover !== null);
 
   // 별점 평균 계산
   const sum = reviewList.reduce((sum, review) => sum + review.point, 0);
@@ -78,10 +63,22 @@ export default function Review() {
     }),
   );
 
-  //페이징 처리
-  const [currentPage, setCurrentPage] = useState(1); //현재 페이지 번호
-  const [totalCount, setTotalCount] = useState(6); //전체 데이터 수
-  const [pageSize, setPageSize] = useState(5); //페이지 당 데이터 수
+  useEffect(() => {
+    // 서버에서 데이터를 불러오는 createAsyncThunk 호출
+    dispatch(getReview(pid));
+  }, [dispatch, pid]);
+
+  const showModal = () => {
+    setModalOpen(true);
+    document.body.style.overflow = "hidden";
+  };
+
+  const toggleShowMore = (id) => {
+    setIsShowMores((prevIsShowMores) => ({
+      ...prevIsShowMores,
+      [id]: !prevIsShowMores[id],
+    }));
+  };
 
   return (
     <div className="mx-auto mb-12 w-11/12 sm:w-10/12">
@@ -140,7 +137,9 @@ export default function Review() {
           </div>
         </div>
       </div>
-      <ReviewSwiper photoReview={photoReview} />
+      <ReviewContext.Provider value={{ reviewList, average }}>
+        <ReviewSwiper photoReview={photoReview} />
+      </ReviewContext.Provider>
       <div className="my-5 flex items-center">
         <div className="mr-4 text-xs">
           <span className="mr-1 font-semibold">상품평수</span>
@@ -183,7 +182,9 @@ export default function Review() {
                 (isShowMores[item.rid] ? "[접기]" : " ...[더보기]")}
             </div>
             {item.rcover && (
-              <img src={`/${item.rcover}`} alt="" className="size-14" />
+              <div className="size-14">
+                <img src={`/${item.rcover}`} alt="" className="w-full" />
+              </div>
             )}
           </div>
         </div>

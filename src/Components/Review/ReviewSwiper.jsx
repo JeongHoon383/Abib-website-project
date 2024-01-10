@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Pagination, Navigation, Grid } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -12,6 +12,15 @@ import ReviewListStar from "./ReviewListStar";
 import ReviewPhotoModal from "./ReviewPhotoModal";
 
 export default function ReviewSwiper({ photoReview }) {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedReview, setSelectedReview] = useState(null);
+
+  const handleReviewClick = (review) => {
+    setSelectedReview(review);
+    setModalOpen(true);
+    document.body.style.overflow = "hidden";
+  };
+
   return (
     <div>
       <Swiper
@@ -30,11 +39,16 @@ export default function ReviewSwiper({ photoReview }) {
         }}
       >
         <>
-          {photoReview.map((v, i) => (
-            <SwiperSlide key={i}>
-              <div className="w-full cursor-pointer border border-gray-200">
+          {photoReview.map((v) => (
+            <SwiperSlide key={v.rid}>
+              <div
+                onClick={() => {
+                  handleReviewClick(v);
+                }}
+                className="w-full cursor-pointer border border-gray-200"
+              >
                 {v.rcover && (
-                  <div className="h-[160px]">
+                  <div className="">
                     <img
                       className="h-full w-full"
                       src={`/${v.rcover}`}
@@ -59,7 +73,14 @@ export default function ReviewSwiper({ photoReview }) {
           ))}
         </>
       </Swiper>
-      {/* {modalOpen && <ReviewPhotoModal setModalOpen={setModalOpen} />} */}
+      {modalOpen && (
+        <ReviewPhotoModal
+          review={selectedReview}
+          setModalOpen={setModalOpen}
+          setSelectedReview={setSelectedReview}
+          ReviewListStar={ReviewListStar}
+        />
+      )}
     </div>
   );
 }
