@@ -1,49 +1,74 @@
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import axios from "axios";
+import AddressSearch from "./AddressSearch";
 
-export default function SignupFormContent() {
-  const [isDomainReadOnly, setIsDomainReadOnly] = useState(false);
-  const [emailId, setEmailId] = useState("");
-  const [domain, setDomain] = useState("");
+export default function SignupFormContent({
+  getIsIdAvailable,
+  getIsCertificated,
+}) {
+  const [showCertificationInput, setShowCertificationInput] = useState(false); //인증번호 input 보여주기 여부
+  const [certificationCode, setCertificationCode] = useState(""); //발송된 인증 번호
+  const certificationCodeRef = useRef(null);
 
   const {
     register,
     watch,
     setValue,
+    trigger,
     formState: { errors },
   } = useFormContext();
 
   const phoneValue = watch("phone");
+  const idValue = watch("id");
 
-  const handleSelectDomain = (e) => {
-    if (e.target.value !== "") {
-      setDomain(e.target.value);
-      setIsDomainReadOnly(true);
-    } else {
-      setDomain("");
-      setIsDomainReadOnly(false);
-    }
+  const checkIdAvailable = () => {
+    axios(`http://127.0.0.1:9090/member/isIdAvailable/${idValue}`).then(
+      (result) => {
+        if (result.data === 1) {
+          alert("이미 사용 중인 아이디입니다.");
+          getIsIdAvailable(false);
+        } else if (result.data === 0) {
+          alert("사용 가능한 아이디입니다.");
+          getIsIdAvailable(true);
+        }
+      },
+    );
   };
 
-  const handlePhoneCertification = () => {
+  const sendCertificationCode = () => {
     axios
-      .post("http://127.0.0.1:9090/certification/", { phoneValue })
+      .post("http://127.0.0.1:9090/member/certification", { phoneValue })
       .then((result) => {
         if (result.data === "failure") {
           alert("인증 번호 전송에 실패했습니다. 다시 시도해주세요.");
         } else {
           alert("인증 번호가 전송되었습니다.");
-          //인증번호 입력란, 확인버튼 활성화
-          //인증번호 비교
-          //맞으면 맞았다고 하기 틀리면 틀렸다고 하기
+          setShowCertificationInput(true);
+          setCertificationCode(result.data);
         }
       });
   };
 
-  useEffect(() => {
-    setValue("email", emailId + "@" + domain);
-  }, [emailId, domain]);
+  const checkCertificationCode = () => {
+    if (certificationCodeRef.current.value === certificationCode) {
+      alert("휴대폰 인증이 완료되었습니다.");
+      getIsCertificated(true);
+    } else {
+      alert("인증번호가 일치하지 않습니다. 다시 입력해주세요.");
+      getIsCertificated(false);
+    }
+  };
+
+  const getPostalcode = (postalcode) => {
+    setValue("postalcode", postalcode);
+    trigger("postalcode");
+  };
+
+  const getAddress1 = (address1) => {
+    setValue("address1", address1);
+    trigger("address1");
+  };
 
   return (
     <div>
@@ -59,12 +84,23 @@ export default function SignupFormContent() {
               type="text"
               id="id"
               name="id"
-              className="transition-input w-[80%]"
+              className="transition-input w-3/4"
               maxLength={16}
               placeholder="영문 소문자/숫자, 4~16자"
-              {...register("id", { required: true })}
+              {...register("id", {
+                required: true,
+                onChange: () => getIsIdAvailable(false),
+              })}
             />
-            <button className="transition-btn h-10 w-[20%] font-normal   dark:bg-slate-400">
+            <button
+              type="button"
+              onClick={checkIdAvailable}
+              className={`h-10 font-normal ${
+                errors.id || idValue === ""
+                  ? "pointer-events-none border border-black bg-back"
+                  : "transition-btn"
+              }    w-1/4 dark:bg-slate-400`}
+            >
               중복 확인
             </button>
           </div>
@@ -123,7 +159,7 @@ export default function SignupFormContent() {
             type="text"
             id="name"
             name="name"
-            className="transition-input w-1/2"
+            className="transition-input w-full"
             {...register("name", { required: true })}
           />
           <p className="absolute">{errors.name && errors.name.message}</p>
@@ -131,25 +167,57 @@ export default function SignupFormContent() {
 
         <div className="mb-7">
           <label htmlFor="phone" className="block text-[12px] font-semibold">
-            휴대폰
+            휴대전화
           </label>
           <input
             type="tel"
             id="phone"
             name="phone"
-            className="transition-input w-1/2"
+            className="transition-input w-3/4"
+            placeholder="'-'를 제외하고 입력해주세요."
             maxLength={11}
-            {...register("phone", { required: true })}
+            {...register("phone", {
+              required: true,
+              onChange: () => getIsCertificated(false),
+            })}
           />
           <button
             type="button"
-            onClick={handlePhoneCertification}
-            className="transition-btn h-10 w-1/4 "
+            onClick={sendCertificationCode}
+            className={`h-10 w-1/4 dark:bg-slate-400 ${
+              errors.phone || phoneValue === ""
+                ? "pointer-events-none border border-black bg-back"
+                : "transition-btn"
+            }`}
           >
             인증 번호 전송
           </button>
           <p className="absolute">{errors.phone && errors.phone.message}</p>
         </div>
+        {showCertificationInput && (
+          <div className="mb-7 ">
+            <label
+              htmlFor="certificationCode"
+              className="block text-[12px] font-semibold"
+            >
+              인증번호 입력
+            </label>
+            <input
+              type="text"
+              id="certificationCode"
+              name="certificationCode"
+              className="transition-input w-3/4"
+              ref={certificationCodeRef}
+            />
+            <button
+              type="button"
+              onClick={checkCertificationCode}
+              className="transition-btn h-10 w-1/4"
+            >
+              인증하기
+            </button>
+          </div>
+        )}
 
         <div className="mb-7">
           <label
@@ -162,7 +230,7 @@ export default function SignupFormContent() {
             type="text"
             id="birthdate"
             name="birthdate"
-            className="transition-input w-1/2"
+            className="transition-input w-full"
             placeholder="YYYYMMDD"
             maxLength={8}
             {...register("birthdate", { required: true })}
@@ -177,66 +245,42 @@ export default function SignupFormContent() {
             이메일
           </label>
 
-          <div className="flex items-center lg:w-3/4">
-            <input
-              type="hidden"
-              id="email"
-              name="email"
-              {...register("email", { required: true })}
-            />
-            <input
-              type="text"
-              className="transition-input w-[31.6%]"
-              value={emailId}
-              onChange={(e) => setEmailId(e.target.value)}
-            />
-            <span className="inline-block w-[4%] text-center">@</span>
-            <input
-              type="text"
-              className="transition-input mr-[1%] w-[31.6%]"
-              readOnly={isDomainReadOnly}
-              value={domain}
-              onChange={(e) => setDomain(e.target.value)}
-            />
-            <select
-              name="domain2"
-              id="domain2"
-              className="transition-input w-[31.6%]"
-              onChange={(e) => handleSelectDomain(e)}
-              defaultValue=""
-            >
-              <option value="">직접입력</option>
-              <option value="naver.com">naver.com</option>
-              <option value="gmail.com">gmail.com</option>
-              <option value="hanmail.net">hanmail.net</option>
-              <option value="nate.com">nate.com</option>
-              <option value="kakao.com">kakao.com</option>
-            </select>
-          </div>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            className="transition-input w-full"
+            {...register("email", { required: true })}
+          />
+          <p className="absolute">{errors.email && errors.email.message}</p>
         </div>
 
         <div className="mb-7 flex w-full">
           <div className="w-3/4">
             <label
-              htmlFor="postalCode"
+              htmlFor="postalcode"
               className="block text-[12px] font-semibold"
             >
               우편번호
             </label>
             <input
               type="text"
-              id="postalCode"
-              name="postalCode"
+              id="postalcode"
+              name="postalcode"
               readOnly
               className="transition-input h-10 w-full"
-              {...register("postalCode", { required: true })}
+              {...register("postalcode", { required: true })}
             />
+            <p className="absolute">
+              {errors.postalcode && errors.postalcode.message}
+            </p>
           </div>
           <div className="w-1/4">
             <span className="text-[12px] font-semibold">우편번호 찾기</span>
-            <button type="button" className="transition-btn h-10 w-full">
-              POSTAL CODE
-            </button>
+            <AddressSearch
+              getPostalcode={getPostalcode}
+              getAddress1={getAddress1}
+            />
           </div>
         </div>
 
@@ -252,6 +296,9 @@ export default function SignupFormContent() {
             className="transition-input w-full"
             {...register("address1", { required: true })}
           />
+          <p className="absolute">
+            {errors.address1 && errors.address1.message}
+          </p>
         </div>
 
         <div>
@@ -265,6 +312,9 @@ export default function SignupFormContent() {
             className="transition-input w-full"
             {...register("address2", { required: true })}
           />
+          <p className="absolute">
+            {errors.address2 && errors.address2.message}
+          </p>
         </div>
       </div>
     </div>
