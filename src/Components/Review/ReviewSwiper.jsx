@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Pagination, Navigation, Grid } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -8,9 +8,10 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/grid";
 
-import ReviewStar from "./ReviewStar";
+import ReviewListStar from "./ReviewListStar";
+import ReviewPhotoModal from "./ReviewPhotoModal";
 
-export default function ReviewSwiper() {
+export default function ReviewSwiper({ photoReview }) {
   return (
     <div>
       <Swiper
@@ -20,9 +21,7 @@ export default function ReviewSwiper() {
         slidesPerView={2}
         grid={{ rows: 2, fill: "row" }}
         navigation={true}
-        pagination={{
-          clickable: true,
-        }}
+        pagination={false}
         breakpoints={{
           768: {
             slidesPerView: 5,
@@ -31,25 +30,28 @@ export default function ReviewSwiper() {
         }}
       >
         <>
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((v, i) => (
+          {photoReview.map((v, i) => (
             <SwiperSlide key={i}>
-              <div className="w-full border border-gray-200">
-                <img
-                  className="w-full"
-                  src="https://i.pinimg.com/564x/6b/2c/d6/6b2cd67bb34ca4ad57ab98a9d64e74fd.jpg"
-                  alt=""
-                />
+              <div className="w-full cursor-pointer border border-gray-200">
+                {v.rcover && (
+                  <div className="h-[160px]">
+                    <img
+                      className="h-full w-full"
+                      src={`/${v.rcover}`}
+                      alt=""
+                    />
+                  </div>
+                )}
                 <div className="p-3">
-                  <ReviewStar />
+                  <ReviewListStar rate={v.point} />
                   <p className="... mb-1 mt-1 truncate font-thin text-neutral-700 sm:text-sm">
-                    샘플 한 번 써보고 괜찮아서 세일하길래 구매해봤어요 트러블
-                    없이 잘 맞네요
+                    {v.content}
                   </p>
                   <span className="... mr-3 inline-block w-10 truncate align-bottom font-thin text-gray-500 sm:align-text-top sm:text-sm">
-                    sjaglaemfek
+                    {v.mid}
                   </span>
                   <span className="font-thin text-gray-500 sm:text-sm">
-                    12.19
+                    {v.rdate.split("T")[0]}
                   </span>
                 </div>
               </div>
@@ -57,6 +59,7 @@ export default function ReviewSwiper() {
           ))}
         </>
       </Swiper>
+      {/* {modalOpen && <ReviewPhotoModal setModalOpen={setModalOpen} />} */}
     </div>
   );
 }

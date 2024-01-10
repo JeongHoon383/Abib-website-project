@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { ProductContext } from "../../Pages/Product/ProductDetail";
-import ReviewStar from "./ReviewStar";
+import ReviewModalStar from "./ReviewModalStar";
 import axios from "axios";
 
 export default function ReviewModal({ setModalOpen }) {
@@ -24,14 +24,14 @@ export default function ReviewModal({ setModalOpen }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     let formData = new FormData(); // 서버로 이미지를 보낼 때 폼 데이터라는 객체에 담아서 보내야함
-    formData.append("rcover", uploadedImg.data);
+    formData.append("rcover", uploadedImg.data || undefined);
     formData.append("pid", product.pid);
     formData.append("mid", "abcd1234");
     formData.append("point", rate);
     formData.append("content", reviewText);
 
     axios
-      .post("http://127.0.0.1:9090/save-review", formData, {
+      .post("http://127.0.0.1:9090/review/save-review", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -53,6 +53,7 @@ export default function ReviewModal({ setModalOpen }) {
 
   const closeModal = () => {
     setModalOpen(false);
+    document.body.style.overflow = "unset";
   };
 
   return (
@@ -61,7 +62,7 @@ export default function ReviewModal({ setModalOpen }) {
       {/* background */}
       <div className="fixed h-full w-full bg-black/70" />
       {/* Modal */}
-      <div className="absolute top-[142rem] min-h-96 w-[22rem] rounded-md bg-white p-5 sm:w-[30rem] md:w-[45rem] lg:top-[180rem] lg:w-[60rem] xl:top-[240rem]">
+      <div className="fixed left-1/2 top-1/2 w-[22rem] -translate-x-1/2 -translate-y-1/2 rounded-md bg-white p-5 sm:w-[30rem] md:w-[45rem] lg:w-[60rem]">
         <div className="flex border-b-2 border-black pb-2">
           <h3>리뷰 작성</h3>
           <button
@@ -107,7 +108,7 @@ export default function ReviewModal({ setModalOpen }) {
               <span className="text-stone-700">별점을 매겨주세요</span>
             </div>
             <div className="flex items-center justify-center">
-              <ReviewStar rate={rate} setRate={setRate} />
+              <ReviewModalStar rate={rate} setRate={setRate} />
             </div>
           </div>
           <div className="flex border-b p-2">

@@ -101,11 +101,13 @@ export default function ProductDetail() {
         </div>
       </div>
       <div className="mb-24 text-center">
-        <img
-          className="mb-8 sm:mx-auto lg:mx-auto lg:w-full"
-          src={`http://127.0.0.1:9090/uploads/${product.cover}`}
-          alt=""
-        />
+        {product.cover && (
+          <img
+            className="mb-8 sm:mx-auto lg:mx-auto lg:w-full"
+            src={`/uploads/${product.cover}`}
+            alt=""
+          />
+        )}
         <p className="mb-4 text-xl font-bold">{product.engTitle}</p>
         <p className="text-base sm:text-xl">
           {product.description && product.description.split("/")[0]}
