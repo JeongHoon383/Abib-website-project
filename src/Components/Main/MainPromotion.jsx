@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
+import React from "react";
+import { Scrollbar } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import CartModal from "../Cart/CartModal";
 import "swiper/css";
@@ -22,7 +22,7 @@ const MainPromotion = ({ title, titleArr }) => {
   const navigate = useNavigate();
   const {
     isPending: promotionLoading,
-    error: promotionError,
+
     data: promotionData,
   } = useQuery({
     queryKey: ["promotionData", title],
@@ -79,6 +79,7 @@ const MainPromotion = ({ title, titleArr }) => {
                           >
                             <figure className=" mt-14 h-[50vw] w-full md:h-[30vw]   lg:h-[25vw]">
                               <img
+                                alt=""
                                 className="h-full w-full  cursor-pointer"
                                 src={`http://127.0.0.1:9090/uploads/${value.cover}`}
                               />
