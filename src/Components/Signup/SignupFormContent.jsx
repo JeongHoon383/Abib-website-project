@@ -79,12 +79,12 @@ export default function SignupFormContent({
           <label htmlFor="id" className="block text-[12px] font-semibold">
             아이디
           </label>
-          <div className="flex">
+          <div className="flex justify-between">
             <input
               type="text"
               id="id"
               name="id"
-              className="transition-input w-3/4"
+              className="transition-input w-[73%]"
               maxLength={16}
               placeholder="영문 소문자/숫자, 4~16자"
               {...register("id", {
@@ -96,7 +96,7 @@ export default function SignupFormContent({
               type="button"
               onClick={checkIdAvailable}
               className={`h-10 font-normal ${
-                errors.id || idValue === ""
+                errors.id || !idValue
                   ? "pointer-events-none border border-black bg-back"
                   : "transition-btn"
               }    w-1/4 dark:bg-slate-400`}
@@ -166,35 +166,41 @@ export default function SignupFormContent({
         </div>
 
         <div className="mb-7">
-          <label htmlFor="phone" className="block text-[12px] font-semibold">
+          <label
+            htmlFor="phone"
+            className="block w-full text-[12px] font-semibold"
+          >
             휴대전화
           </label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            className="transition-input w-3/4"
-            placeholder="'-'를 제외하고 입력해주세요."
-            maxLength={11}
-            {...register("phone", {
-              required: true,
-              onChange: () => getIsCertificated(false),
-            })}
-          />
-          <button
-            type="button"
-            onClick={sendCertificationCode}
-            className={`h-10 w-1/4 dark:bg-slate-400 ${
-              errors.phone || phoneValue === ""
-                ? "pointer-events-none border border-black bg-back"
-                : "transition-btn"
-            }`}
-          >
-            인증 번호 전송
-          </button>
+          <div className="flex justify-between">
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              className="transition-input w-[73%]"
+              placeholder="'-'를 제외하고 입력해주세요."
+              maxLength={11}
+              {...register("phone", {
+                required: true,
+                onChange: () => getIsCertificated(false),
+              })}
+            />
+            <button
+              type="button"
+              onClick={sendCertificationCode}
+              className={`h-10 w-1/4 dark:bg-slate-400 ${
+                errors.phone || !phoneValue
+                  ? "pointer-events-none border border-black bg-back"
+                  : "transition-btn"
+              }`}
+            >
+              인증 번호 전송
+            </button>
+          </div>
+
           <p className="absolute">{errors.phone && errors.phone.message}</p>
         </div>
-        {showCertificationInput && (
+        {!showCertificationInput && (
           <div className="mb-7 ">
             <label
               htmlFor="certificationCode"
@@ -202,20 +208,22 @@ export default function SignupFormContent({
             >
               인증번호 입력
             </label>
-            <input
-              type="text"
-              id="certificationCode"
-              name="certificationCode"
-              className="transition-input w-3/4"
-              ref={certificationCodeRef}
-            />
-            <button
-              type="button"
-              onClick={checkCertificationCode}
-              className="transition-btn h-10 w-1/4"
-            >
-              인증하기
-            </button>
+            <div className="flex justify-between">
+              <input
+                type="text"
+                id="certificationCode"
+                name="certificationCode"
+                className="transition-input w-[73%]"
+                ref={certificationCodeRef}
+              />
+              <button
+                type="button"
+                onClick={checkCertificationCode}
+                className="transition-btn h-10 w-1/4"
+              >
+                인증하기
+              </button>
+            </div>
           </div>
         )}
 
@@ -255,8 +263,8 @@ export default function SignupFormContent({
           <p className="absolute">{errors.email && errors.email.message}</p>
         </div>
 
-        <div className="mb-7 flex w-full">
-          <div className="w-3/4">
+        <div className="mb-7 flex w-full justify-between">
+          <div className="w-[73%]">
             <label
               htmlFor="postalcode"
               className="block text-[12px] font-semibold"
