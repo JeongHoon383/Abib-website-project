@@ -35,26 +35,56 @@ const schema = yup.object({
   phone: yup
     .string()
     .required("휴대폰 번호를 입력해주세요.")
-    .matches(/^[0-9]{10,11}$/, "올바른 핸드폰 번호를 입력하세요."),
+    .matches(/^[0-9]{10,11}$/, "올바른 핸드폰 번호를 입력해주세요."),
 
   birthdate: yup
     .string()
     .required("생년월일을 입력해주세요.")
-    .length(8, "올바른 생년월일 형식이 아닙니다."),
-  // .test("isValidate", "유효하지 않은 날짜입니다.", (value) => {
-  //   const year = parseInt(value.substring(0, 4), 10);
-  //   const month = parseInt(value.substring(4, 6), 10);
-  //   const day = parseInt(value.substring(6, 8), 10);
+    .matches(/^[0-9]{8}$/, "올바른 생년월일을 입력해주세요.")
+    .test("isValidate", "올바른 생년월일을 입력해주세요.", (value, context) => {
+      const year = parseInt(value.substring(0, 4), 10);
+      const month = parseInt(value.substring(4, 6), 10);
+      const day = parseInt(value.substring(6, 8), 10);
+      const currentYear = new Date().getFullYear();
+      const currentMonth = new Date().getMonth() + 1;
+      const currentDay = new Date().getDate();
 
-  // }),
+      const isValidate =
+        month >= 1 &&
+        month <= 12 &&
+        day >= 1 &&
+        day <= new Date(year, month, 0).getDate();
 
-  email: yup.string().required("이메일을 입력해주세요."),
+      const isPastDate =
+        year < currentYear ||
+        (year === currentYear &&
+          (month < currentMonth ||
+            (month === currentMonth && day <= currentDay)));
 
-  postalCode: yup.number().required("우편 번호를 입력해주세요."),
+      if (isValidate && isPastDate) {
+        return true;
+      } else {
+        return false;
+      }
+    })
+    .test("isUnder14", "만 14세 미만은 가입할 수 없습니다.", (value) => {
+      const year = parseInt(value.substring(0, 4), 10);
+      const currentYear = new Date().getFullYear();
+      return currentYear - year >= 14;
+    }),
+  email: yup
+    .string()
+    .required("이메일을 입력해주세요.")
+    .matches(
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      "유효한 이메일 형식이 아닙니다.",
+    ),
+
+  postalcode: yup.string().required("우편 번호를 입력해주세요."),
 
   address1: yup.string().required("기본 주소를 입력해주세요."),
 
-  address2: yup.string().required(" 나머지 주소를 입력해주세요."),
+  address2: yup.string(),
 });
 
 export default function SignupForm() {
