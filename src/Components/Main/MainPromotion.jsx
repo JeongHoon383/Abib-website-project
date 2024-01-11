@@ -10,10 +10,14 @@ import { useNavigate } from "react-router-dom";
 
 const MainPromotion = ({ title, titleArr }) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [product, setProduct] = useState({});
 
-  const showModal = () => {
+  const showModal = (value) => {
     setModalOpen(true);
+    setProduct(value);
   };
+
+  console.log(product);
 
   const navigate = useNavigate();
   const {
@@ -34,7 +38,7 @@ const MainPromotion = ({ title, titleArr }) => {
   return (
     <div className="w-screen overflow-x-hidden  pb-5 dark:bg-black    dark:text-white ">
       {/* modal */}
-      {modalOpen && <CartModal setModalOpen={setModalOpen} />}
+      {modalOpen && <CartModal setModalOpen={setModalOpen} product={product} />}
       {promotionLoading ? (
         "로딩중"
       ) : (
@@ -109,7 +113,7 @@ const MainPromotion = ({ title, titleArr }) => {
                             </figcaption>
                           </div>
                           <div
-                            onClick={showModal}
+                            onClick={() => showModal(value)}
                             className="mx-auto my-4 w-full cursor-pointer border  py-2 text-center text-xs hover:bg-font hover:text-back md:opacity-0 md:group-hover:opacity-100 lg:text-sm"
                           >
                             카트에 담기
@@ -168,7 +172,7 @@ const MainPromotion = ({ title, titleArr }) => {
                             </figcaption>
                           </div>
                           <div
-                            onClick={showModal}
+                            onClick={() => showModal(value)}
                             className="mx-auto my-4 w-full cursor-pointer border  py-2 text-center text-xs hover:bg-font hover:text-back md:opacity-0 md:group-hover:opacity-100 lg:text-sm"
                           >
                             카트에 담기
@@ -227,7 +231,7 @@ const MainPromotion = ({ title, titleArr }) => {
                             </figcaption>
                           </div>
                           <div
-                            onClick={showModal}
+                            onClick={() => showModal(value)}
                             className="mx-auto my-4 w-full cursor-pointer border  py-2 text-center text-xs hover:bg-font hover:text-back md:opacity-0 md:group-hover:opacity-100 lg:text-sm"
                           >
                             카트에 담기
