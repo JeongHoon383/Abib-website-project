@@ -3,7 +3,7 @@ import React from "react";
 const Footer = () => {
   return (
     <div className="flex  w-full items-center justify-center overflow-x-hidden  bg-font">
-      <div className="flex h-2/3 w-10/12 flex-col justify-between text-center   md:flex-row ">
+      <div className="flex h-2/3 w-10/12 flex-col justify-between text-center  lg:flex-row ">
         <div className="text-[11px]">
           <div className="my-5 flex flex-col text-back">
             <span>The digital platform for ABIB CO.</span>
@@ -24,8 +24,8 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-        <div className="my-5 hidden    space-x-32    text-[12px] text-gray-500 sm:flex  sm:flex-row  md:items-start md:justify-center md:text-[13px]">
-          <ul className="space-y-3  ">
+        <div className="my-5 hidden     space-x-32    text-[12px] text-gray-500 sm:flex  sm:flex-row  md:items-start md:justify-center md:text-[13px]">
+          <ul className="w-[33%]    space-y-3">
             <li className="font-semibold text-back">주요메뉴</li>
             <li>카테고리</li>
             <li>기능</li>
@@ -33,7 +33,7 @@ const Footer = () => {
             <li>이벤트</li>
             <li>리뷰</li>
           </ul>
-          <ul className="space-y-3   ">
+          <ul className="w-[33%] flex-col items-center    space-y-3">
             <li className="font-semibold text-back">고객 서비스</li>
             <li>주문조회</li>
             <li>문의</li>
@@ -43,7 +43,7 @@ const Footer = () => {
             <li>이용약관</li>
             <li>개인정보처리방침</li>
           </ul>
-          <ul className="space-y-3">
+          <ul className="w-[33%] flex-col justify-center space-y-3">
             <li className="font-semibold text-back">소설</li>
             <li>인스타그램</li>
             <li>페이스북</li>

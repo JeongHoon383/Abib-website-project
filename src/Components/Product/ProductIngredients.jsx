@@ -2,7 +2,7 @@ import React from "react";
 
 export default function ProductIngredients() {
   return (
-    <ul className="text-[10px] text-neutral-600">
+    <ul className="text-[10px] text-neutral-600 sm:text-[14px]">
       <li className="mb-4">
         Water, Methylpropanediol, Sedum Sarmentosum Extract, Glycerin,
         1,2-Hexanediol, Propanediol, Sodium Hyaluronate, Cynanchum Atratum

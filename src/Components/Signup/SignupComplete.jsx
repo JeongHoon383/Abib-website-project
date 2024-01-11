@@ -9,13 +9,13 @@ export default function SignupComplete() {
       </p>
       <Link
         to={"/login"}
-        className="transition-btn mb-2 block h-12 w-full text-[13px] leading-[48px]"
+        className="transition-btn mb-2 block h-12 w-full text-[13px] leading-[48px] dark:bg-slate-400"
       >
         로그인
       </Link>
       <Link
         to={"/"}
-        className="block h-8 w-full border border-black text-[13px] leading-8 transition duration-500 hover:bg-back"
+        className="block h-8 w-full border border-black text-[13px] leading-8 transition duration-500 hover:bg-back dark:border dark:border-white dark:hover:text-black"
       >
         메인 페이지
       </Link>

@@ -1,8 +1,31 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 const CartProduct = () => {
   const navigate = useNavigate();
+  const [product, setProduct] = useState({});
+  const [count, setCount] = useState(1);
+
+  const handleQuantity = (type) => {
+    if (type === "plus") {
+      setCount(count + 1);
+    } else {
+      if (count === 1) return;
+      setCount(count - 1);
+    }
+  };
+
+  /*  useEffect(() => {
+    axios.get(`http://127.0.0.1:9090/cart/${pid}`).then((data) => {
+      setProduct(data.data);
+    });
+  }, []); */
+
+  console.log(product);
+
+  const { pid } = useParams();
+
   return (
     <div>
       <ul className="flex w-full items-center justify-between border-b border-solid border-gray-300 py-[12px] text-center text-xs">
@@ -37,7 +60,29 @@ const CartProduct = () => {
           <p>₩24,000</p>
           <p className="font-bold">₩16,800</p>
         </li>
-        <li className="hidden w-[165px] lg:block">2</li>
+        <li className="hidden w-[165px] lg:block">
+          <div className="relative m-auto h-[30px] w-[70px] rounded-[5px] border border-solid border-gray-400">
+            <img
+              className="absolute left-[10px] top-1/2 h-[10px] w-[10px] -translate-y-1/2 transform cursor-pointer"
+              src="../../../cart/icon-minus-line.svg"
+              alt="minus"
+              onClick={() => handleQuantity("minus")}
+            />
+
+            <div className="absolute left-1/2 top-1/2 w-[56px] -translate-x-1/2 -translate-y-1/2 transform border border-b-0 border-t-0 border-solid border-gray-400">
+              <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+                {count}
+              </span>
+            </div>
+
+            <img
+              className="absolute right-[10px] top-1/2 h-[10px] w-[10px] -translate-y-1/2 transform cursor-pointer"
+              src="../../../cart/icon-plus-line.svg"
+              alt="plus"
+              onClick={() => handleQuantity("plus")}
+            />
+          </div>
+        </li>
         <li className="w-[99px]">₩1,680</li>
         <li className="w-[58px] text-center">
           <p>2,500</p>
