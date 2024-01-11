@@ -61,7 +61,7 @@ const CartProduct = () => {
           <p className="font-bold">₩16,800</p>
         </li>
         <li className="hidden w-[165px] lg:block">
-          <div className="relative m-auto h-[30px] w-[70px] rounded-[5px] border border-solid border-gray-400">
+          <div className="relative ml-[52px] h-[30px] w-[70px] rounded-[5px] border border-solid border-gray-400">
             <img
               className="absolute left-[10px] top-1/2 h-[10px] w-[10px] -translate-y-1/2 transform cursor-pointer"
               src="../../../cart/icon-minus-line.svg"
