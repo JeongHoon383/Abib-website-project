@@ -1,11 +1,48 @@
-import { RiKakaoTalkFill } from "react-icons/ri";
-import { MdArrowBackIos } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+import { RiKakaoTalkFill } from "react-icons/ri";
+import { MdArrowBackIos } from "react-icons/md";
 
 export default function Login() {
   const [tabSwitch, setTabSwitch] = useState(false);
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+  const [isKeepLogin, setIsKeepLogin] = useState(false);
   const navigate = useNavigate();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (id === "") {
+      alert("아이디를 입력해주세요.");
+    } else if (password === "") {
+      alert("비밀번호를 입력해주세요.");
+    } else {
+      axios
+        .post("http://127.0.0.1:9090/member/login", {
+          id: id,
+          password: password,
+        })
+        .then((result) => {
+          if (result.data.isIdExist) {
+            if (result.data.isLogin) {
+              const memberInfo = jwtDecode(result.data.token);
+              console.log(memberInfo);
+              if (isKeepLogin) {
+                //로그인 유지 o
+              } else {
+                //로그인 유지 x
+              }
+            } else {
+              alert("비밀번호가 일치하지 않습니다.");
+            }
+          } else {
+            alert("존재하지 않는 계정입니다.");
+          }
+        });
+    }
+  };
 
   return (
     <main className="pb-[50px] lg:mb-[150px] lg:border-b lg:border-black">
@@ -78,7 +115,7 @@ export default function Login() {
           </form>
         ) : (
           <>
-            <form>
+            <form onSubmit={(e) => handleLogin(e)}>
               <label htmlFor="id" className="hidden">
                 아이디
               </label>
@@ -87,6 +124,8 @@ export default function Login() {
                 name="id"
                 className="transition-input mb-2.5 w-full"
                 placeholder="ID"
+                value={id}
+                onChange={(e) => setId(e.target.value)}
               />
               <label htmlFor="password" className="hidden">
                 비밀번호
@@ -96,9 +135,11 @@ export default function Login() {
                 name="password"
                 className="transition-input mb-8 w-full"
                 placeholder="PASSWORD"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
 
-              <button className="transition-btn mb-2 h-12 w-full">
+              <button type="submit" className="transition-btn mb-2 h-12 w-full">
                 로그인
               </button>
             </form>
@@ -110,6 +151,7 @@ export default function Login() {
                   id="keepLogin"
                   name="keepLogin"
                   className="mr-1 h-[15px] w-[15px] translate-y-[-1px]"
+                  onChange={() => setIsKeepLogin(!isKeepLogin)}
                 />
                 <label htmlFor="keepLogin">로그인 상태 유지</label>
               </div>
@@ -120,9 +162,12 @@ export default function Login() {
                 <button className="mr-2 border-r border-[#999] pr-2 transition duration-300 hover:text-[#DDD]">
                   비밀번호 찾기
                 </button>
-                <button className="transition duration-300 hover:text-[#DDD]">
+                <Link
+                  to={"/signup"}
+                  className="transition duration-300 hover:text-[#DDD]"
+                >
                   회원가입
-                </button>
+                </Link>
               </div>
             </div>
 
