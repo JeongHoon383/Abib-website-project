@@ -1,12 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { getProduct } from "../../Modules/Products";
+import CartModal from "../../Components/Cart/CartModal";
 
 export default function ProductList() {
   const { category } = useParams();
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productSlice.list);
+
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const showModal = () => {
+    setModalOpen(true);
+  };
 
   useEffect(() => {
     // 서버에서 데이터를 불러오는 createAsyncThunk 호출
@@ -18,6 +25,7 @@ export default function ProductList() {
     : category;
   return (
     <>
+      {modalOpen && <CartModal setModalOpen={setModalOpen} />}
       <div className="categoryName">
         <h2 className="p-20 text-center text-3xl">{replaceCategory}</h2>
       </div>
@@ -68,7 +76,10 @@ export default function ProductList() {
                   </span>
                 )}
               </div>
-              <button className="visible mb-12 mt-3 w-full border border-gray-300 px-5 py-1.5 text-center text-xs font-medium text-gray-700 hover:bg-gray-900 hover:text-white focus:outline-none focus:ring-4 focus:ring-gray-300 sm:invisible sm:py-2.5 sm:hover:transition-all sm:group-hover/btn:visible sm:group-hover/list:transition-all dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-800">
+              <button
+                onClick={showModal}
+                className="visible mb-12 mt-3 w-full border border-gray-300 px-5 py-1.5 text-center text-xs font-medium text-gray-700 hover:bg-gray-900 hover:text-white focus:outline-none focus:ring-4 focus:ring-gray-300 sm:invisible sm:py-2.5 sm:hover:transition-all sm:group-hover/btn:visible sm:group-hover/list:transition-all dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-800"
+              >
                 카트에 담기
               </button>
             </div>
