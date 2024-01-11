@@ -20,7 +20,7 @@ import PrivateInquiry from "./Pages/MyPage/PrivateInquiry";
 import Login from "./Pages/Login/Login";
 import SignupMain from "./Components/Signup/SignupMain";
 import SignupComplete from "./Components/Signup/SignupComplete";
-import SignupForm from "./Components/Signup/SignupForm";
+import SignupSchema from "./Components/Signup/SignupSchema";
 import store from "./Modules/rootReducer";
 import { Provider } from "react-redux";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -70,7 +70,7 @@ const router = createBrowserRouter([
           },
           {
             path: "/signup/join",
-            element: <SignupForm />,
+            element: <SignupSchema />,
           },
           {
             path: "/signup/complete",
