@@ -1,5 +1,5 @@
 import React from "react";
-
+// import ImageUpload from "../ImageUpload";
 import { Form } from "react-bootstrap";
 import { IoIosArrowDropright } from "react-icons/io";
 import { FaCloud, FaFileUpload, FaQq } from "react-icons/fa";
@@ -8,9 +8,14 @@ import axios from "axios";
 import Axios from "axios";
 import { RiAdminFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
+import { NavLink, Route, Routes } from "react-router-dom";
+import Dashboard from "../../Components/Admins/Dashboard";
+import Products from "../../Components/Admins/Products";
+import Members from "../../Components/Admins/Members";
 
 export default function Admin() {
   const [open, setOpen] = useState(true);
+  const [image, setImage] = useState(null);
 
   const [form, setForm] = useState({
     title: "",
@@ -28,23 +33,24 @@ export default function Admin() {
 
   const Menus = [
     { title: "Dashboard", src: "Chartfill" },
-    { title: "Product", src: "Folder" },
-    { title: "Member", src: "User" },
-    { title: "Inbox", src: "Chat" },
-    { title: "Schedule", src: "Calendar" },
-    { title: "Search", src: "search" },
-    { title: "Analytics", src: "Chart" },
-    { title: "Setting", src: "Setting" },
+    { title: "Products", src: "Folder" },
+    { title: "Members", src: "User" },
+    // { title: "Inbox", src: "Chat" },
+    // { title: "Schedule", src: "Calendar" },
+    // { title: "Search", src: "search" },
+    // { title: "Analytics", src: "Chart" },
+    // { title: "Setting", src: "Setting" },
   ];
 
-  const FileUpload = (e) => {
-    const files = e.target.files;
+  const fileUpload = (e) => {
+    const files = e.target.files[0];
     setForm((prevForm) => ({
       ...prevForm,
       // cover: [...prevForm.cover, ...files],
       cover: files,
     }));
   };
+  console.log();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -81,6 +87,10 @@ export default function Admin() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
+  };
+
+  const getImage = (e) => {
+    setImage(e);
   };
 
   return (
@@ -120,12 +130,24 @@ export default function Admin() {
                 index === 0 && "bg-light-white"
               } `}
               >
-                <img src={`../AdminImage/${Menu.src}.png`} />
+                <NavLink
+                  to={`/${Menu.title.toLowerCase()}`}
+                  activeClassName="active"
+                >
+                  <img src={`../AdminImage/${Menu.src}.png`} />
+                  <span
+                    className={`${!open && "hidden"} origin-left duration-200`}
+                  >
+                    {Menu.title}
+                  </span>
+                </NavLink>
+
+                {/* <img src={`../AdminImage/${Menu.src}.png`} />
                 <span
                   className={`${!open && "hidden"} origin-left duration-200`}
                 >
                   {Menu.title}
-                </span>
+                </span> */}
               </li>
             ))}
           </ul>
@@ -135,7 +157,8 @@ export default function Admin() {
           <h1 className="text-2xl font-semibold ">Product</h1>
           <br></br>
 
-          <form action="" onSubmit={handleSubmit}>
+          {/* <form action="" onSubmit={handleSubmit}> */}
+          <form action="">
             <p>
               title : <input type="text" name="title" placeholder="title" />
             </p>
@@ -167,7 +190,7 @@ export default function Admin() {
               prod option :{" "}
               <input type="text" name="prod option" placeholder="prod option" />
             </p>
-            <p>
+            {/* <p>
               cover :{" "}
               <Form.Control
                 type="file"
@@ -178,6 +201,19 @@ export default function Admin() {
                   FileUpload(e);
                 }}
               ></Form.Control>
+              <ImageUpload getImage={getImage} />
+            </p> */}
+            <p>
+              <input
+                type="file"
+                className="shadow-none"
+                accept="image/*"
+                multiple
+                onChange={(e) => {
+                  fileUpload(e);
+                }}
+              />
+              {/* <ImageUpload getImage={getImage} /> */}
             </p>
 
             <p>
@@ -192,12 +228,26 @@ export default function Admin() {
 
             <button
               type="submit"
-              onSubmit={handleSubmit}
               className="focus:shadow-outline-blue rounded bg-gray-500 px-3 py-1 font-bold text-white hover:bg-blue-700 focus:outline-none active:bg-blue-800"
             >
               Upload
             </button>
           </form>
+
+          <Routes>
+            <Route
+              path="/dashboard"
+              element={<Dashboard />} // 대시보드 컴포넌트로 대체
+            />
+            <Route
+              path="/product"
+              element={<Products />} // 제품 컴포넌트로 대체
+            />
+            <Route
+              path="/member"
+              element={<Members />} // 멤버 컴포넌트로 대체
+            />
+          </Routes>
         </div>
       </div>
     </>
