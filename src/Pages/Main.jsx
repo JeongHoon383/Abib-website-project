@@ -5,13 +5,13 @@ import MainVideo from "../Components/Main/MainVideo";
 import MainHeartleaf from "../Components/Main/MainHeartleaf";
 import MainLastCover from "../Components/Main/MainLastCover";
 import MainBrandStory from "../Components/Main/MainBrandStory";
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
+
+import { motion } from "framer-motion";
 
 const Main = () => {
-  const [title, setTitle] = useState(["프로모션", "베스트", "추천제품"]);
+  const [title] = useState(["프로모션", "베스트", "추천제품"]);
   return (
-    <div className="m-0 box-border w-full overflow-x-hidden p-0 dark:bg-black dark:text-white ">
+    <motion.div className="m-0 box-border w-full overflow-x-hidden p-0 dark:bg-black dark:text-white ">
       <MainCover />
       <MainPromotion title={title[0]} titleArr={title} />
       <MainVideo />
@@ -21,7 +21,7 @@ const Main = () => {
       <MainLastCover image={4} title={`Sedum hyaluron`} />
       <MainPromotion title={title[2]} titleArr={title} />
       <MainBrandStory />
-    </div>
+    </motion.div>
   );
 };
 

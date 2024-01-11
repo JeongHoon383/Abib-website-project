@@ -4,7 +4,7 @@ import { ProductContext } from "../../Pages/Product/ProductDetail";
 export default function ProductInfo() {
   let product = useContext(ProductContext); //조부모한테 전달받기
   return (
-    <ul className="text-[10px]">
+    <ul className="text-[10px] sm:text-[14px]">
       <li className="mb-3">
         <span className="inline-block w-52 font-bold">제품명</span>
         <span className="text-neutral-600">{product.title}</span>

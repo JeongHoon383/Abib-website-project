@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { createContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ProductAccordion from "../../Components/Product/ProductAccordion";
-import Review from "../../Components/Product/Review";
+import Review from "../../Components//Review/Review";
 import ProductRecommendSwiper from "../../Components/Product/ProductRecommendSwiper";
 import ProductCounter from "../../Components/Product/ProductCounter";
 
@@ -100,12 +100,19 @@ export default function ProductDetail() {
           </div>
         </div>
       </div>
-      <div className="mb-24">
+      <div className="mb-24 text-center">
         <img
-          className="sm:mx-auto lg:mx-auto lg:w-full"
-          src={product.detailCover}
+          className="mb-8 sm:mx-auto lg:mx-auto lg:w-full"
+          src={`http://127.0.0.1:9090/uploads/${product.cover}`}
           alt=""
         />
+        <p className="mb-4 text-xl font-bold">{product.engTitle}</p>
+        <p className="text-base sm:text-xl">
+          {product.description && product.description.split("/")[0]}
+        </p>
+        <p className="text-base sm:text-xl">
+          {product.description && product.description.split("/")[1]}
+        </p>
       </div>
       <div className="acco-wrap divide-y divide-black">
         <ProductContext.Provider value={product}>
@@ -116,7 +123,9 @@ export default function ProductDetail() {
         <ProductRecommendSwiper />
       </div>
       <div className="review-wrap">
-        <Review />
+        <ProductContext.Provider value={product}>
+          <Review />
+        </ProductContext.Provider>
       </div>
     </>
   );
