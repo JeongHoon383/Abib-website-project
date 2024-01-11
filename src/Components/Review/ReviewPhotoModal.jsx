@@ -3,19 +3,13 @@ import { ProductContext } from "../../Pages/Product/ProductDetail";
 import { ReviewContext } from "./Review";
 
 export default function ReviewPhotoModal({
-  setModalOpen,
+  closeModal,
   review,
   setSelectedReview,
   ReviewListStar,
 }) {
   let product = useContext(ProductContext);
   let { reviewList, average } = useContext(ReviewContext);
-
-  const closeModal = () => {
-    setModalOpen(false);
-    setSelectedReview(null);
-    document.body.style.overflow = "unset";
-  };
 
   return (
     // container

@@ -7,7 +7,7 @@ import CartModal from "../../Components/Cart/CartModal";
 export default function ProductList() {
   const { category } = useParams();
   const dispatch = useDispatch();
-  const productList = useSelector((state) => state.productSlice.list);
+  const productList = useSelector((state) => state.product.products.list);
 
   const [modalOpen, setModalOpen] = useState(false);
 

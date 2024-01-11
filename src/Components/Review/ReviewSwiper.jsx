@@ -12,15 +12,6 @@ import ReviewListStar from "./ReviewListStar";
 import ReviewPhotoModal from "./ReviewPhotoModal";
 
 export default function ReviewSwiper({ photoReview }) {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [selectedReview, setSelectedReview] = useState(null);
-
-  const handleReviewClick = (review) => {
-    setSelectedReview(review);
-    setModalOpen(true);
-    document.body.style.overflow = "hidden";
-  };
-
   return (
     <div>
       <Swiper
@@ -44,12 +35,7 @@ export default function ReviewSwiper({ photoReview }) {
             .reverse()
             .map((v) => (
               <SwiperSlide key={v.rid}>
-                <div
-                  onClick={() => {
-                    handleReviewClick(v);
-                  }}
-                  className="w-full cursor-pointer border border-gray-200"
-                >
+                <div className="w-full cursor-pointer border border-gray-200">
                   {v.rcover && (
                     <div className="">
                       <img
@@ -76,14 +62,6 @@ export default function ReviewSwiper({ photoReview }) {
             ))}
         </>
       </Swiper>
-      {modalOpen && (
-        <ReviewPhotoModal
-          review={selectedReview}
-          setModalOpen={setModalOpen}
-          setSelectedReview={setSelectedReview}
-          ReviewListStar={ReviewListStar}
-        />
-      )}
     </div>
   );
 }

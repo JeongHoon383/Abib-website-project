@@ -29,6 +29,7 @@ import MembersUpdate from "./Components/Admins/MembersUpdate.jsx";
 import MembersCreate from "./Components/Admins/MembersCreate.jsx";
 import Products from "./Components/Admins/Products.jsx";
 import Dashboard from "./Components/Admins/Dashboard.jsx";
+import GlobalModal from "./Components/GlobalModal.jsx";
 
 const router = createBrowserRouter([
   {
@@ -140,6 +141,7 @@ root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
+        <GlobalModal />
         <RouterProvider router={router} />
       </Provider>
     </QueryClientProvider>

@@ -5,10 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import ReviewSwiper from "./ReviewSwiper";
 import ReviewListStar from "./ReviewListStar";
 import ReviewModal from "./ReviewModal";
+import ReviewPhotoModal from "./ReviewPhotoModal";
 import { getReview } from "../../Modules/Review";
 
 import "rc-pagination/assets/index.css";
 import "../../custom.css";
+import { openModal } from "../../Modules/Modal";
 
 export const ReviewContext = createContext({});
 
@@ -16,15 +18,14 @@ export default function Review() {
   const { pid } = useParams();
   const dispatch = useDispatch();
   const textLimit = useRef(150);
-  const reviewList = useSelector((state) => state.review.reviews.list);
-  const [modalOpen, setModalOpen] = useState(false);
+  const reviewList = useSelector((state) => state.review.list);
   const [isShowMores, setIsShowMores] = useState(
     reviewList.reduce((acc, item) => {
       acc[item.rid] = false;
       return acc;
     }, {}),
   );
-
+  const [selectedReview, setSelectedReview] = useState(null);
   //페이징 처리
   const [currentPage, setCurrentPage] = useState(1); //현재 페이지 번호
   const [totalCount, setTotalCount] = useState(6); //전체 데이터 수
@@ -68,16 +69,21 @@ export default function Review() {
     dispatch(getReview(pid));
   }, [dispatch, pid]);
 
-  const showModal = () => {
-    setModalOpen(true);
-    document.body.style.overflow = "hidden";
-  };
-
   const toggleShowMore = (id) => {
     setIsShowMores((prevIsShowMores) => ({
       ...prevIsShowMores,
       [id]: !prevIsShowMores[id],
     }));
+  };
+
+  const handleOpenReviewModal = () => {
+    dispatch(
+      openModal({
+        modalType: "ReviewModal",
+        isOpen: true,
+      }),
+    );
+    document.body.style.overflow = "hidden";
   };
 
   return (
@@ -113,12 +119,12 @@ export default function Review() {
               <div className="mb-1 flex h-14 w-2 items-end bg-gray-100 dark:bg-gray-700">
                 <div
                   className="h-14 w-2 bg-black"
-                  style={{ height: `${rate.ratio}%` }}
+                  style={{ height: `${isNaN(rate.ratio) ? 0 : rate.ratio}%` }}
                 ></div>
               </div>
               <span className="block text-sm font-semibold">{`${rate.point}점`}</span>
               <span className="text-sm text-gray-300 dark:text-gray-400">
-                {rate.ratio}%
+                {isNaN(rate.ratio) ? 0 : rate.ratio}%
               </span>
             </div>
           ))}
@@ -130,12 +136,11 @@ export default function Review() {
           <div>
             <button
               type="button"
-              onClick={showModal}
+              onClick={handleOpenReviewModal}
               className="me-2 rounded-md border border-gray-200 bg-white px-5 py-1 text-xs font-light text-neutral-400 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
             >
               리뷰 작성하기
             </button>
-            {modalOpen && <ReviewModal setModalOpen={setModalOpen} />}
           </div>
         </div>
       </div>
@@ -188,10 +193,29 @@ export default function Review() {
               </span>
 
               {item.rcover && (
-                <div className="size-14">
+                <div
+                  className="size-14 cursor-pointer"
+                  // onClick={}
+                >
                   <img src={`/${item.rcover}`} alt="" className="w-full" />
                 </div>
               )}
+              {/* {modalOpen && (
+                <>
+                  {showPhotoModal ? (
+                    <ReviewContext.Provider value={{ reviewList, average }}>
+                      <ReviewPhotoModal
+                        review={selectedReview}
+                        closeModal={closeModal}
+                        setSelectedReview={setSelectedReview}
+                        ReviewListStar={ReviewListStar}
+                      />
+                    </ReviewContext.Provider>
+                  ) : (
+                    <ReviewModal closeModal={closeModal} />
+                  )}
+                </>
+              )} */}
             </div>
           </div>
         ))}
