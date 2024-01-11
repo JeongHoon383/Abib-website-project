@@ -68,7 +68,7 @@ const Header = ({ setDark, dark }) => {
   return (
     <div
       onMouseLeave={() => setHover(false)}
-      className=" relative mt-[15vh] w-full overflow-x-hidden dark:bg-black dark:text-white "
+      className=" relative mt-[15vh] w-full overflow-x-hidden transition ease-in-out dark:bg-black dark:text-white "
     >
       <div className=" fixed top-0   z-20 h-[15vh] w-full border-b border-gray-300 bg-back dark:bg-black dark:text-white">
         <div className="flex   h-[4vh] items-center justify-center bg-font text-back">
