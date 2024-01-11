@@ -200,7 +200,7 @@ export default function SignupFormContent({
 
           <p className="absolute">{errors.phone && errors.phone.message}</p>
         </div>
-        {!showCertificationInput && (
+        {showCertificationInput && (
           <div className="mb-7 ">
             <label
               htmlFor="certificationCode"
