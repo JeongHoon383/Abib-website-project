@@ -24,6 +24,7 @@ export default function ReviewPhotoModal({
       <div className="fixed h-full w-full bg-black/90 "></div>
       {/* modal */}
       <div className="absolute top-52 flex w-[22rem] flex-col rounded bg-white text-black sm:w-[30rem] md:w-[45rem] md:flex-row lg:w-[62rem]">
+        {/* photo */}
         <div className="bg-black">
           <img
             className="mx-auto w-1/2 object-contain"
@@ -31,7 +32,8 @@ export default function ReviewPhotoModal({
             alt=""
           />
         </div>
-        <div className="bg-white">
+        {/* content */}
+        <div className="bg-white p-2">
           <div className="flex border-b pb-3">
             <div className="h-[50px] w-[50px]">
               <img
