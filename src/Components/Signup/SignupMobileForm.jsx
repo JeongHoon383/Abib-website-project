@@ -8,8 +8,8 @@ import SignupFormContent from "./SignupFormContent";
 export default function SignupMobileForm() {
   const [termsAgreement, setTermsAgreement] = useState(false);
   const [infoAgreement, setInfoAgreement] = useState(false);
-  const [isIdAvailable, setIsIdAvailable] = useState(false); //아이디 중복 여부 확인
-  const [isCertificated, setIsCertificated] = useState(false); //핸드폰 인증 여부 확인
+  const [isIdAvailable, setIsIdAvailable] = useState(false);
+  const [isCertificated, setIsCertificated] = useState(false); 
   const [isShowSignupForm, setIsShowSignupForm] = useState(false);
   const navigate = useNavigate();
 
