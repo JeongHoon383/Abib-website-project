@@ -25,6 +25,11 @@ import SignupComplete from "./Components/Signup/SignupComplete";
 import store from "./Modules/rootReducer";
 import { Provider } from "react-redux";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Members from "./Components/Admins/Members.jsx";
+import MembersUpdate from "./Components/Admins/MembersUpdate.jsx";
+import MembersCreate from "./Components/Admins/MembersCreate.jsx";
+import Products from "./Components/Admins/Products.jsx";
+import Dashboard from "./Components/Admins/Dashboard.jsx";
 
 const router = createBrowserRouter([
   {
@@ -90,6 +95,26 @@ const router = createBrowserRouter([
       {
         path: "/admin",
         element: <Admin />,
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
+      },
+      {
+        path: "/products",
+        element: <Products />,
+      },
+      {
+        path: "/members",
+        element: <Members />,
+      },
+      {
+        path: "/create",
+        element: <MembersCreate />,
+      },
+      {
+        path: "/update",
+        element: <MembersUpdate />,
       },
       {
         path: "/mypage",

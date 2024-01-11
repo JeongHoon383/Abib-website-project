@@ -87,7 +87,7 @@ export default function PrivateInquiry() {
         </div>
 
         <div>
-          <p className="mr-96 pb-2 pt-10 text-center text-xs font-bold">
+          <p className="-ml-96 pb-2 pt-10 text-center text-xs font-bold">
             문의내용
           </p>
 

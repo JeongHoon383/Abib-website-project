@@ -12,7 +12,7 @@ export default function ImageUpload({ getImage }) {
     for (const key of formData)
       console.log(`key---->>> ${JSON.stringify(key)}`);
 
-    //선택한 파일을 서버로 전송
+    // 선택한 파일을 서버로 전송
     axios.post("http://127.0.0.1:9090/upload", formData).then((result) => {
       getImage(result.data);
     });

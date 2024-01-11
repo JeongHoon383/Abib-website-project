@@ -7,7 +7,7 @@ export default function OrderList() {
   console.log("date", date);
   return (
     <div className="mx-auto text-center">
-      <div className="@media (min-width: 768px)  @media (min-width: 1024px) text-bold mx-auto border-b p-16 text-center text-3xl ">
+      <div className="@media (min-width: 768px)  @media (min-width: 1024px) text-bold mx-auto mb-20 border-b border-black p-16 text-center text-3xl">
         주문내역
       </div>
 
