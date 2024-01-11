@@ -9,7 +9,7 @@ export default function SignupMobileForm() {
   const [termsAgreement, setTermsAgreement] = useState(false);
   const [infoAgreement, setInfoAgreement] = useState(false);
   const [isIdAvailable, setIsIdAvailable] = useState(false);
-  const [isCertificated, setIsCertificated] = useState(false); 
+  const [isCertificated, setIsCertificated] = useState(false);
   const [isShowSignupForm, setIsShowSignupForm] = useState(false);
   const navigate = useNavigate();
 
@@ -51,6 +51,7 @@ export default function SignupMobileForm() {
         .post("http://127.0.0.1:9090/member/insertMember", data)
         .then((result) => {
           if (result.data === "success") {
+            alert("회원가입이 완료되었습니다.");
             navigate("/signup/complete");
           } else {
             alert(

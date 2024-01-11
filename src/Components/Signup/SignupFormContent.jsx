@@ -310,7 +310,7 @@ export default function SignupFormContent({
             id="address2"
             name="address2"
             className="transition-input w-full"
-            {...register("address2", { required: true })}
+            {...register("address2")}
           />
           <p className="absolute">
             {errors.address2 && errors.address2.message}

@@ -84,7 +84,7 @@ const schema = yup.object({
 
   address1: yup.string().required("기본 주소를 입력해주세요."),
 
-  address2: yup.string().required(" 나머지 주소를 입력해주세요."),
+  address2: yup.string(),
 });
 
 export default function SignupForm() {

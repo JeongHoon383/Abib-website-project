@@ -44,6 +44,7 @@ export default function SignupForm() {
         .post("http://127.0.0.1:9090/member/insertMember", data)
         .then((result) => {
           if (result.data === "success") {
+            alert("회원가입이 완료되었습니다.");
             navigate("/signup/complete");
           } else {
             alert(
