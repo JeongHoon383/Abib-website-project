@@ -100,7 +100,7 @@ export default function ProductDetail() {
           </div>
         </div>
       </div>
-      <div className="mb-24 text-center">
+      <div className="mb-24 text-center lg:mx-auto lg:w-4/5">
         {product.cover && (
           <img
             className="mb-8 sm:mx-auto lg:mx-auto lg:w-full"
@@ -108,23 +108,24 @@ export default function ProductDetail() {
             alt=""
           />
         )}
-        <p className="mb-4 text-xl font-bold">{product.engTitle}</p>
+
+        <p className="mb-4 text-4xl font-bold">{product.engTitle}</p>
         <p className="text-base sm:text-xl">
           {product.description && product.description.split("/")[0]}
         </p>
         <p className="text-base sm:text-xl">
           {product.description && product.description.split("/")[1]}
         </p>
-      </div>
-      <div className="acco-wrap divide-y divide-black">
-        <ProductContext.Provider value={product}>
-          <ProductAccordion />
-        </ProductContext.Provider>
+        <div className="acco-wrap divide-y divide-black">
+          <ProductContext.Provider value={product}>
+            <ProductAccordion />
+          </ProductContext.Provider>
+        </div>
       </div>
       <div className="recommend-wrap">
         <ProductRecommendSwiper />
       </div>
-      <div className="review-wrap">
+      <div className="review-wrap ">
         <ProductContext.Provider value={product}>
           <Review />
         </ProductContext.Provider>

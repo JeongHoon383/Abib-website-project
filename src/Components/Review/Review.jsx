@@ -24,6 +24,7 @@ export default function Review() {
       return acc;
     }, {}),
   );
+
   //페이징 처리
   const [currentPage, setCurrentPage] = useState(1); //현재 페이지 번호
   const [totalCount, setTotalCount] = useState(6); //전체 데이터 수
@@ -44,24 +45,23 @@ export default function Review() {
     pointCounts[point] = (pointCounts[point] || 0) + 1;
   });
 
-  // 전체 point 개수
-  const totalPoints = reviewList.length;
+  // 1점부터 5점까지의 정보를 가진 객체 배열 생성
+  const allPoints = Array.from({ length: 5 }, (_, index) => ({
+    point: index + 1,
+    count: pointCounts[index + 1] || 0,
+  }));
 
-  // 각 point의 비율 계산
-  const pointRatios = {};
-  Object.keys(pointCounts).forEach((point) => {
-    const count = pointCounts[point];
-    const ratio = ((count / totalPoints) * 100).toFixed(1); // 소수점 한 자리까지 표시
-    pointRatios[point] = parseFloat(ratio);
-  });
+  // 전체 리뷰 개수
+  const totalReviews = reviewList.length;
 
-  // 배열로 변환
-  const pointRatiosArray = Object.entries(pointRatios).map(
-    ([point, ratio]) => ({
-      point: parseInt(point),
-      ratio,
-    }),
-  );
+  // 역순으로 정렬
+  const sortedPoints = allPoints.reverse();
+
+  // 각 점수의 비율 계산
+  const pointRatios = sortedPoints.map((pointInfo) => ({
+    point: pointInfo.point,
+    ratio: parseInt((pointInfo.count / totalReviews) * 100),
+  }));
 
   useEffect(() => {
     // 서버에서 데이터를 불러오는 createAsyncThunk 호출
@@ -81,7 +81,7 @@ export default function Review() {
   };
 
   return (
-    <div className="mx-auto mb-12 w-11/12 sm:w-10/12">
+    <div className="mx-auto mb-12 w-11/12 sm:w-10/12 lg:w-8/12">
       <h3 className="mt-16 text-center text-2xl lg:mt-32">Review.</h3>
       <div className="mb-4 border border-gray-200 p-4 text-center">
         <p className="text-sm font-light text-neutral-800">상품만족도</p>
@@ -106,17 +106,17 @@ export default function Review() {
           id="rateChart"
           className="flex justify-evenly border-y border-gray-200 py-4"
         >
-          {pointRatiosArray.map((v, i) => (
-            <div key={i} className="flex flex-col items-center">
+          {pointRatios.map((rate) => (
+            <div key={rate.point} className="flex flex-col items-center">
               <div className="mb-1 flex h-14 w-2 items-end bg-gray-100 dark:bg-gray-700">
                 <div
                   className="h-14 w-2 bg-black"
-                  style={{ height: `${v.ratio}%` }}
+                  style={{ height: `${rate.ratio}%` }}
                 ></div>
               </div>
-              <span className="block text-sm font-semibold">{`${v.point}점`}</span>
+              <span className="block text-sm font-semibold">{`${rate.point}점`}</span>
               <span className="text-sm text-gray-300 dark:text-gray-400">
-                {v.ratio}%
+                {rate.ratio}%
               </span>
             </div>
           ))}
@@ -153,42 +153,46 @@ export default function Review() {
           </select>
         </div>
       </div>
-      {reviewList.map((item) => (
-        <div className="border-y border-gray-200 py-3" key={item.rid}>
-          <div className="flex">
-            <ReviewListStar rate={item.point} />
-            <span className="ml-2 text-sm font-thin">{item.point}.0</span>
-            <span className="ml-auto text-sm text-gray-400">
-              {item.rdate.split("T")[0]}
-            </span>
-          </div>
-          <span className="text-sm text-gray-400">
-            {item.mid.slice(0, -3) + "*".repeat(3)}
-          </span>
-          <div>
-            <span className="mb-1 inline-block text-sm">
-              {item.content.length > textLimit.current
-                ? isShowMores[item.rid]
-                  ? item.content
-                  : item.content.slice(0, textLimit.current)
-                : item.content}
-            </span>
-            <div
-              id="content-toggle"
-              className="mb-2 inline-block cursor-pointer text-sm text-gray-400"
-              onClick={() => toggleShowMore(item.rid)}
-            >
-              {item.content.length > textLimit.current &&
-                (isShowMores[item.rid] ? "[접기]" : " ...[더보기]")}
+      {reviewList
+        .slice()
+        .reverse()
+        .map((item) => (
+          <div className="border-y border-gray-200 py-3" key={item.rid}>
+            <div className="flex">
+              <ReviewListStar rate={item.point} />
+              <span className="ml-2 text-sm font-thin">{item.point}.0</span>
+              <span className="ml-auto text-sm text-gray-400">
+                {item.rdate.split("T")[0]}
+              </span>
             </div>
-            {item.rcover && (
-              <div className="size-14">
-                <img src={`/${item.rcover}`} alt="" className="w-full" />
-              </div>
-            )}
+            <span className="text-sm text-gray-400">
+              {item.mid.slice(0, -3) + "*".repeat(3)}
+            </span>
+            <div>
+              <span className="mb-1 inline-block text-sm">
+                {item.content.length > textLimit.current
+                  ? isShowMores[item.rid]
+                    ? item.content
+                    : item.content.slice(0, textLimit.current)
+                  : item.content}
+                <span
+                  id="content-toggle"
+                  className="mb-2 cursor-pointer text-sm text-gray-400"
+                  onClick={() => toggleShowMore(item.rid)}
+                >
+                  {item.content.length > textLimit.current &&
+                    (isShowMores[item.rid] ? "[접기]" : " ...[더보기]")}
+                </span>
+              </span>
+
+              {item.rcover && (
+                <div className="size-14">
+                  <img src={`/${item.rcover}`} alt="" className="w-full" />
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
       <Pagination
         total={totalCount}
         current={currentPage}
