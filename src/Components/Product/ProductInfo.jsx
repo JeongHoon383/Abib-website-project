@@ -17,7 +17,11 @@ export default function ProductInfo() {
     <ul className="text-left text-[10px] sm:text-[14px]">
       <li className="mb-3">
         <span className="inline-block w-52 font-bold">제품명</span>
-        <span className="text-neutral-600">{product.title}</span>
+        <span className="text-neutral-600">
+          {product.title && product.title.includes("/")
+            ? product.title.replace("/", " ")
+            : product.title}
+        </span>
       </li>
       <li className="mb-3">
         <span className="inline-block w-52 font-bold">용량</span>

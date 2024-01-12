@@ -6,14 +6,13 @@ import { closeModal } from "../../Modules/Modal";
 import { useParams } from "react-router-dom";
 import { getProductDetail } from "../../Modules/Products";
 
-export default function ReviewModal() {
+export default function ReviewModal({ pid }) {
   const [rate, setRate] = useState(0);
   const [textCount, setTextCount] = useState(0);
   const [uploadedImg, setUploadedImg] = useState({ preview: "", data: "" });
   const [reviewText, setReviewText] = useState("");
 
   const dispatch = useDispatch();
-  const { pid } = useParams();
   const product = useSelector((state) => state.product.productDetail.data);
   useEffect(() => {
     // 서버에서 데이터를 불러오는 createAsyncThunk 호출
@@ -92,14 +91,18 @@ export default function ReviewModal() {
         </button>
       </div>
       <div className="mt-2 flex items-center border-b p-2">
-        <div className="mr-2 w-1/6">
+        <div className="mr-2 w-1/6 md:w-1/12">
           <img
             src={`http://127.0.0.1:9090/uploads/${product.cover}`}
             className="w-full"
             alt=""
           />
         </div>
-        <span className="text-xs">{product.title}</span>
+        <span className="text-xs">
+          {product.title.includes("/")
+            ? product.title.replace("/", " ")
+            : product.title}
+        </span>
       </div>
       <form
         className="flex flex-col"

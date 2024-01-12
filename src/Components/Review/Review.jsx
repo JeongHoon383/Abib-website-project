@@ -74,11 +74,24 @@ export default function Review() {
     }));
   };
 
-  const handleOpenReviewModal = () => {
+  const handleOpenReviewModal = (pid) => {
     dispatch(
       openModal({
         modalType: "ReviewModal",
         isOpen: true,
+        pid,
+      }),
+    );
+    document.body.style.overflow = "hidden";
+  };
+
+  const handleOpenReviewPhotoModal = (pid, review) => {
+    dispatch(
+      openModal({
+        modalType: "ReviewPhotoModal",
+        isOpen: true,
+        pid,
+        review,
       }),
     );
     document.body.style.overflow = "hidden";
@@ -134,7 +147,7 @@ export default function Review() {
           <div>
             <button
               type="button"
-              onClick={handleOpenReviewModal}
+              onClick={() => handleOpenReviewModal(pid)}
               className="me-2 rounded-md border border-gray-200 bg-white px-5 py-1 text-xs font-light text-neutral-400 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
             >
               리뷰 작성하기
@@ -142,9 +155,7 @@ export default function Review() {
           </div>
         </div>
       </div>
-      <ReviewContext.Provider value={{ reviewList, average }}>
-        <ReviewSwiper photoReview={photoReview} />
-      </ReviewContext.Provider>
+      <ReviewSwiper photoReview={photoReview} />
       <div className="my-5 flex items-center">
         <div className="mr-4 text-xs">
           <span className="mr-1 font-semibold">상품평수</span>
@@ -193,25 +204,11 @@ export default function Review() {
               {item.rcover && (
                 <div
                   className="size-14 cursor-pointer"
-                  // onClick={}
+                  onClick={() => handleOpenReviewPhotoModal(pid, item)}
                 >
                   <img src={`/${item.rcover}`} alt="" className="w-full" />
                 </div>
               )}
-              {/* {modalOpen && (
-                <>
-                  {showPhotoModal ? (
-                    <ReviewContext.Provider value={{ reviewList, average }}>
-                      <ReviewPhotoModal
-                        review={selectedReview}
-                        closeModal={closeModal}
-                        setSelectedReview={setSelectedReview}
-                        ReviewListStar={ReviewListStar}
-                      />
-                    </ReviewContext.Provider>
-                  ) : }
-                </>
-              )} */}
             </div>
           </div>
         ))}
