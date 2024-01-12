@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 
 const OrderForm = () => {
   const [formData, setFormData] = useState({
@@ -105,7 +106,7 @@ const OrderForm = () => {
                     name="phone"
                     value={formData.itemName}
                     onChange={handleChange}
-                    className="form-text-hover h-[40px] w-full border border-solid border-gray-300 p-[5px] lg:w-[50%]"
+                    className="form-text-hover w-z h-[40px] border border-solid border-gray-300 p-[5px]"
                   />
                 </div>
               </label>
@@ -120,7 +121,7 @@ const OrderForm = () => {
                     name="email"
                     value={formData.itemName}
                     onChange={handleChange}
-                    className="form-text-hover h-[40px] w-full border border-solid border-gray-300 p-[5px] lg:w-[50%]"
+                    className="form-text-hover h-[40px] w-full border border-solid border-gray-300 p-[5px]"
                   />
                 </div>
               </label>
@@ -211,27 +212,35 @@ const OrderForm = () => {
                   <span className="ml-[3px] text-red-500">*</span>
                 </p>
                 <div className="text-left">
-                  <input
+                  <select
                     type="tel"
                     name="phone"
                     value={formData.itemName}
                     onChange={handleChange}
-                    className="form-text-hover h-[40px] w-full border border-solid border-gray-300 p-[5px] lg:w-[50%]"
-                  />
-                </div>
-              </label>
-              <label className="py-[5px]">
-                <p className="w-full pb-[5px] pt-[10px] text-left">
-                  이메일
-                  <span className="ml-[3px] text-red-500">*</span>
-                </p>
-                <div className="text-left">
+                    className="form-text-hover h-[40px] w-[30%] border border-solid border-gray-300 p-[5px] md:w-[10%]"
+                  >
+                    <option value="">010</option>
+                    <option value="">011</option>
+                    <option value="">016</option>
+                    <option value="">017</option>
+                    <option value="">018</option>
+                    <option value="">019</option>
+                  </select>
+                  <span className="mx-[4px]">-</span>
                   <input
-                    type="email"
-                    name="email"
+                    type="tel"
+                    name="phone2"
                     value={formData.itemName}
                     onChange={handleChange}
-                    className="form-text-hover h-[40px] w-full border border-solid border-gray-300 p-[5px] lg:w-[50%]"
+                    className="form-text-hover h-[40px] w-[30%] border border-solid border-gray-300 p-[5px] md:w-[10%]"
+                  />
+                  <span className="mx-[4px]">-</span>
+                  <input
+                    type="tel"
+                    name="phone3"
+                    value={formData.itemName}
+                    onChange={handleChange}
+                    className="form-text-hover ml-[4px] h-[40px] w-[30%] border border-solid border-gray-300 p-[5px] md:w-[10%]"
                   />
                 </div>
               </label>
