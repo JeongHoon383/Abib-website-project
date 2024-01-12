@@ -104,7 +104,7 @@ export default function SignupFormContent({
               중복 확인
             </button>
           </div>
-          <p className="absolute">{errors.id && errors.id.message}</p>
+          <p className=" text-rose-400">{errors.id && errors.id.message}</p>
         </div>
 
         <div className="w-full">
@@ -121,7 +121,7 @@ export default function SignupFormContent({
               placeholder="영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 8자~16자"
               {...register("password", { required: true })}
             />
-            <p className="absolute">
+            <p className=" text-rose-400">
               {errors.password && errors.password.message}
             </p>
           </div>
@@ -142,7 +142,7 @@ export default function SignupFormContent({
               {...register("confirmPassword", { required: true })}
             />
           </div>
-          <p className="absolute">
+          <p className=" text-rose-400">
             {errors.confirmPassword && errors.confirmPassword.message}
           </p>
         </div>
@@ -162,7 +162,7 @@ export default function SignupFormContent({
             className="transition-input w-full"
             {...register("name", { required: true })}
           />
-          <p className="absolute">{errors.name && errors.name.message}</p>
+          <p className=" text-rose-400">{errors.name && errors.name.message}</p>
         </div>
 
         <div className="mb-7">
@@ -198,7 +198,9 @@ export default function SignupFormContent({
             </button>
           </div>
 
-          <p className="absolute">{errors.phone && errors.phone.message}</p>
+          <p className=" text-rose-400">
+            {errors.phone && errors.phone.message}
+          </p>
         </div>
         {showCertificationInput && (
           <div className="mb-7 ">
@@ -243,7 +245,7 @@ export default function SignupFormContent({
             maxLength={8}
             {...register("birthdate", { required: true })}
           />
-          <p className="absolute">
+          <p className=" text-rose-400">
             {errors.birthdate && errors.birthdate.message}
           </p>
         </div>
@@ -260,7 +262,9 @@ export default function SignupFormContent({
             className="transition-input w-full"
             {...register("email", { required: true })}
           />
-          <p className="absolute">{errors.email && errors.email.message}</p>
+          <p className=" text-rose-400">
+            {errors.email && errors.email.message}
+          </p>
         </div>
 
         <div className="mb-7 flex w-full justify-between">
@@ -279,7 +283,7 @@ export default function SignupFormContent({
               className="transition-input h-10 w-full"
               {...register("postalcode", { required: true })}
             />
-            <p className="absolute">
+            <p className=" text-rose-400">
               {errors.postalcode && errors.postalcode.message}
             </p>
           </div>
@@ -304,7 +308,7 @@ export default function SignupFormContent({
             className="transition-input w-full"
             {...register("address1", { required: true })}
           />
-          <p className="absolute">
+          <p className=" text-rose-400">
             {errors.address1 && errors.address1.message}
           </p>
         </div>
@@ -320,7 +324,7 @@ export default function SignupFormContent({
             className="transition-input w-full"
             {...register("address2")}
           />
-          <p className="absolute">
+          <p className=" text-rose-400">
             {errors.address2 && errors.address2.message}
           </p>
         </div>
