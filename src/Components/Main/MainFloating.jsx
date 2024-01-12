@@ -1,16 +1,40 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { BsFillSendFill } from "react-icons/bs";
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const MainFloating = ({ constraintsRef }) => {
   const [toggle, setToggle] = useState(true);
   const [toggleQna, setToggleQna] = useState(false);
+  const { register, handleSubmit, setValue } = useForm();
+  const memberInfo = useSelector((state) => state.memberSlice);
   const handleToggleQna = () => {
     return setToggleQna((prev) => !prev);
   };
   function cls(...a) {
     return a.join(" ");
   }
+  const onValid = (data) => {
+    console.log(memberInfo.id);
+    const { qtitle, qcontent } = data;
+    if (memberInfo.id) {
+      setValue(qtitle, "");
+      setValue(qcontent, "");
+      axios
+        .post("http://127.0.0.1:9090", {
+          qTitle: qtitle,
+          qContent: qcontent,
+          mid: memberInfo.id,
+        })
+        .then((res) => {
+          alert("ok");
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
   return (
     <div>
       <AnimatePresence>
@@ -70,10 +94,11 @@ const MainFloating = ({ constraintsRef }) => {
                 <div className="mt-4">
                   <fieldset>
                     <legend className="text-center text-3xl">문의하기</legend>
-                    <form method="post" action="">
+                    <form method="post" onSubmit={handleSubmit(onValid)}>
                       <label>
                         제목
                         <input
+                          {...register("qtitle")}
                           className="w-full p-1 outline-none focus:border-b-[1px]"
                           type="text"
                           placeholder="제목을 입력해주세요"
@@ -82,6 +107,7 @@ const MainFloating = ({ constraintsRef }) => {
                       <label className="  w-full">
                         내용
                         <textarea
+                          {...register("qcontent")}
                           className="block h-[200px] w-full resize-none border px-2 py-4 outline-none"
                           type="text"
                           placeholder="제목을 입력해주세요"
