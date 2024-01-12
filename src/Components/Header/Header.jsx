@@ -5,6 +5,8 @@ import HeaderForm from "./HeaderForm";
 import HeaderLink from "./HeaderLink";
 import HeaderMLink from "./HeaderMLink";
 import { IoSunnySharp, IoMoonSharp } from "react-icons/io5";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../Modules/Member";
 const searchVars = {
   //window.innerWidth를 사용 이게 픽셀로 주는것보다 더 좋을듯
   start: {
@@ -65,6 +67,12 @@ const Header = ({ setDark, dark }) => {
   const [hover, setHover] = useState(false);
   const [cateHover, setCateHover] = useState();
   const [mToggle, setMToggle] = useState(false);
+  const dispatch = useDispatch();
+  const memberInfo = useSelector((state) => state.memberSlice) || {};
+
+  const handleLogout = () => {
+    if (window.confirm("로그아웃 하시겠습니까?")) dispatch(logout());
+  };
   return (
     <div
       onMouseLeave={() => setHover(false)}
@@ -195,15 +203,26 @@ const Header = ({ setDark, dark }) => {
                 0
               </span>
             </span>
-            <span
-              onClick={() => navigate("/signup/")}
-              className="cursor-pointer"
-            >
-              회원가입
-            </span>
-            <span onClick={() => navigate("/login")} className="cursor-pointer">
-              로그인
-            </span>
+            {memberInfo.id ? (
+              <span onClick={handleLogout} className="cursor-pointer">
+                로그아웃
+              </span>
+            ) : (
+              <>
+                <span
+                  onClick={() => navigate("/signup/")}
+                  className="cursor-pointer"
+                >
+                  회원가입
+                </span>
+                <span
+                  onClick={() => navigate("/login")}
+                  className="cursor-pointer"
+                >
+                  로그인
+                </span>
+              </>
+            )}
           </div>
           <div className="flex w-[33%]  items-center justify-end lg:hidden lg:w-0">
             <span>

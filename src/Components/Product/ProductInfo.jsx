@@ -1,13 +1,27 @@
-import React, { useContext } from "react";
-import { ProductContext } from "../../Pages/Product/ProductDetail";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getProductDetail } from "../../Modules/Products";
+import { useParams } from "react-router-dom";
 
 export default function ProductInfo() {
-  let product = useContext(ProductContext); //조부모한테 전달받기
+  const { pid } = useParams();
+  const dispatch = useDispatch();
+  const product = useSelector((state) => state.product.productDetail.data);
+
+  useEffect(() => {
+    // 서버에서 데이터를 불러오는 createAsyncThunk 호출
+    dispatch(getProductDetail(pid));
+  }, [dispatch, pid]);
+
   return (
-    <ul className="text-[10px] sm:text-[14px]">
+    <ul className="text-left text-[10px] sm:text-[14px]">
       <li className="mb-3">
         <span className="inline-block w-52 font-bold">제품명</span>
-        <span className="text-neutral-600">{product.title}</span>
+        <span className="text-neutral-600">
+          {product.title && product.title.includes("/")
+            ? product.title.replace("/", " ")
+            : product.title}
+        </span>
       </li>
       <li className="mb-3">
         <span className="inline-block w-52 font-bold">용량</span>

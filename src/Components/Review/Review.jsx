@@ -4,8 +4,8 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ReviewSwiper from "./ReviewSwiper";
 import ReviewListStar from "./ReviewListStar";
-import ReviewModal from "./ReviewModal";
 import { getReview } from "../../Modules/Review";
+import { openModal } from "../../Modules/Modal";
 
 import "rc-pagination/assets/index.css";
 import "../../custom.css";
@@ -16,15 +16,14 @@ export default function Review() {
   const { pid } = useParams();
   const dispatch = useDispatch();
   const textLimit = useRef(150);
-  const reviewList = useSelector((state) => state.review.reviews.list);
-  const [modalOpen, setModalOpen] = useState(false);
+  const reviewList = useSelector((state) => state.review.list);
   const [isShowMores, setIsShowMores] = useState(
     reviewList.reduce((acc, item) => {
       acc[item.rid] = false;
       return acc;
     }, {}),
   );
-
+  const [selectedReview, setSelectedReview] = useState(null);
   //페이징 처리
   const [currentPage, setCurrentPage] = useState(1); //현재 페이지 번호
   const [totalCount, setTotalCount] = useState(6); //전체 데이터 수
@@ -68,16 +67,34 @@ export default function Review() {
     dispatch(getReview(pid));
   }, [dispatch, pid]);
 
-  const showModal = () => {
-    setModalOpen(true);
-    document.body.style.overflow = "hidden";
-  };
-
   const toggleShowMore = (id) => {
     setIsShowMores((prevIsShowMores) => ({
       ...prevIsShowMores,
       [id]: !prevIsShowMores[id],
     }));
+  };
+
+  const handleOpenReviewModal = (pid) => {
+    dispatch(
+      openModal({
+        modalType: "ReviewModal",
+        isOpen: true,
+        pid,
+      }),
+    );
+    document.body.style.overflow = "hidden";
+  };
+
+  const handleOpenReviewPhotoModal = (pid, review) => {
+    dispatch(
+      openModal({
+        modalType: "ReviewPhotoModal",
+        isOpen: true,
+        pid,
+        review,
+      }),
+    );
+    document.body.style.overflow = "hidden";
   };
 
   return (
@@ -95,7 +112,9 @@ export default function Review() {
           >
             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
           </svg>
-          <span className="text-2xl font-bold text-black">{average}</span>{" "}
+          <span className="text-2xl font-bold text-black">
+            {isNaN(average) ? 0 : average}
+          </span>
           <span className="text-2xl text-neutral-400"> /5</span>
         </div>
         <p className="mb-4 text-xs font-light text-neutral-800">
@@ -111,12 +130,12 @@ export default function Review() {
               <div className="mb-1 flex h-14 w-2 items-end bg-gray-100 dark:bg-gray-700">
                 <div
                   className="h-14 w-2 bg-black"
-                  style={{ height: `${rate.ratio}%` }}
+                  style={{ height: `${isNaN(rate.ratio) ? 0 : rate.ratio}%` }}
                 ></div>
               </div>
               <span className="block text-sm font-semibold">{`${rate.point}점`}</span>
               <span className="text-sm text-gray-300 dark:text-gray-400">
-                {rate.ratio}%
+                {isNaN(rate.ratio) ? 0 : rate.ratio}%
               </span>
             </div>
           ))}
@@ -128,18 +147,15 @@ export default function Review() {
           <div>
             <button
               type="button"
-              onClick={showModal}
+              onClick={() => handleOpenReviewModal(pid)}
               className="me-2 rounded-md border border-gray-200 bg-white px-5 py-1 text-xs font-light text-neutral-400 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
             >
               리뷰 작성하기
             </button>
-            {modalOpen && <ReviewModal setModalOpen={setModalOpen} />}
           </div>
         </div>
       </div>
-      <ReviewContext.Provider value={{ reviewList, average }}>
-        <ReviewSwiper photoReview={photoReview} />
-      </ReviewContext.Provider>
+      <ReviewSwiper photoReview={photoReview} />
       <div className="my-5 flex items-center">
         <div className="mr-4 text-xs">
           <span className="mr-1 font-semibold">상품평수</span>
@@ -186,7 +202,10 @@ export default function Review() {
               </span>
 
               {item.rcover && (
-                <div className="size-14">
+                <div
+                  className="size-14 cursor-pointer"
+                  onClick={() => handleOpenReviewPhotoModal(pid, item)}
+                >
                   <img src={`/${item.rcover}`} alt="" className="w-full" />
                 </div>
               )}

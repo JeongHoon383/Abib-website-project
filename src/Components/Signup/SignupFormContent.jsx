@@ -79,12 +79,12 @@ export default function SignupFormContent({
           <label htmlFor="id" className="block text-[12px] font-semibold">
             아이디
           </label>
-          <div className="flex">
+          <div className="flex justify-between">
             <input
               type="text"
               id="id"
               name="id"
-              className="transition-input w-3/4"
+              className="transition-input w-[73%]"
               maxLength={16}
               placeholder="영문 소문자/숫자, 4~16자"
               {...register("id", {
@@ -96,7 +96,7 @@ export default function SignupFormContent({
               type="button"
               onClick={checkIdAvailable}
               className={`h-10 font-normal ${
-                errors.id || idValue === ""
+                errors.id || !idValue
                   ? "pointer-events-none border border-black bg-back"
                   : "transition-btn"
               }    w-1/4 dark:bg-slate-400`}
@@ -104,7 +104,7 @@ export default function SignupFormContent({
               중복 확인
             </button>
           </div>
-          <p className="absolute">{errors.id && errors.id.message}</p>
+          <p className=" text-rose-400">{errors.id && errors.id.message}</p>
         </div>
 
         <div className="w-full">
@@ -121,7 +121,7 @@ export default function SignupFormContent({
               placeholder="영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 8자~16자"
               {...register("password", { required: true })}
             />
-            <p className="absolute">
+            <p className=" text-rose-400">
               {errors.password && errors.password.message}
             </p>
           </div>
@@ -142,7 +142,7 @@ export default function SignupFormContent({
               {...register("confirmPassword", { required: true })}
             />
           </div>
-          <p className="absolute">
+          <p className=" text-rose-400">
             {errors.confirmPassword && errors.confirmPassword.message}
           </p>
         </div>
@@ -162,37 +162,45 @@ export default function SignupFormContent({
             className="transition-input w-full"
             {...register("name", { required: true })}
           />
-          <p className="absolute">{errors.name && errors.name.message}</p>
+          <p className=" text-rose-400">{errors.name && errors.name.message}</p>
         </div>
 
         <div className="mb-7">
-          <label htmlFor="phone" className="block text-[12px] font-semibold">
+          <label
+            htmlFor="phone"
+            className="block w-full text-[12px] font-semibold"
+          >
             휴대전화
           </label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            className="transition-input w-3/4"
-            placeholder="'-'를 제외하고 입력해주세요."
-            maxLength={11}
-            {...register("phone", {
-              required: true,
-              onChange: () => getIsCertificated(false),
-            })}
-          />
-          <button
-            type="button"
-            onClick={sendCertificationCode}
-            className={`h-10 w-1/4 dark:bg-slate-400 ${
-              errors.phone || phoneValue === ""
-                ? "pointer-events-none border border-black bg-back"
-                : "transition-btn"
-            }`}
-          >
-            인증 번호 전송
-          </button>
-          <p className="absolute">{errors.phone && errors.phone.message}</p>
+          <div className="flex justify-between">
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              className="transition-input w-[73%]"
+              placeholder="'-'를 제외하고 입력해주세요."
+              maxLength={11}
+              {...register("phone", {
+                required: true,
+                onChange: () => getIsCertificated(false),
+              })}
+            />
+            <button
+              type="button"
+              onClick={sendCertificationCode}
+              className={`h-10 w-1/4 dark:bg-slate-400 ${
+                errors.phone || !phoneValue
+                  ? "pointer-events-none border border-black bg-back"
+                  : "transition-btn"
+              }`}
+            >
+              인증 번호 전송
+            </button>
+          </div>
+
+          <p className=" text-rose-400">
+            {errors.phone && errors.phone.message}
+          </p>
         </div>
         {showCertificationInput && (
           <div className="mb-7 ">
@@ -202,20 +210,22 @@ export default function SignupFormContent({
             >
               인증번호 입력
             </label>
-            <input
-              type="text"
-              id="certificationCode"
-              name="certificationCode"
-              className="transition-input w-3/4"
-              ref={certificationCodeRef}
-            />
-            <button
-              type="button"
-              onClick={checkCertificationCode}
-              className="transition-btn h-10 w-1/4"
-            >
-              인증하기
-            </button>
+            <div className="flex justify-between">
+              <input
+                type="text"
+                id="certificationCode"
+                name="certificationCode"
+                className="transition-input w-[73%]"
+                ref={certificationCodeRef}
+              />
+              <button
+                type="button"
+                onClick={checkCertificationCode}
+                className="transition-btn h-10 w-1/4"
+              >
+                인증하기
+              </button>
+            </div>
           </div>
         )}
 
@@ -235,7 +245,7 @@ export default function SignupFormContent({
             maxLength={8}
             {...register("birthdate", { required: true })}
           />
-          <p className="absolute">
+          <p className=" text-rose-400">
             {errors.birthdate && errors.birthdate.message}
           </p>
         </div>
@@ -252,11 +262,13 @@ export default function SignupFormContent({
             className="transition-input w-full"
             {...register("email", { required: true })}
           />
-          <p className="absolute">{errors.email && errors.email.message}</p>
+          <p className=" text-rose-400">
+            {errors.email && errors.email.message}
+          </p>
         </div>
 
-        <div className="mb-7 flex w-full">
-          <div className="w-3/4">
+        <div className="mb-7 flex w-full justify-between">
+          <div className="w-[73%]">
             <label
               htmlFor="postalcode"
               className="block text-[12px] font-semibold"
@@ -271,7 +283,7 @@ export default function SignupFormContent({
               className="transition-input h-10 w-full"
               {...register("postalcode", { required: true })}
             />
-            <p className="absolute">
+            <p className=" text-rose-400">
               {errors.postalcode && errors.postalcode.message}
             </p>
           </div>
@@ -296,7 +308,7 @@ export default function SignupFormContent({
             className="transition-input w-full"
             {...register("address1", { required: true })}
           />
-          <p className="absolute">
+          <p className=" text-rose-400">
             {errors.address1 && errors.address1.message}
           </p>
         </div>
@@ -312,7 +324,7 @@ export default function SignupFormContent({
             className="transition-input w-full"
             {...register("address2")}
           />
-          <p className="absolute">
+          <p className=" text-rose-400">
             {errors.address2 && errors.address2.message}
           </p>
         </div>

@@ -2,6 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import { useDispatch } from "react-redux";
+import { login } from "../../Modules/Member.js";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { MdArrowBackIos } from "react-icons/md";
 
@@ -11,6 +13,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [isKeepLogin, setIsKeepLogin] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -28,12 +31,17 @@ export default function Login() {
           if (result.data.isIdExist) {
             if (result.data.isLogin) {
               const memberInfo = jwtDecode(result.data.token);
-              console.log(memberInfo);
+              memberInfo.isKeepLogin = isKeepLogin;
+              dispatch(login(memberInfo));
+
               if (isKeepLogin) {
-                //로그인 유지 o
+                localStorage.setItem("member", JSON.stringify(memberInfo));
               } else {
-                //로그인 유지 x
+                sessionStorage.setItem("member", JSON.stringify(memberInfo));
               }
+
+              alert("로그인에 성공했습니다.");
+              navigate("/");
             } else {
               alert("비밀번호가 일치하지 않습니다.");
             }
