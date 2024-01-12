@@ -11,14 +11,12 @@ const options = [
 export default function Inquiry() {
   return (
     <div>
-      <div className="@media (min-width: 768px)  @media (min-width: 1024px) text-bold gray-800 mx-auto border-b p-16 text-center text-3xl ">
+      <div className=" text-bold gray-800 mx-auto border-b border-b-black p-16 text-center text-3xl ">
         문의내역
       </div>
-      <div className="mb-4 mt-8 flex justify-center gap-20  pt-20 ">
-        <div className="text-xs font-bold">NO</div>
+      <div className="pt-25 mb-4 mt-8 flex justify-center gap-32 max-sm:gap-12 ">
         <div className="text-xs font-bold">BOARD</div>
         <div className="text-xs font-bold">SUBJECT</div>
-        <div className="text-xs font-bold">NAME</div>
         <div className="text-xs font-bold">DATE</div>
       </div>
 
@@ -26,7 +24,7 @@ export default function Inquiry() {
         주문내역이 없습니다
       </div>
 
-      <div className="mb-6 mt-4 flex justify-center text-center">
+      <div className="mb-6 mt-4 flex justify-center text-center max-sm:p-2">
         <select className=" form-select pr-4 text-center text-xs hover:border-gray-600">
           {options.map((option) => (
             <option className="text-left" value={option.value}>
@@ -37,7 +35,7 @@ export default function Inquiry() {
 
         <input
           type="text"
-          className="w-61 mr-4 h-10 border border-gray-300 pl-4 hover:border-gray-600"
+          className="mr-1 h-10 w-48 border border-gray-300 pl-4 hover:border-gray-600"
         />
         <div className="h-10 w-32 cursor-pointer border border-gray-300 bg-black pt-3 text-xs font-bold text-white hover:border-gray-100">
           찾기

@@ -86,7 +86,7 @@ const Header = ({ setDark, dark }) => {
         </div>
         <div className="flex h-[11vh] w-full items-center justify-between   px-8 py-4">
           <div className="hidden w-[33%] space-x-[15px] text-[12px] font-medium lg:block">
-            <span
+            <span 
               className="cursor-pointer"
               onMouseOver={() => {
                 setHover(true);
