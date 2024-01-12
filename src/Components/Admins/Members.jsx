@@ -9,7 +9,10 @@ export default function Members() {
   useEffect(() => {
     axios
       .get("http://localhost:9090")
-      .then((res) => setMembers(res.data))
+      .then((res) => {
+        console.log(res.data)
+        setMembers(res.data)
+      })
       .catch((err) => console.log(err));
   }, []);
   return (

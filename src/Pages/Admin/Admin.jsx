@@ -1,11 +1,8 @@
 import React from "react";
 
 import { Form } from "react-bootstrap";
-import { IoIosArrowDropright } from "react-icons/io";
-import { FaCloud, FaFileUpload, FaQq } from "react-icons/fa";
 import { useState } from "react";
 import axios from "axios";
-import Axios from "axios";
 import { RiAdminFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { NavLink, Route, Routes } from "react-router-dom";
@@ -43,15 +40,15 @@ export default function Admin() {
     // { title: "Setting", src: "Setting" },
   ];
 
-  const fileUpload = (e) => {
-    const files = e.target.files[0];
-    setForm((prevForm) => ({
-      ...prevForm,
-      // cover: [...prevForm.cover, ...files],
-      cover: files,
-    }));
-  };
-  console.log();
+  // const fileUpload = (e) => {
+  //   const files = e.target.files[0];
+  //   setForm((prevForm) => ({
+  //     ...prevForm,
+  //     // cover: [...prevForm.cover, ...files],
+  //     cover: files,
+  //   }));
+  // };
+  // console.log();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -214,7 +211,7 @@ export default function Admin() {
                 placeholder="prod option"
               />
             </p>
-            <p>
+            {/* <p>
               cover :{" "}
               <Form.Control
                 type="file"
@@ -225,7 +222,7 @@ export default function Admin() {
                   FileUpload(e);
                 }}
               ></Form.Control>
-            </p>
+            </p> */}
 
             <p>
               functional : <input type="text" placeholder="functional" />
@@ -246,7 +243,7 @@ export default function Admin() {
                 placeholder="description"
               />
             </p>
-
+            <ImageUpload />
             <button
               type="submit"
               className="focus:shadow-outline-blue rounded bg-gray-500 px-3 py-1 font-bold text-white hover:bg-blue-700 focus:outline-none active:bg-blue-800"
