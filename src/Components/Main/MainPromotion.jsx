@@ -9,7 +9,6 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getCart, insert } from "../../Modules/cart";
-import { getProductDetail } from "../../Modules/Products";
 
 const MainPromotion = ({ title, titleArr }) => {
   const [modalOpen, setModalOpen] = useState(false);
