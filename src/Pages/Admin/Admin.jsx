@@ -12,7 +12,7 @@ import { NavLink, Route, Routes } from "react-router-dom";
 import Dashboard from "../../Components/Admins/Dashboard";
 import Products from "../../Components/Admins/Products";
 import Members from "../../Components/Admins/Members";
-
+import ImageUpload from "../ImageUpload";
 export default function Admin() {
   const [open, setOpen] = useState(true);
   const [image, setImage] = useState(null);
@@ -154,21 +154,33 @@ export default function Admin() {
         </div>
 
         <div className="h-screen flex-1 p-7">
-          <h1 className="text-2xl font-semibold ">Product</h1>
+          <h1 className="text-2xl font-semibold text-gray-400">New Product</h1>
           <br></br>
 
           {/* <form action="" onSubmit={handleSubmit}> */}
           <form action="">
             <p>
-              title : <input type="text" name="title" placeholder="title" />
+              title :{" "}
+              <input
+                className="mb-3 h-7 border"
+                type="text"
+                name="title"
+                placeholder="title"
+              />
             </p>
             <p>
               eng title :{" "}
-              <input type="text" name="eng title" placeholder="eng title" />
+              <input
+                className="mb-3 h-7  border"
+                type="text"
+                name="eng title"
+                placeholder="eng title"
+              />
             </p>
             <p>
               product volume :{" "}
               <input
+                className="mb-3 h-7  border"
                 type="text"
                 name="product volume"
                 placeholder="product volume"
@@ -177,6 +189,7 @@ export default function Admin() {
             <p>
               original price :{" "}
               <input
+                className="mb-3 h-7  border"
                 type="text"
                 name="original price"
                 placeholder="original price"
@@ -184,11 +197,21 @@ export default function Admin() {
             </p>
             <p>
               price sales :{" "}
-              <input type="text" name="price sales" placeholder="price sales" />
+              <input
+                className="mb-3 h-7  border"
+                type="text"
+                name="price sales"
+                placeholder="price sales"
+              />
             </p>
             <p>
               prod option :{" "}
-              <input type="text" name="prod option" placeholder="prod option" />
+              <input
+                className="mb-3 h-7  border"
+                type="text"
+                name="prod option"
+                placeholder="prod option"
+              />
             </p>
             {/* <p>
               cover :{" "}
@@ -206,7 +229,7 @@ export default function Admin() {
             <p>
               <input
                 type="file"
-                className="shadow-none"
+                className="mb-3  shadow-none"
                 accept="image/*"
                 multiple
                 onChange={(e) => {
@@ -216,14 +239,31 @@ export default function Admin() {
               {/* <ImageUpload getImage={getImage} /> */}
             </p>
 
+            <ImageUpload />
+
             <p>
-              functional : <input type="text" placeholder="functional" />
+              functional :{" "}
+              <input
+                className="mb-3 h-7  border"
+                type="text"
+                placeholder="functional"
+              />
             </p>
             <p>
-              category : <input type="text" placeholder="category" />
+              category :{" "}
+              <input
+                className="mb-3 h-7 border"
+                type="text"
+                placeholder="category"
+              />
             </p>
             <p>
-              description : <input type="text" placeholder="description" />
+              description :{" "}
+              <input
+                className="mb-3 h-7  border"
+                type="text"
+                placeholder="description"
+              />
             </p>
 
             <button
@@ -253,3 +293,6 @@ export default function Admin() {
     </>
   );
 }
+
+//이미지 path에 이미지를 넣고
+// src에 이미지 path

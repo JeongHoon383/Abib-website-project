@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Scrollbar } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import CartModal from "../Cart/CartModal";
