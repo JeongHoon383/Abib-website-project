@@ -74,13 +74,24 @@ export default function Review() {
     }));
   };
 
-  const handleOpenReviewModal = (pid, review) => {
+  const handleOpenReviewModal = (pid) => {
     dispatch(
       openModal({
         modalType: "ReviewModal",
         isOpen: true,
-        review,
         pid,
+      }),
+    );
+    document.body.style.overflow = "hidden";
+  };
+
+  const handleOpenReviewPhotoModal = (pid, review) => {
+    dispatch(
+      openModal({
+        modalType: "ReviewPhotoModal",
+        isOpen: true,
+        pid,
+        review,
       }),
     );
     document.body.style.overflow = "hidden";
@@ -193,7 +204,7 @@ export default function Review() {
               {item.rcover && (
                 <div
                   className="size-14 cursor-pointer"
-                  onClick={handleOpenReviewModal(pid, item)}
+                  onClick={() => handleOpenReviewPhotoModal(pid, item)}
                 >
                   <img src={`/${item.rcover}`} alt="" className="w-full" />
                 </div>
