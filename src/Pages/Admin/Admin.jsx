@@ -1,5 +1,5 @@
 import React from "react";
-// import ImageUpload from "../ImageUpload";
+
 import { Form } from "react-bootstrap";
 import { IoIosArrowDropright } from "react-icons/io";
 import { FaCloud, FaFileUpload, FaQq } from "react-icons/fa";
@@ -13,6 +13,7 @@ import Dashboard from "../../Components/Admins/Dashboard";
 import Products from "../../Components/Admins/Products";
 import Members from "../../Components/Admins/Members";
 import ImageUpload from "../ImageUpload";
+
 export default function Admin() {
   const [open, setOpen] = useState(true);
   const [image, setImage] = useState(null);
@@ -213,7 +214,7 @@ export default function Admin() {
                 placeholder="prod option"
               />
             </p>
-            {/* <p>
+            <p>
               cover :{" "}
               <Form.Control
                 type="file"
@@ -224,30 +225,10 @@ export default function Admin() {
                   FileUpload(e);
                 }}
               ></Form.Control>
-              <ImageUpload getImage={getImage} />
-            </p> */}
-            <p>
-              <input
-                type="file"
-                className="mb-3  shadow-none"
-                accept="image/*"
-                multiple
-                onChange={(e) => {
-                  fileUpload(e);
-                }}
-              />
-              {/* <ImageUpload getImage={getImage} /> */}
             </p>
 
-            <ImageUpload />
-
             <p>
-              functional :{" "}
-              <input
-                className="mb-3 h-7  border"
-                type="text"
-                placeholder="functional"
-              />
+              functional : <input type="text" placeholder="functional" />
             </p>
             <p>
               category :{" "}
