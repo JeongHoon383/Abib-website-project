@@ -38,7 +38,7 @@ const MainPromotion = ({ title, titleArr }) => {
       {/* modal */}
       {modalOpen && <CartModal setModalOpen={setModalOpen} product={product} />}
       {promotionLoading ? (
-        "로딩중"
+        "로딩중..."
       ) : (
         <>
           <div className="mx-auto  mt-16 text-center text-4xl font-bold lg:mt-32">
