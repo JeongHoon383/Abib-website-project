@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 const OrderForm = () => {
+  const [count, setCount] = useState(1);
+
   const [formData, setFormData] = useState({
     itemName: "",
     postNum: "",
@@ -23,6 +25,15 @@ const OrderForm = () => {
     e.preventDefault();
     // 주문 정보를 처리하는 로직 추가
     console.log("주문 정보:", formData);
+  };
+
+  const handleQuantity = (type) => {
+    if (type === "plus") {
+      setCount(count + 1);
+    } else {
+      if (count === 1) return;
+      setCount(count - 1);
+    }
   };
   return (
     <>

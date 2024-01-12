@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Scrollbar } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import CartModal from "../Cart/CartModal";
@@ -6,15 +6,25 @@ import "swiper/css";
 import "swiper/css/scrollbar";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { getCart, insert } from "../../Modules/cart";
 
 const MainPromotion = ({ title, titleArr }) => {
   const [modalOpen, setModalOpen] = useState(false);
-  const [product, setProduct] = useState({});
+  /* const [product, setProduct] = useState({}); */
+
+  const dispatch = useDispatch();
+
+  const cart = useSelector(getCart);
+
+  console.log(cart);
+
+  const { pid } = useParams();
 
   const showModal = (value) => {
     setModalOpen(true);
-    setProduct(value);
+    dispatch(insert(value));
   };
 
   const navigate = useNavigate();
@@ -36,7 +46,7 @@ const MainPromotion = ({ title, titleArr }) => {
   return (
     <div className="w-screen overflow-x-hidden  pb-5 dark:bg-black    dark:text-white ">
       {/* modal */}
-      {modalOpen && <CartModal setModalOpen={setModalOpen} product={product} />}
+      {modalOpen && <CartModal setModalOpen={setModalOpen} />}
       {promotionLoading ? (
         "로딩중"
       ) : (
