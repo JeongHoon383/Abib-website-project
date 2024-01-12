@@ -3,7 +3,7 @@ import React from "react";
 export default function MemberInfo() {
   return (
     <>
-      <div className="mx-auto max-sm:p-1 ">
+      <div className="mx-auto max-sm:pl-1">
         <div className="text-bold @media (min-width: 768px)  @media (min-width: 1024px) text-bold border-b-1 mx-auto border-b border-black  p-16 text-center text-3xl ">
           Profile.
         </div>
