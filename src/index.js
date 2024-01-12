@@ -24,6 +24,12 @@ import SignupSchema from "./Components/Signup/SignupSchema";
 import store from "./Modules/rootReducer";
 import { Provider } from "react-redux";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Members from "./Components/Admins/Members.jsx";
+import MembersUpdate from "./Components/Admins/MembersUpdate.jsx";
+import MembersCreate from "./Components/Admins/MembersCreate.jsx";
+import Products from "./Components/Admins/Products.jsx";
+import Dashboard from "./Components/Admins/Dashboard.jsx";
+import GlobalModal from "./Components/GlobalModal.jsx";
 
 const router = createBrowserRouter([
   {
@@ -87,6 +93,26 @@ const router = createBrowserRouter([
         element: <Admin />,
       },
       {
+        path: "/dashboard",
+        element: <Dashboard />,
+      },
+      {
+        path: "/products",
+        element: <Products />,
+      },
+      {
+        path: "/members",
+        element: <Members />,
+      },
+      {
+        path: "/create",
+        element: <MembersCreate />,
+      },
+      {
+        path: "/update",
+        element: <MembersUpdate />,
+      },
+      {
         path: "/mypage",
         element: <MyPageMain />,
       },
@@ -115,6 +141,7 @@ root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
+        <GlobalModal />
         <RouterProvider router={router} />
       </Provider>
     </QueryClientProvider>

@@ -1,4 +1,8 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  combineReducers,
+  createAsyncThunk,
+  createSlice,
+} from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const getProduct = createAsyncThunk(
@@ -8,6 +12,16 @@ export const getProduct = createAsyncThunk(
       `http://127.0.0.1:9090/product/list/${category}`,
     );
     return result.data; //action payload return
+  },
+);
+
+export const getProductDetail = createAsyncThunk(
+  "productDetail/fetchProductsStatus",
+  async (pid) => {
+    const result = await axios.get(
+      `http://127.0.0.1:9090/product/detail/${pid}`,
+    );
+    return result.data;
   },
 );
 
@@ -24,4 +38,20 @@ export const productSlice = createSlice({
   },
 });
 
-export default productSlice.reducer;
+export const productDetailSlice = createSlice({
+  name: "productDetail",
+  initialState: { data: {} },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(getProductDetail.fulfilled, (state, action) => {
+      state.data = action.payload;
+    });
+  },
+});
+
+const productReducer = combineReducers({
+  products: productSlice.reducer,
+  productDetail: productDetailSlice.reducer,
+});
+
+export default productReducer;
