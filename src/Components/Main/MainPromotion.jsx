@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Scrollbar } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import CartModal from "../Cart/CartModal";
@@ -7,10 +7,14 @@ import "swiper/css/scrollbar";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 const MainPromotion = ({ title, titleArr }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [product, setProduct] = useState({});
+
+  const productData = useSelector((state) => state.cartSlice.cartData);
+  const dispatch = useDispatch();
 
   const showModal = (value) => {
     setModalOpen(true);
