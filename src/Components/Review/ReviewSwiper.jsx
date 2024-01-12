@@ -9,9 +9,21 @@ import "swiper/css/pagination";
 import "swiper/css/grid";
 
 import ReviewListStar from "./ReviewListStar";
-import ReviewPhotoModal from "./ReviewPhotoModal";
+import { useDispatch } from "react-redux";
+import { openModal } from "../../Modules/Modal";
 
 export default function ReviewSwiper({ photoReview }) {
+  const dispatch = useDispatch();
+
+  const handleOpenPhotoReviewModal = () => {
+    dispatch(
+      openModal({
+        modalType: "ReviewPhotoModal",
+        isOpen: true,
+      }),
+    );
+    document.body.style.overflow = "hidden";
+  };
   return (
     <div>
       <Swiper
@@ -35,7 +47,10 @@ export default function ReviewSwiper({ photoReview }) {
             .reverse()
             .map((v) => (
               <SwiperSlide key={v.rid}>
-                <div className="w-full cursor-pointer border border-gray-200">
+                <div
+                  onClick={handleOpenPhotoReviewModal}
+                  className="w-full cursor-pointer border border-gray-200"
+                >
                   {v.rcover && (
                     <div className="">
                       <img

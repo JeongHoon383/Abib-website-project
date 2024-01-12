@@ -1,7 +1,7 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import ReviewModal from "./Review/ReviewModal";
 import ReviewPhotoModal from "./Review/ReviewPhotoModal";
-import { closeModal, selectModal } from "../Modules/Modal";
+import { selectModal } from "../Modules/Modal";
 
 const modalTypes = {
   ReviewModal: "ReviewModal",
@@ -20,9 +20,7 @@ const modalComponents = [
 ];
 
 export default function GlobalModal() {
-  // modal type을 string 형태로 받습니다.
   const { modalType, isOpen } = useSelector(selectModal);
-  const dispatch = useDispatch();
   if (!isOpen) return;
 
   const findModal = modalComponents.find((modal) => {
@@ -34,11 +32,8 @@ export default function GlobalModal() {
   };
 
   return (
-    <div className="z-60 fixed inset-0 flex items-center justify-center">
-      <div
-        className="fixed inset-0 bg-black/90"
-        onClick={() => dispatch(closeModal())}
-      />
+    <div className="absolute bottom-0 left-0 right-0 top-0 z-10 flex h-full w-full flex-col items-center">
+      <div className="fixed h-full w-full bg-black/70" />
       {renderModal()}
     </div>
   );

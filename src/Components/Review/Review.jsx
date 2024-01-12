@@ -4,13 +4,11 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ReviewSwiper from "./ReviewSwiper";
 import ReviewListStar from "./ReviewListStar";
-import ReviewModal from "./ReviewModal";
-import ReviewPhotoModal from "./ReviewPhotoModal";
 import { getReview } from "../../Modules/Review";
+import { openModal } from "../../Modules/Modal";
 
 import "rc-pagination/assets/index.css";
 import "../../custom.css";
-import { openModal } from "../../Modules/Modal";
 
 export const ReviewContext = createContext({});
 
@@ -211,9 +209,7 @@ export default function Review() {
                         ReviewListStar={ReviewListStar}
                       />
                     </ReviewContext.Provider>
-                  ) : (
-                    <ReviewModal closeModal={closeModal} />
-                  )}
+                  ) : }
                 </>
               )} */}
             </div>

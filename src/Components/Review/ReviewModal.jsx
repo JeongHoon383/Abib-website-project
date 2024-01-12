@@ -1,9 +1,10 @@
-import React, { useContext, useState } from "react";
-import { ProductContext } from "../../Pages/Product/ProductDetail";
+import React, { useEffect, useState } from "react";
 import ReviewModalStar from "./ReviewModalStar";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "../../Modules/Modal";
+import { useParams } from "react-router-dom";
+import { getProductDetail } from "../../Modules/Products";
 
 export default function ReviewModal() {
   const [rate, setRate] = useState(0);
@@ -12,7 +13,12 @@ export default function ReviewModal() {
   const [reviewText, setReviewText] = useState("");
 
   const dispatch = useDispatch();
-  let product = useContext(ProductContext);
+  const { pid } = useParams();
+  const product = useSelector((state) => state.product.productDetail.data);
+  useEffect(() => {
+    // 서버에서 데이터를 불러오는 createAsyncThunk 호출
+    dispatch(getProductDetail(pid));
+  }, [dispatch, pid]);
 
   const handleImgChange = (e) => {
     let reader = new FileReader();
@@ -60,7 +66,7 @@ export default function ReviewModal() {
   };
 
   return (
-    <div className="z-60 w-[22rem] rounded-md bg-white p-5 sm:w-[30rem] md:w-[45rem] lg:w-[60rem]">
+    <div className="fixed left-1/2 top-1/2 w-[22rem] -translate-x-1/2 -translate-y-1/2 rounded-md bg-white p-5 sm:w-[30rem] md:w-[45rem] lg:w-[60rem]">
       <div className="flex border-b-2 border-black pb-2">
         <h3>리뷰 작성</h3>
         <button

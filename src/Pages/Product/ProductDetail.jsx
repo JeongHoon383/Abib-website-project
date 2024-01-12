@@ -1,5 +1,4 @@
-import axios from "axios";
-import React, { createContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ProductAccordion from "../../Components/Product/ProductAccordion";
 import Review from "../../Components//Review/Review";
@@ -7,8 +6,6 @@ import ProductRecommendSwiper from "../../Components/Product/ProductRecommendSwi
 import ProductCounter from "../../Components/Product/ProductCounter";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductDetail } from "../../Modules/Products";
-
-export const ProductContext = createContext({}); // 조부모->자식 전달 용도
 
 export default function ProductDetail() {
   const [quantity, setQuantity] = useState(1);
@@ -109,18 +106,14 @@ export default function ProductDetail() {
           {product.description && product.description.split("/")[1]}
         </p>
         <div className="acco-wrap divide-y divide-black">
-          <ProductContext.Provider value={product}>
-            <ProductAccordion />
-          </ProductContext.Provider>
+          <ProductAccordion />
         </div>
       </div>
       <div className="recommend-wrap">
         <ProductRecommendSwiper />
       </div>
       <div className="review-wrap ">
-        <ProductContext.Provider value={product}>
-          <Review />
-        </ProductContext.Provider>
+        <Review />
       </div>
     </>
   );
