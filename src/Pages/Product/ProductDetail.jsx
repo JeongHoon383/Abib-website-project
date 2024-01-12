@@ -14,6 +14,8 @@ export default function ProductDetail() {
   const { pid } = useParams();
   const product = useSelector((state) => state.product.productDetail.data);
 
+  console.log(product);
+
   useEffect(() => {
     // 서버에서 데이터를 불러오는 createAsyncThunk 호출
     dispatch(getProductDetail(pid));

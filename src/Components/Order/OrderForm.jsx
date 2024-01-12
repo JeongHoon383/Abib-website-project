@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 
 const OrderForm = () => {
+  const [count, setCount] = useState(1);
+
   const [formData, setFormData] = useState({
     itemName: "",
     postNum: "",
@@ -23,6 +25,15 @@ const OrderForm = () => {
     e.preventDefault();
     // 주문 정보를 처리하는 로직 추가
     console.log("주문 정보:", formData);
+  };
+
+  const handleQuantity = (type) => {
+    if (type === "plus") {
+      setCount(count + 1);
+    } else {
+      if (count === 1) return;
+      setCount(count - 1);
+    }
   };
   return (
     <div className="mx-auto max-w-[1400px] border-b border-t border-solid border-black text-center text-xs">
@@ -337,7 +348,29 @@ const OrderForm = () => {
                   <div>24,000</div>
                   <div>₩16,800</div>
                 </li>
-                <li className="w-[99px] min-w-[85px]">2</li>
+                <li className="w-[99px] min-w-[85px]">
+                  <div className="relative ml-[15px] h-[30px] w-[70px] rounded-[5px] border border-solid border-gray-400">
+                    <img
+                      className="absolute left-[10px] top-1/2 h-[10px] w-[10px] -translate-y-1/2 transform cursor-pointer"
+                      src="../../../cart/icon-minus-line.svg"
+                      alt="minus"
+                      onClick={() => handleQuantity("minus")}
+                    />
+
+                    <div className="absolute left-1/2 top-1/2 w-[56px] -translate-x-1/2 -translate-y-1/2 transform border border-b-0 border-t-0 border-solid border-gray-400">
+                      <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+                        {count}
+                      </span>
+                    </div>
+
+                    <img
+                      className="absolute right-[10px] top-1/2 h-[10px] w-[10px] -translate-y-1/2 transform cursor-pointer"
+                      src="../../../cart/icon-plus-line.svg"
+                      alt="plus"
+                      onClick={() => handleQuantity("plus")}
+                    />
+                  </div>
+                </li>
                 <li className="hidden w-[96px] lg:block">₩1,680</li>
                 <li className="w-[99px] min-w-[88px]">33,600</li>
               </ul>

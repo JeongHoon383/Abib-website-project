@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { getCart } from "../../Modules/cart";
 
 const CartProduct = () => {
   const navigate = useNavigate();
-  const [product, setProduct] = useState({});
   const [count, setCount] = useState(1);
+  const [discountPrice, setDiscountPrice] = useState(0);
+
+  useEffect(() => {}, []);
+
+  const cart = useSelector(getCart);
+
+  console.log(cart);
 
   const handleQuantity = (type) => {
     if (type === "plus") {
@@ -16,16 +23,6 @@ const CartProduct = () => {
     }
   };
 
-  /*  useEffect(() => {
-    axios.get(`http://127.0.0.1:9090/cart/${pid}`).then((data) => {
-      setProduct(data.data);
-    });
-  }, []); */
-
-  console.log(product);
-
-  const { pid } = useParams();
-
   return (
     <div>
       <ul className="flex w-full items-center justify-between border-b border-solid border-gray-300 py-[12px] text-center text-xs">
@@ -35,7 +32,8 @@ const CartProduct = () => {
         <li className="w-[105px]">
           <img
             onClick={() => navigate("/product/detail/:pid")}
-            src="../../../cart/cartCover.jpeg"
+            /* src="../../../cart/cartCover.jpeg" */
+            src={`http://127.0.0.1:9090/uploads/${cart[0].cover}`}
             className="ml-[30px] h-[60px] w-[60px] cursor-pointer"
             alt=""
           />
@@ -45,8 +43,8 @@ const CartProduct = () => {
             onClick={() => navigate("/product/detail/:pid")}
             className="transition-text flex flex-col items-center"
           >
-            <p className="ml-[10px]">여성초 스팟 패드</p>
-            <p className="ml-[10px]">카밍 터치</p>
+            <p className="ml-[10px]">{cart[0].title}</p>
+            {/* <p className="ml-[10px]">카밍 터치</p> */}
             <div>
               <img
                 src="../../../cart/cartSale.png"
@@ -57,8 +55,8 @@ const CartProduct = () => {
           </div>
         </li>
         <li className="w-[108px]">
-          <p>₩24,000</p>
-          <p className="font-bold">₩16,800</p>
+          <p>₩{cart[0].originalPrice.toLocaleString()}</p>
+          <p className="font-bold">₩{cart[0].priceSales.toLocaleString()}</p>
         </li>
         <li className="hidden w-[165px] lg:block">
           <div className="relative ml-[52px] h-[30px] w-[70px] rounded-[5px] border border-solid border-gray-400">

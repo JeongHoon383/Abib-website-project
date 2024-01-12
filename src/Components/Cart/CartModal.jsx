@@ -2,12 +2,10 @@ import React, { useState } from "react";
 import { IoCloseOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
-const CartModal = ({ setModalOpen, product }) => {
+const CartModal = ({ setModalOpen }) => {
   const closeModal = () => {
     setModalOpen(false);
   };
-
-  console.log(product.title);
 
   return (
     <div className="fixed left-0 top-0 z-[100] h-full w-full bg-black/70">
