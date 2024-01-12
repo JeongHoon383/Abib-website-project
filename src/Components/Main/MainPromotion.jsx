@@ -17,8 +17,6 @@ const MainPromotion = ({ title, titleArr }) => {
     setProduct(value);
   };
 
-  console.log(product);
-
   const navigate = useNavigate();
   const {
     isPending: promotionLoading,

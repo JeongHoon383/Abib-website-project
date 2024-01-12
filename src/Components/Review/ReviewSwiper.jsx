@@ -9,18 +9,21 @@ import "swiper/css/pagination";
 import "swiper/css/grid";
 
 import ReviewListStar from "./ReviewListStar";
-import ReviewPhotoModal from "./ReviewPhotoModal";
+import { useDispatch } from "react-redux";
+import { openModal } from "../../Modules/Modal";
 
 export default function ReviewSwiper({ photoReview }) {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [selectedReview, setSelectedReview] = useState(null);
+  const dispatch = useDispatch();
 
-  const handleReviewClick = (review) => {
-    setSelectedReview(review);
-    setModalOpen(true);
+  const handleOpenPhotoReviewModal = () => {
+    dispatch(
+      openModal({
+        modalType: "ReviewPhotoModal",
+        isOpen: true,
+      }),
+    );
     document.body.style.overflow = "hidden";
   };
-
   return (
     <div>
       <Swiper
@@ -45,9 +48,7 @@ export default function ReviewSwiper({ photoReview }) {
             .map((v) => (
               <SwiperSlide key={v.rid}>
                 <div
-                  onClick={() => {
-                    handleReviewClick(v);
-                  }}
+                  onClick={handleOpenPhotoReviewModal}
                   className="w-full cursor-pointer border border-gray-200"
                 >
                   {v.rcover && (
@@ -76,14 +77,6 @@ export default function ReviewSwiper({ photoReview }) {
             ))}
         </>
       </Swiper>
-      {modalOpen && (
-        <ReviewPhotoModal
-          review={selectedReview}
-          setModalOpen={setModalOpen}
-          setSelectedReview={setSelectedReview}
-          ReviewListStar={ReviewListStar}
-        />
-      )}
     </div>
   );
 }

@@ -1,34 +1,23 @@
-import axios from "axios";
-import React, { createContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ProductAccordion from "../../Components/Product/ProductAccordion";
 import Review from "../../Components//Review/Review";
 import ProductRecommendSwiper from "../../Components/Product/ProductRecommendSwiper";
 import ProductCounter from "../../Components/Product/ProductCounter";
-
-export const ProductContext = createContext({}); // 조부모->자식 전달 용도
+import { useDispatch, useSelector } from "react-redux";
+import { getProductDetail } from "../../Modules/Products";
 
 export default function ProductDetail() {
   const [quantity, setQuantity] = useState(1);
   const [total, setTotal] = useState(0);
-  const [product, setProduct] = useState({});
-
+  const dispatch = useDispatch();
   const { pid } = useParams();
-  const url = `http://127.0.0.1:9090/product/detail/${pid}`;
+  const product = useSelector((state) => state.product.productDetail.data);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await axios.get(url);
-        setProduct(result.data);
-        if (result.data.priceSales) setTotal(result.data.priceSales);
-        else setTotal(result.data.originalPrice);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
-  }, [url]);
+    // 서버에서 데이터를 불러오는 createAsyncThunk 호출
+    dispatch(getProductDetail(pid));
+  }, [dispatch, pid]);
 
   const handleClickCounter = (num) => {
     setQuantity((prev) => prev + num);
@@ -117,18 +106,14 @@ export default function ProductDetail() {
           {product.description && product.description.split("/")[1]}
         </p>
         <div className="acco-wrap divide-y divide-black">
-          <ProductContext.Provider value={product}>
-            <ProductAccordion />
-          </ProductContext.Provider>
+          <ProductAccordion />
         </div>
       </div>
       <div className="recommend-wrap">
         <ProductRecommendSwiper />
       </div>
       <div className="review-wrap ">
-        <ProductContext.Provider value={product}>
-          <Review />
-        </ProductContext.Provider>
+        <Review />
       </div>
     </>
   );
