@@ -74,11 +74,12 @@ export default function Review() {
     }));
   };
 
-  const handleOpenReviewModal = () => {
+  const handleOpenReviewModal = (pid) => {
     dispatch(
       openModal({
         modalType: "ReviewModal",
         isOpen: true,
+        pid,
       }),
     );
     document.body.style.overflow = "hidden";
@@ -134,7 +135,7 @@ export default function Review() {
           <div>
             <button
               type="button"
-              onClick={handleOpenReviewModal}
+              onClick={() => handleOpenReviewModal(pid)}
               className="me-2 rounded-md border border-gray-200 bg-white px-5 py-1 text-xs font-light text-neutral-400 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
             >
               리뷰 작성하기
