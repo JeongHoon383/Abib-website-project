@@ -1,27 +1,32 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ReviewContext } from "./Review";
-import { useParams } from "react-router-dom";
 import { getProductDetail } from "../../Modules/Products";
+import { closeModal } from "../../Modules/Modal";
+import { getReview } from "../../Modules/Review";
+import ReviewListStar from "./ReviewListStar";
 
-export default function ReviewPhotoModal({
-  closeModal,
-  review,
-  setSelectedReview,
-  ReviewListStar,
-}) {
-  const { pid } = useParams();
+export default function ReviewPhotoModal({ review, pid }) {
   const dispatch = useDispatch();
-  let { reviewList, average } = useContext(ReviewContext);
+  const reviewList = useSelector((state) => state.review.list);
   const product = useSelector((state) => state.product.productDetail.data);
+  const average = (
+    reviewList.reduce((sum, review) => sum + review.point, 0) /
+    reviewList.length
+  ).toFixed(1);
 
   useEffect(() => {
     // 서버에서 데이터를 불러오는 createAsyncThunk 호출
     dispatch(getProductDetail(pid));
+    dispatch(getReview(pid));
   }, [dispatch, pid]);
 
+  const handleModalClose = () => {
+    dispatch(closeModal());
+    document.body.style.overflow = "unset";
+  };
+
   return (
-    <div className="absolute top-28 flex h-96 w-[22rem] flex-col rounded bg-white text-black min-[390px]:top-52 sm:w-[30rem] md:top-[28rem] md:w-[45rem] md:flex-row lg:top-[35rem] lg:w-[55rem] xl:top-64 xl:w-[62rem]">
+    <div className="absolute top-[158rem] flex h-96 w-[22rem] flex-col rounded bg-white text-black min-[390px]:top-[170rem] sm:w-[30rem] md:top-[177rem] md:w-[45rem] md:flex-row lg:top-[188rem] lg:w-[55rem] xl:top-[230rem] xl:w-[62rem]">
       {/* photo */}
       <div className="bg-black">
         <img
@@ -75,9 +80,9 @@ export default function ReviewPhotoModal({
         </div>
       </div>
       <button
-        onClick={closeModal}
+        onClick={handleModalClose}
         type="button"
-        className="absolute right-4 top-32 bg-transparent text-sm text-white min-[390px]:top-48 md:right-12 md:top-[26rem] lg:right-24 lg:top-[33rem] xl:right-56 xl:top-56"
+        className="min-[390px]: absolute -top-4 right-4 bg-transparent text-sm text-white md:right-0 md:top-[-2rem] lg:right-0 lg:top-[-2rem]"
       >
         <svg
           className="h-3 w-3"

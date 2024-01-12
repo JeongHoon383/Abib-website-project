@@ -74,11 +74,12 @@ export default function Review() {
     }));
   };
 
-  const handleOpenReviewModal = (pid) => {
+  const handleOpenReviewModal = (pid, review) => {
     dispatch(
       openModal({
         modalType: "ReviewModal",
         isOpen: true,
+        review,
         pid,
       }),
     );
@@ -143,9 +144,7 @@ export default function Review() {
           </div>
         </div>
       </div>
-      <ReviewContext.Provider value={{ reviewList, average }}>
-        <ReviewSwiper photoReview={photoReview} />
-      </ReviewContext.Provider>
+      <ReviewSwiper photoReview={photoReview} />
       <div className="my-5 flex items-center">
         <div className="mr-4 text-xs">
           <span className="mr-1 font-semibold">상품평수</span>
@@ -194,25 +193,11 @@ export default function Review() {
               {item.rcover && (
                 <div
                   className="size-14 cursor-pointer"
-                  // onClick={}
+                  onClick={handleOpenReviewModal(pid, item)}
                 >
                   <img src={`/${item.rcover}`} alt="" className="w-full" />
                 </div>
               )}
-              {/* {modalOpen && (
-                <>
-                  {showPhotoModal ? (
-                    <ReviewContext.Provider value={{ reviewList, average }}>
-                      <ReviewPhotoModal
-                        review={selectedReview}
-                        closeModal={closeModal}
-                        setSelectedReview={setSelectedReview}
-                        ReviewListStar={ReviewListStar}
-                      />
-                    </ReviewContext.Provider>
-                  ) : }
-                </>
-              )} */}
             </div>
           </div>
         ))}
