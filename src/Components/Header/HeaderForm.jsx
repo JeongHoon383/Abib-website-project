@@ -7,7 +7,7 @@ const HeaderForm = ({ setSearch }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate(`/search/${query}`, { state: { query: query } });
+    navigate(`/search/${query}`);
     window.location.reload();
   };
 
