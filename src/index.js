@@ -38,70 +38,70 @@ const router = createBrowserRouter([
     errorElement: <div>not found</div>,
     children: [
       {
-        index: "/",
+        index: true,
         element: <Main />,
       },
       {
-        path: "/product",
+        path: "product",
         children: [
           {
-            path: "/product/list/:category",
+            path: "list/:category",
             element: <ProductList />,
           },
           {
-            path: "/product/detail/:pid",
+            path: "detail/:pid",
             element: <ProductDetail />,
           },
         ],
       },
       {
-        path: "/search",
+        path: "search/:query",
         element: <SearchResult />,
       },
       {
-        path: "/cart",
+        path: "cart",
         element: <Cart />,
       },
       {
-        path: "/order",
+        path: "order",
         element: <Order />,
       },
       {
-        path: "/signup",
+        path: "signup",
         element: <Signup />,
         children: [
           {
-            path: "/signup/",
+            index: true,
             element: <SignupMain />,
           },
           {
-            path: "/signup/join",
+            path: "join",
             element: <SignupSchema />,
           },
           {
-            path: "/signup/complete",
+            path: "complete",
             element: <SignupComplete />,
           },
         ],
       },
       {
-        path: "/login",
+        path: "login",
         element: <Login />,
       },
       {
-        path: "/admin",
+        path: "admin",
         element: <Admin />,
       },
       {
-        path: "/dashboard",
+        path: "dashboard",
         element: <Dashboard />,
       },
       {
-        path: "/products",
+        path: "products",
         element: <Products />,
       },
       {
-        path: "/members",
+        path: "members",
         element: <Members />,
       },
       {
@@ -109,27 +109,27 @@ const router = createBrowserRouter([
         element: <MembersCreate />,
       },
       {
-        path: "/update",
+        path: "update",
         element: <MembersUpdate />,
       },
       {
-        path: "/mypage",
+        path: "mypage",
         element: <MyPageMain />,
       },
       {
-        path: "/inquiry",
+        path: "inquiry",
         element: <Inquiry />,
       },
       {
-        path: "/memberinfo",
+        path: "memberinfo",
         element: <MemberInfo />,
       },
       {
-        path: "/orderlist",
+        path: "orderlist",
         element: <OrderList />,
       },
       {
-        path: "/privateinquiry",
+        path: "privateinquiry",
         element: <PrivateInquiry />,
       },
     ],

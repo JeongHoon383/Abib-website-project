@@ -86,7 +86,7 @@ const Header = ({ setDark, dark }) => {
         </div>
         <div className="flex h-[11vh] w-full items-center justify-between   px-8 py-4">
           <div className="hidden w-[33%] space-x-[15px] text-[12px] font-medium lg:block">
-            <span 
+            <span
               className="cursor-pointer"
               onMouseOver={() => {
                 setHover(true);
@@ -277,7 +277,7 @@ const Header = ({ setDark, dark }) => {
             initial="start"
             animate="end"
             exit="exit"
-            className="fixed hidden h-[11vh] w-screen  justify-center bg-back  lg:flex dark:bg-black dark:text-white"
+            className="fixed z-50 hidden h-[11vh] w-screen  justify-center bg-back  lg:flex dark:bg-black dark:text-white"
           >
             <HeaderForm setSearch={setSearch} />
           </motion.div>

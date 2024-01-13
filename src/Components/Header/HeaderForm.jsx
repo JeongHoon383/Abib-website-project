@@ -1,9 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const HeaderForm = ({ setSearch }) => {
+  const navigate = useNavigate();
+  const [query, setQuery] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    navigate(`/search/${query}`, { state: { query: query } });
+    window.location.reload();
+  };
+
+  const handleInputChange = (e) => {
+    setQuery(e.target.value);
+  };
+
   return (
-    <form className="  z-50 flex w-full items-end  p-5 lg:h-full lg:w-1/2   lg:items-center lg:p-0  dark:bg-black dark:text-white">
-      <div className="hidden  h-1/2 w-[6%] items-end justify-center border-b  border-black pb-1 lg:flex">
+    <form
+      onSubmit={handleSubmit}
+      className="flex w-full items-end p-5 lg:h-full lg:w-1/2 lg:items-center lg:p-0 dark:bg-black dark:text-white"
+    >
+      <div className="hidden h-1/2 w-[6%] items-end justify-center border-b border-black pb-1 lg:flex">
         <svg
           onClick={() => setSearch((prev) => !prev)}
           xmlns="http://www.w3.org/2000/svg"
@@ -20,7 +37,7 @@ const HeaderForm = ({ setSearch }) => {
           />
         </svg>
       </div>
-      <div className="h-1/2  w-[6%] items-end justify-center border-b  border-black pb-1 lg:hidden">
+      <div className="h-1/2 w-[6%] items-end justify-center border-b border-black pb-1 lg:hidden">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -40,6 +57,8 @@ const HeaderForm = ({ setSearch }) => {
         <input
           className="w-full border-none bg-transparent outline-none  "
           type="text"
+          value={query}
+          onChange={handleInputChange}
         />
         <button type="submit" className="hidden"></button>
       </div>
