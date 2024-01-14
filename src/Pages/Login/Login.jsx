@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../../Modules/Member.js";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { MdArrowBackIos } from "react-icons/md";
-import { useCookies } from "react-cookie";
+import * as cookies from "../../util/cookie.js";
 
 export default function Login() {
   const [tabSwitch, setTabSwitch] = useState(false);
@@ -14,7 +14,6 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [cookies, setCookie, removeCookie] = useCookies();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -37,8 +36,8 @@ export default function Login() {
               );
               alert("로그인에 성공했습니다.");
               //쿠키에 저장된 prevPage가 있다면
-              const prePage = cookies.prevPage;
-              const currentPage = cookies.currentPage;
+              const prePage = cookies.getCookie("prevPage");
+              const currentPage = cookies.getCookie("currentPage");
               if (prePage === undefined) navigate(currentPage);
               else navigate(prePage);
             } else {

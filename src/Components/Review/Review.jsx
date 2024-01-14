@@ -1,4 +1,3 @@
-import Pagination from "rc-pagination";
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,7 +5,7 @@ import ReviewSwiper from "./ReviewSwiper";
 import ReviewListStar from "./ReviewListStar";
 import { getReview } from "../../Modules/Review";
 import { openModal } from "../../Modules/Modal";
-import { useCookies } from "react-cookie";
+import * as cookies from "../../util/cookie.js";
 
 import "rc-pagination/assets/index.css";
 import "../../custom.css";
@@ -17,7 +16,6 @@ export default function Review() {
   const location = useLocation();
   const navigate = useNavigate();
   const textLimit = useRef(150);
-  const [cookies, setCookie, removeCookie] = useCookies();
 
   useEffect(() => {
     // 서버에서 데이터를 불러오는 createAsyncThunk 호출
@@ -25,7 +23,7 @@ export default function Review() {
   }, [dispatch, pid]);
   //data 가져오기
   const reviewList = useSelector((state) => state.review.list);
-  const memberInfo = useSelector((state) => state.memberSlice.id);
+  const memberInfo = useSelector((state) => state.persistedReducer);
   //사진이 있는 리뷰만 가져오기
   const photoReview = reviewList.filter((review) => review.rcover !== null);
 
@@ -88,7 +86,7 @@ export default function Review() {
   };
 
   const handleOpenReviewModal = (pid) => {
-    if (memberInfo !== "") {
+    if (memberInfo.isLogin) {
       dispatch(
         openModal({
           modalType: "ReviewModal",
@@ -99,7 +97,7 @@ export default function Review() {
       document.body.style.overflow = "hidden";
     } else {
       alert("로그인 후 작성 가능합니다.");
-      setCookie("prevPage", JSON.stringify(location.pathname));
+      cookies.setCookie("prevPage", JSON.stringify(location.pathname));
       navigate("/login");
     }
   };

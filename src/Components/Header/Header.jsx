@@ -8,7 +8,8 @@ import { IoSunnySharp, IoMoonSharp } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../Modules/Member";
 import { persistor } from "../../Modules/rootReducer";
-import { useCookies } from "react-cookie";
+import * as cookies from "../../util/cookie.js";
+
 const searchVars = {
   //window.innerWidth를 사용 이게 픽셀로 주는것보다 더 좋을듯
   start: {
@@ -71,14 +72,13 @@ const Header = ({ setDark, dark }) => {
   const [cateHover, setCateHover] = useState();
   const [mToggle, setMToggle] = useState(false);
   const memberInfo = useSelector((state) => state.persistedReducer);
-
-  const [cookies, setCookie, removeCookie] = useCookies();
   const purge = async () => await persistor.purge();
   const dispatch = useDispatch();
+
   const handleLogout = async () => {
     if (window.confirm("로그아웃 하시겠습니까?")) {
-      removeCookie("prevPage");
-      removeCookie("currentPage");
+      cookies.removeCookie("prevPage");
+      cookies.removeCookie("currentPage");
       await dispatch(logout());
       await setTimeout(() => purge(), 200);
     }
@@ -229,7 +229,10 @@ const Header = ({ setDark, dark }) => {
                 <span
                   onClick={() => {
                     navigate("/login");
-                    setCookie("currentPage", JSON.stringify(location.pathname));
+                    cookies.setCookie(
+                      "currentPage",
+                      JSON.stringify(location.pathname),
+                    );
                   }}
                   className="cursor-pointer"
                 >
