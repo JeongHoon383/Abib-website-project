@@ -1,11 +1,12 @@
 import Pagination from "rc-pagination";
 import React, { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ReviewSwiper from "./ReviewSwiper";
 import ReviewListStar from "./ReviewListStar";
 import { getReview } from "../../Modules/Review";
 import { openModal } from "../../Modules/Modal";
+import { useCookies } from "react-cookie";
 
 import "rc-pagination/assets/index.css";
 import "../../custom.css";
@@ -13,13 +14,17 @@ import "../../custom.css";
 export default function Review() {
   const { pid } = useParams();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
   const textLimit = useRef(150);
+  const [cookies, setCookie, removeCookie] = useCookies();
   useEffect(() => {
     // 서버에서 데이터를 불러오는 createAsyncThunk 호출
     dispatch(getReview(pid));
   }, [dispatch, pid]);
   //data 가져오기
   const reviewList = useSelector((state) => state.review.list);
+  const memberInfo = useSelector((state) => state.memberSlice.id);
   //사진이 있는 리뷰만 가져오기
   const photoReview = reviewList.filter((review) => review.rcover !== null);
 
@@ -74,14 +79,20 @@ export default function Review() {
   };
 
   const handleOpenReviewModal = (pid) => {
-    dispatch(
-      openModal({
-        modalType: "ReviewModal",
-        isOpen: true,
-        pid,
-      }),
-    );
-    document.body.style.overflow = "hidden";
+    if (memberInfo !== "") {
+      dispatch(
+        openModal({
+          modalType: "ReviewModal",
+          isOpen: true,
+          pid,
+        }),
+      );
+      document.body.style.overflow = "hidden";
+    } else {
+      alert("로그인 후 작성 가능합니다.");
+      setCookie("prevPage", JSON.stringify(location.pathname));
+      navigate("/login");
+    }
   };
 
   const handleOpenReviewPhotoModal = (pid, review) => {

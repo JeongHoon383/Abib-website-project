@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useNavigationType } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../../Modules/Member.js";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { MdArrowBackIos } from "react-icons/md";
+import { useCookies } from "react-cookie";
 
 export default function Login() {
   const [tabSwitch, setTabSwitch] = useState(false);
@@ -14,6 +15,7 @@ export default function Login() {
   const [isKeepLogin, setIsKeepLogin] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [cookies, setCookie, removeCookie] = useCookies();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -39,9 +41,11 @@ export default function Login() {
               } else {
                 sessionStorage.setItem("member", JSON.stringify(memberInfo));
               }
-
               alert("로그인에 성공했습니다.");
-              navigate("/");
+              //쿠키에 저장된 prevPage가 있다면
+              const prePage = cookies.prevPage;
+              if (prePage === undefined) navigate("/");
+              else navigate(prePage);
             } else {
               alert("비밀번호가 일치하지 않습니다.");
             }

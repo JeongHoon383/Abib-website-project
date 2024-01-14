@@ -67,7 +67,7 @@ export default function ReviewSwiper({ photoReview }) {
                       {v.content}
                     </p>
                     <span className="... mr-3 inline-block w-10 truncate align-bottom font-thin text-gray-500 sm:align-text-top sm:text-sm">
-                      {v.mid}
+                      {v.mid.substring(0, 3) + "..."}
                     </span>
                     <span className="font-thin text-gray-500 sm:text-sm">
                       {v.rdate.split("T")[0]}

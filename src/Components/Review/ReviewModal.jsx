@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
-import ReviewModalStar from "./ReviewModalStar";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "../../Modules/Modal";
-import { useParams } from "react-router-dom";
 import { getProductDetail } from "../../Modules/Products";
+import ReviewModalStar from "./ReviewModalStar";
 
 export default function ReviewModal({ pid }) {
   const [rate, setRate] = useState(0);
   const [textCount, setTextCount] = useState(0);
   const [uploadedImg, setUploadedImg] = useState({ preview: "", data: "" });
   const [reviewText, setReviewText] = useState("");
-
   const dispatch = useDispatch();
+
+  const mid = useSelector((state) => state.memberSlice.id) || {};
   const product = useSelector((state) => state.product.productDetail.data);
   useEffect(() => {
     // 서버에서 데이터를 불러오는 createAsyncThunk 호출
@@ -34,7 +34,7 @@ export default function ReviewModal({ pid }) {
     let formData = new FormData(); // 서버로 이미지를 보낼 때 폼 데이터라는 객체에 담아서 보내야함
     formData.append("rcover", uploadedImg.data || undefined);
     formData.append("pid", product.pid);
-    formData.append("mid", "abcd1234");
+    formData.append("mid", mid);
     formData.append("point", rate);
     formData.append("content", reviewText);
 
@@ -45,7 +45,6 @@ export default function ReviewModal({ pid }) {
         },
       })
       .then((result) => {
-        console.log(`then 이후 -->${formData}`);
         if (result.data === "success") {
           alert("리뷰가 등록되었습니다");
           window.location.reload();
