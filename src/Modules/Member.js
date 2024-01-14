@@ -1,36 +1,36 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { PURGE } from "redux-persist";
+import * as cookie from "./../util/cookie";
+
+const initialState = {
+  isLogin: false,
+  token: null,
+  memberId: null,
+};
 
 export const memberSlice = createSlice({
   name: "member",
-  initialState: {
-    id: "",
-    iat: "",
-    isKeepLogin: false,
-  },
+  initialState,
   reducers: {
     login: (state, action) => {
-      const { id, iat, isKeepLogin } = action.payload;
-      state.id = id;
-      state.iat = iat;
-      state.isKeepLogin = isKeepLogin;
+      const { token, memberId } = action.payload;
+      state.isLogin = true;
+      state.token = token;
+      state.memberId = memberId;
+      cookie.setCookie("x-auth-jwt", token);
     },
     logout: (state) => {
-      state.isKeepLogin
-        ? localStorage.removeItem("member")
-        : sessionStorage.removeItem("member");
-      state.id = "";
-      state.iat = "";
-      state.isKeepLogin = false;
+      state.isLogin = false;
+      state.token = null;
+      state.memberId = null;
+      cookie.removeCookie("x-auth-jwt");
     },
-    getMemberInfo: (state) => {
-      const { id, iat, isKeepLogin } = state.payload;
-      state.id = id;
-      state.iat = iat;
-      state.isKeepLogin = isKeepLogin;
-    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(PURGE, () => initialState);
   },
 });
 
-export const { login, logout, getMemberInfo } = memberSlice.actions;
+export const { login, logout } = memberSlice.actions;
 
 export default memberSlice.reducer;

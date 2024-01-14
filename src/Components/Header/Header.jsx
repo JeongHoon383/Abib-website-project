@@ -7,6 +7,8 @@ import HeaderMLink from "./HeaderMLink";
 import { IoSunnySharp, IoMoonSharp } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../Modules/Member";
+import { persistor } from "../../Modules/rootReducer";
+
 const searchVars = {
   //window.innerWidth를 사용 이게 픽셀로 주는것보다 더 좋을듯
   start: {
@@ -67,12 +69,17 @@ const Header = ({ setDark, dark }) => {
   const [hover, setHover] = useState(false);
   const [cateHover, setCateHover] = useState();
   const [mToggle, setMToggle] = useState(false);
-  const dispatch = useDispatch();
-  const memberInfo = useSelector((state) => state.memberSlice) || {};
+  const memberInfo = useSelector((state) => state.persistedReducer);
 
-  const handleLogout = () => {
-    if (window.confirm("로그아웃 하시겠습니까?")) dispatch(logout());
+  const purge = async () => await persistor.purge();
+  const dispatch = useDispatch();
+  const handleLogout = async () => {
+    if (window.confirm("로그아웃 하시겠습니까?")) {
+      await dispatch(logout());
+      await setTimeout(() => purge(), 200);
+    }
   };
+
   return (
     <div
       onMouseLeave={() => setHover(false)}
@@ -203,7 +210,7 @@ const Header = ({ setDark, dark }) => {
                 0
               </span>
             </span>
-            {memberInfo.id ? (
+            {memberInfo.isLogin ? (
               <span onClick={handleLogout} className="cursor-pointer">
                 로그아웃
               </span>
@@ -277,7 +284,7 @@ const Header = ({ setDark, dark }) => {
             initial="start"
             animate="end"
             exit="exit"
-            className="fixed hidden h-[11vh] w-screen  justify-center bg-back  lg:flex dark:bg-black dark:text-white"
+            className="fixed hidden h-[11vh] w-screen  justify-center bg-back  dark:bg-black dark:text-white lg:flex"
           >
             <HeaderForm setSearch={setSearch} />
           </motion.div>
@@ -303,7 +310,7 @@ const Header = ({ setDark, dark }) => {
             initial="start"
             animate="end"
             exit="exit"
-            className="fixed z-10 h-[85vh] w-screen bg-back lg:hidden dark:bg-black"
+            className="fixed z-10 h-[85vh] w-screen bg-back dark:bg-black lg:hidden"
           >
             <HeaderMLink setMToggle={setMToggle} />
           </motion.div>
