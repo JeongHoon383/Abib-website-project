@@ -108,38 +108,23 @@ export default function MemberInfo() {
               />
             </div>
 
-            <div className="mx-auto mt-5 flex w-4/5 gap-2  max-sm:w-screen">
-              <div className="flex ">
-                <div className="max-xm:w-1/3 w-2/6 max-sm:p-1">
-                  <p className=" text-left text-xs font-bold leading-8">
-                    휴대폰
-                  </p>
-                  <input
-                    type="text"
-                    className="h-10 w-full border border-gray-300 leading-8 hover:border-gray-600"
-                  />
-                </div>
-                <div className="mt-10">-</div>
-                <div className="max-xm:w-1/3 w-2/6">
-                  <p className="text-left text-xs font-bold leading-8 text-white">
-                    우편번호
-                  </p>
-                  <input
-                    type="text"
-                    className="h-10 w-full border border-gray-300 leading-8 hover:border-gray-600"
-                  />
-                </div>
-                <div className="mt-10">-</div>
-
-                <div className="max-xm:w-1/3 w-2/6">
-                  <p className="text-left text-xs font-bold leading-8 text-white">
-                    우편번호
-                  </p>
-                  <input
-                    type="text"
-                    className="h-10 w-full border border-gray-300 leading-8 hover:border-gray-600"
-                  />
-                </div>
+            <div className="mx-auto mt-5 flex w-4/5 flex-col justify-center max-sm:w-screen max-sm:p-1">
+              <p className=" text-left text-xs font-bold leading-8">휴대폰</p>
+              <div className="flex">
+                <input
+                  type="text"
+                  className=" h-10 w-1/3 border border-gray-300 leading-8 hover:border-gray-600"
+                />
+                <div>-</div>
+                <input
+                  type="text"
+                  className=" h-10 w-1/3 border border-gray-300 leading-8 hover:border-gray-600"
+                />
+                <div>-</div>
+                <input
+                  type="text"
+                  className=" h-10 w-1/3 border border-gray-300 leading-8 hover:border-gray-600"
+                />
               </div>
             </div>
 
@@ -150,41 +135,46 @@ export default function MemberInfo() {
             </div>
 
             <div className="mx-auto  w-4/5 justify-center max-sm:w-screen">
-              <p className="text-left text-xs leading-8">
-                <div className="flex max-sm:ml-2">
+              <p className="text-left text-xs leading-6">
+                <div className="flex  max-sm:ml-2">
                   <div className="ml-0 pr-3 text-center text-xs">
                     예{" "}
                     <label>
-                      <input type="radio" name="radioExample" value="" />
+                      <input
+                        type="radio"
+                        className="pt-1"
+                        name="radioExample"
+                        value=""
+                      />
                     </label>
                   </div>
 
                   <div className="text-xs">
                     아니오{" "}
                     <label>
-                      <input type="radio" name="radioExample" value="" />
+                      <input
+                        type="radio"
+                        className="pt-1"
+                        name="radioExample"
+                        value=""
+                      />
                     </label>
                   </div>
                 </div>
               </p>
             </div>
 
-            <div className="mx-auto mt-5 flex w-4/5 gap-2 max-sm:w-screen  max-sm:p-1">
-              <div className="w-1/6 max-sm:w-2/6">
-                <p className="text-left text-xs font-bold leading-8">이메일</p>
+            <div className="mx-auto mt-5 flex w-4/5 flex-col justify-center max-sm:w-screen max-sm:p-1">
+              <p className=" text-left text-xs font-bold leading-8">이메일</p>
+              <div className="flex">
                 <input
                   type="text"
-                  className="h-10 w-full border border-gray-300 leading-8 hover:border-gray-600"
+                  className=" h-10 w-1/2 border border-gray-300 leading-8 hover:border-gray-600"
                 />
-              </div>
-              <div className="mt-10">@</div>
-              <div className="w-1/6  max-sm:w-3/6">
-                <p className="text-left text-xs font-bold leading-8 text-white">
-                  우편번호
-                </p>
+                <div>@</div>
                 <input
                   type="text"
-                  className="h-10 w-full border border-gray-300 leading-8 hover:border-gray-600"
+                  className=" h-10 w-1/2 border border-gray-300 leading-8 hover:border-gray-600"
                 />
               </div>
             </div>

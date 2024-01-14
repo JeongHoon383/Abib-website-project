@@ -30,7 +30,7 @@ export default function MyPageMain() {
             <br />
             <br />
             <div className="w-9/10">
-              <div className="max-sm:w-9/10 flex gap-5 max-sm:flex-col">
+              <div className=" max-sm:w-9/10 flex gap-5 max-sm:flex-col">
                 <div className="pb-20 max-sm:pb-0">
                   <Link to="/orderlist">
                     <div className="h-25 box-border cursor-pointer border border-gray-600 p-4 text-center text-xs leading-6 hover:bg-gray-100 max-sm:mx-auto ">
