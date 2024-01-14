@@ -284,7 +284,7 @@ const Header = ({ setDark, dark }) => {
             initial="start"
             animate="end"
             exit="exit"
-            className="fixed hidden h-[11vh] w-screen  justify-center bg-back  dark:bg-black dark:text-white lg:flex"
+            className="fixed z-50 hidden h-[11vh] w-screen  justify-center bg-back  dark:bg-black dark:text-white lg:flex"
           >
             <HeaderForm setSearch={setSearch} />
           </motion.div>

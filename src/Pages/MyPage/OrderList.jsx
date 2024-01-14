@@ -7,43 +7,45 @@ export default function OrderList() {
   console.log("date", date);
   return (
     <div className="mx-auto text-center">
-      <div className="@media (min-width: 768px)  @media (min-width: 1024px) text-bold mx-auto border-b p-16 text-center text-3xl ">
+      <div className="@media (min-width: 768px)  @media (min-width: 1024px) text-bold mx-auto mb-20 border-b border-black p-16 text-center text-3xl">
         주문내역
       </div>
 
-      <div className=" mx-auto flex justify-center">
-        <button
-          type="button"
-          className="mr-1 h-8 w-12 border border-gray-300 text-xs hover:text-gray-300"
-        >
-          오늘
-        </button>
-        <button
-          type="button"
-          className="mr-1 h-8 w-12 border border-gray-300 text-xs hover:text-gray-300"
-        >
-          일주일
-        </button>
-        <button
-          type="button"
-          className="mr-1 h-8 w-12 border border-gray-300 text-xs hover:text-gray-300"
-        >
-          1개월
-        </button>
-        <button
-          type="button"
-          className="mr-1 h-8 w-12 border border-gray-300 text-xs hover:text-gray-300"
-        >
-          3개월
-        </button>
-        <button
-          type="button"
-          className="mr-1 h-8 w-12 border border-gray-300 text-xs hover:text-gray-300"
-        >
-          6개월
-        </button>
+      <div className=" mx-auto flex justify-center max-sm:flex-col">
+        <div className="">
+          <button
+            type="button"
+            className="mr-1 h-8 w-12 border border-gray-300 text-xs hover:text-gray-300"
+          >
+            오늘
+          </button>
+          <button
+            type="button"
+            className="mr-1 h-8 w-12 border border-gray-300 text-xs hover:text-gray-300"
+          >
+            일주일
+          </button>
+          <button
+            type="button"
+            className="mr-1 h-8 w-12 border border-gray-300 text-xs hover:text-gray-300"
+          >
+            1개월
+          </button>
+          <button
+            type="button"
+            className="mr-1 h-8 w-12 border border-gray-300 text-xs hover:text-gray-300"
+          >
+            3개월
+          </button>
+          <button
+            type="button"
+            className="mr-1 h-8 w-12 border border-gray-300 text-xs hover:text-gray-300"
+          >
+            6개월
+          </button>
+        </div>
 
-        <div>
+        <div className="max-sm:mt-2">
           <input
             type="date"
             className="mr-1 h-8 border border-gray-300 text-center text-xs "
@@ -55,33 +57,31 @@ export default function OrderList() {
             className="mr-1 h-8 border border-gray-300 text-center text-xs "
             onChange={(e) => setDate(e.target.value)}
           />
+          <button
+            typ="button"
+            className="h-8 w-12 border border-gray-300 bg-black text-xs text-white hover:text-gray-300"
+          >
+            조회
+          </button>
         </div>
-
-        <button
-          typ="button"
-          className="h-8 w-12 border border-gray-300 bg-black text-xs text-white hover:text-gray-300"
-        >
-          조회
-        </button>
       </div>
 
       <div className="mt-4">
-        <p className="text-center text-xs  leading-6">
+        <p className="leading-1 text-center text-xs max-sm:tracking-tighter">
           기본적으로 최근 3개월간의 자료가 조회되며, 기간 검색시 지난 주문내역을
           조회하실 수 있습니다.
         </p>
 
-        <p className="text-center text-xs leading-6">
-          주문번호를 클릭하시면 해당 주문에 대한 상세내역을 확인하실 수
-          있습니다.
+        <p className=" leading-1 text-center text-xs max-sm:tracking-tighter">
+          주문번호를 클릭하시면 해당 주문에 대한 상세내역을 확인할 수 있습니다.
         </p>
 
-        <p className="text-center text-xs leading-6">
+        <p className=" leading-1 text-center text-xs max-sm:tracking-tighter">
           취소/교환/반품 신청은 주문 완료일 기준 30일까지 가능합니다.
         </p>
       </div>
 
-      <div className="mb-4 mt-8 flex justify-center gap-20  pt-20 ">
+      <div className="mb-4 mt-8 flex justify-center gap-20  pt-20 max-sm:gap-5 ">
         <div className="text-xs font-bold">DATE</div>
         <div className="text-xs font-bold">ORDER #</div>
         <div className="text-xs font-bold">PRODUCT</div>
