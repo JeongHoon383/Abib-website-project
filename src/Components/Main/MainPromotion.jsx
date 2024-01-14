@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Scrollbar } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import CartModal from "../Cart/CartModal";
@@ -17,10 +17,6 @@ const MainPromotion = ({ title, titleArr }) => {
   const dispatch = useDispatch();
 
   const cart = useSelector(getCart).list;
-
-  console.log(cart);
-
-  const { pid } = useParams();
 
   const showModal = (value) => {
     setModalOpen(true);
