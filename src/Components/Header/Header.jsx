@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import HeaderForm from "./HeaderForm";
 import HeaderLink from "./HeaderLink";
 import HeaderMLink from "./HeaderMLink";
@@ -8,6 +8,8 @@ import { IoSunnySharp, IoMoonSharp } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../Modules/Member";
 import { persistor } from "../../Modules/rootReducer";
+import * as cookie from "../../util/cookie";
+import { getCart } from "../../Modules/cart";
 
 const searchVars = {
   //window.innerWidth를 사용 이게 픽셀로 주는것보다 더 좋을듯
@@ -70,6 +72,10 @@ const Header = ({ setDark, dark }) => {
   const [cateHover, setCateHover] = useState();
   const [mToggle, setMToggle] = useState(false);
   const memberInfo = useSelector((state) => state.persistedReducer);
+  const location = useLocation();
+
+  //카트 상품 목록
+  const cart = useSelector(getCart).list;
 
   const purge = async () => await persistor.purge();
   const dispatch = useDispatch();
@@ -78,6 +84,11 @@ const Header = ({ setDark, dark }) => {
       await dispatch(logout());
       await setTimeout(() => purge(), 200);
     }
+  };
+
+  const handleLogin = () => {
+    cookie.setCookie("recentPath", JSON.stringify(location.pathname));
+    navigate("/login");
   };
 
   return (
@@ -151,7 +162,7 @@ const Header = ({ setDark, dark }) => {
               <span className="flex h-full items-center">
                 카트
                 <span className="relative bottom-[0.5px] flex h-4 w-4   items-center justify-center rounded-full   bg-font text-xs font-bold text-white">
-                  0
+                  {cart.length}
                 </span>
               </span>
             </span>
@@ -207,7 +218,7 @@ const Header = ({ setDark, dark }) => {
             >
               <span>카트</span>
               <span className="flex h-4 w-4 items-center justify-center rounded-full bg-font text-xs font-bold text-white">
-                0
+                {cart.length}
               </span>
             </span>
             {memberInfo.isLogin ? (
@@ -222,10 +233,7 @@ const Header = ({ setDark, dark }) => {
                 >
                   회원가입
                 </span>
-                <span
-                  onClick={() => navigate("/login")}
-                  className="cursor-pointer"
-                >
+                <span onClick={handleLogin} className="cursor-pointer">
                   로그인
                 </span>
               </>

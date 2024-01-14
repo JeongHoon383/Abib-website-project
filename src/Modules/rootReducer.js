@@ -16,14 +16,19 @@ const persistConfig = {
   storage, // 리덕스 상태를 실제로 저장할 스토리지 엔진 (storage: 로컬스토리지 storageSession: 세션스토리지)
 };
 
+const persistCartConfig = {
+  key: "cart",
+  version: 1,
+  storage,
+};
+
 /** 여러개의 reducer를 합치는 기능 */
 const reducer = combineReducers({
   product: productReducer,
   review: reviewSlice.reducer,
   modal: modalSlice.reducer,
-  cart: cartSlice.reducer,
+  cart: persistReducer(persistCartConfig, cartSlice.reducer),
   persistedReducer: persistReducer(persistConfig, memberSlice.reducer),
-  // member: memberSlice.reducer,
 });
 
 const store = configureStore({

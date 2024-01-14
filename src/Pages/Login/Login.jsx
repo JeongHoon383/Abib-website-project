@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../../Modules/Member.js";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { MdArrowBackIos } from "react-icons/md";
+import * as cookie from "../../util/cookie.js";
 
 export default function Login() {
   const [tabSwitch, setTabSwitch] = useState(false);
@@ -34,7 +35,14 @@ export default function Login() {
                 login({ token: result.data.token, memberId: memberInfo.id }),
               );
               alert("로그인에 성공했습니다.");
-              navigate("/");
+
+              const recentPath = cookie.getCookie("recentPath");
+              if (recentPath === undefined) {
+                navigate("/");
+              } else {
+                navigate(recentPath);
+                cookie.removeCookie("recentPath");
+              }
             } else {
               alert("비밀번호가 일치하지 않습니다.");
             }
