@@ -21,8 +21,9 @@ export default function Review() {
     // 서버에서 데이터를 불러오는 createAsyncThunk 호출
     dispatch(getReview(pid));
   }, [dispatch, pid]);
+
   //data 가져오기
-  const reviewList = useSelector((state) => state.review.list);
+  const reviewList = useSelector((state) => state.review.list) || [];
   const memberInfo = useSelector((state) => state.persistedReducer);
   //사진이 있는 리뷰만 가져오기
   const photoReview = reviewList.filter((review) => review.rcover !== null);
@@ -33,6 +34,18 @@ export default function Review() {
       return acc;
     }, {}),
   );
+
+  const [sortList, setSortList] = useState([]);
+  const [sortOption, setSortOption] = useState("");
+
+  useEffect(() => {
+    const sortedData = [...reviewList];
+    if (sortOption === "point") {
+      setSortList(sortedData.sort((a, b) => b.point - a.point));
+    } else {
+      setSortList(sortedData);
+    }
+  }, [reviewList, sortOption]);
 
   //페이징처리
   const [page, setPage] = useState(1); //현재 페이지 수
@@ -179,56 +192,57 @@ export default function Review() {
           <span className="text-neutral-400">{`${reviewList.length}개`}</span>
         </div>
         <div className="selectFilter ml-auto">
-          <select id="order" defaultValue="최신순" className="text-xs">
-            <option value="추천순">추천순</option>
-            <option value="별점순">별점순</option>
-            <option value="최신순">최신순</option>
+          <select
+            id="order"
+            defaultValue="date"
+            className="text-xs"
+            onChange={(e) => setSortOption(e.target.value)}
+          >
+            <option value="date">최신순</option>
+            <option value="point">별점순</option>
           </select>
         </div>
       </div>
-      {reviewList
-        .slice(startPost - 1, endPost)
-        .reverse()
-        .map((item) => (
-          <div className="border-y border-gray-200 py-3" key={item.rid}>
-            <div className="flex">
-              <ReviewListStar rate={item.point} />
-              <span className="ml-2 text-sm font-thin">{item.point}.0</span>
-              <span className="ml-auto text-sm text-gray-400">
-                {item.rdate.split("T")[0]}
-              </span>
-            </div>
-            <span className="text-sm text-gray-400">
-              {item.mid.slice(0, -3) + "*".repeat(3)}
+      {sortList.slice(startPost - 1, endPost).map((item) => (
+        <div className="border-y border-gray-200 py-3" key={item.rid}>
+          <div className="flex">
+            <ReviewListStar rate={item.point} />
+            <span className="ml-2 text-sm font-thin">{item.point}.0</span>
+            <span className="ml-auto text-sm text-gray-400">
+              {item.rdate.split("T")[0]}
             </span>
-            <div>
-              <span className="mb-1 inline-block text-sm">
-                {item.content.length > textLimit.current
-                  ? isShowMores[item.rid]
-                    ? item.content
-                    : item.content.slice(0, textLimit.current)
-                  : item.content}
-                <span
-                  id="content-toggle"
-                  className="mb-2 cursor-pointer text-sm text-gray-400"
-                  onClick={() => toggleShowMore(item.rid)}
-                >
-                  {item.content.length > textLimit.current &&
-                    (isShowMores[item.rid] ? "[접기]" : " ...[더보기]")}
-                </span>
-              </span>
-
-              {item.rcover && (
-                <div
-                  className="size-14 cursor-pointer"
-                  onClick={() => handleOpenReviewPhotoModal(pid, item)}
-                >
-                  <img src={`/${item.rcover}`} alt="" className="w-full" />
-                </div>
-              )}
-            </div>
           </div>
-        ))}
+          <span className="text-sm text-gray-400">
+            {item.mid.slice(0, -3) + "*".repeat(3)}
+          </span>
+          <div>
+            <span className="mb-1 inline-block text-sm">
+              {item.content.length > textLimit.current
+                ? isShowMores[item.rid]
+                  ? item.content
+                  : item.content.slice(0, textLimit.current)
+                : item.content}
+              <span
+                id="content-toggle"
+                className="mb-2 cursor-pointer text-sm text-gray-400"
+                onClick={() => toggleShowMore(item.rid)}
+              >
+                {item.content.length > textLimit.current &&
+                  (isShowMores[item.rid] ? "[접기]" : " ...[더보기]")}
+              </span>
+            </span>
+
+            {item.rcover && (
+              <div
+                className="size-14 cursor-pointer"
+                onClick={() => handleOpenReviewPhotoModal(pid, item)}
+              >
+                <img src={`/${item.rcover}`} alt="" className="w-full" />
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
       <nav className="mt-6">
         <ul className="flex h-8 items-center justify-center -space-x-px text-sm">
           <li>

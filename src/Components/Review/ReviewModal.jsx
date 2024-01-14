@@ -35,7 +35,8 @@ export default function ReviewModal({ pid }) {
     formData.append("rcover", uploadedImg.data || undefined);
     formData.append("pid", product.pid);
     formData.append("mid", memberInfo.memberId);
-    formData.append("point", rate);
+    if (rate !== 0) formData.append("point", rate);
+    else return alert("별점을 매겨주세요");
     formData.append("content", reviewText);
 
     axios
@@ -45,8 +46,7 @@ export default function ReviewModal({ pid }) {
         },
       })
       .then((result) => {
-        if (rate === 0) alert("별점을 매겨주세요");
-        else if (result.data === "success") {
+        if (result.data === "success") {
           alert("리뷰가 등록되었습니다");
           window.location.reload();
         }
