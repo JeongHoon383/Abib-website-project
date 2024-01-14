@@ -29,7 +29,9 @@ function App() {
     <motion.div ref={constraintsRef} className={dark ? "dark" : ""}>
       <Header dark={dark} setDark={setDark} />
       <Outlet />
+
       <Footer />
+
       <MainFloating constraintsRef={constraintsRef} />
     </motion.div>
   );

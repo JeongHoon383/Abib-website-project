@@ -3,20 +3,20 @@ import React from "react";
 export default function MemberInfo() {
   return (
     <>
-      <div className="mx-auto max-sm:pl-1">
-        <div className="text-bold @media (min-width: 768px)  @media (min-width: 1024px) text-bold border-b-1 mx-auto border-b border-black  p-16 text-center text-3xl ">
+      <div className=" mx-auto ">
+        <div className="text-bold text-bold border-b-1 mx-auto border-b border-black  p-16 text-center text-3xl ">
           Profile.
         </div>
 
-        <div className=" text-bold flex flex-col border-b border-gray-200 text-xs">
-          <div className="mx-auto mt-5 w-4/5 justify-center max-sm:pl-0">
-            <p className="mt-5 text-left text-xs leading-8 max-sm:p-0">개인</p>
+        <div className="text-bold flex flex-col border-b border-gray-200 text-xs">
+          <div className="mx-auto mt-5 w-4/5 justify-center ">
+            <p className="mt-5 text-left text-xs leading-8 ">개인</p>
           </div>
           <div className="mx-auto mt-20 flex justify-center text-xs font-bold leading-4">
             계정 정보
           </div>
 
-          <div className="mx-auto mt-5 w-4/5 justify-center max-sm:w-screen">
+          <div className="mx-auto mt-5 w-4/5 justify-center max-sm:w-screen max-sm:p-1">
             <p className="text-left text-xs font-bold leading-8">아이디</p>
             <input
               type="text"
@@ -27,7 +27,7 @@ export default function MemberInfo() {
             </p>
           </div>
 
-          <div className="mx-auto mt-5 flex w-4/5 justify-center gap-2 max-sm:w-screen">
+          <div className="mx-auto mt-5 flex w-4/5 justify-center gap-2 max-sm:w-screen max-sm:p-1">
             <div className="w-1/2">
               <p className=" text-left text-xs font-bold leading-8">
                 비밀번호 변경
@@ -59,7 +59,7 @@ export default function MemberInfo() {
           </div>
 
           <div>
-            <div className="mx-auto mt-5 w-4/5 justify-center max-sm:w-screen">
+            <div className="mx-auto mt-5 w-4/5 justify-center max-sm:w-screen max-sm:p-1">
               <p className="text-left text-xs font-bold leading-8">이름</p>
               <input
                 type="text"
@@ -67,7 +67,7 @@ export default function MemberInfo() {
               />
             </div>
 
-            <div className="mx-auto mt-5 flex w-4/5 justify-center gap-2 max-sm:w-screen">
+            <div className="mx-auto mt-5 flex w-4/5 justify-center gap-2 max-sm:w-screen max-sm:p-1">
               <div className="w-2/3">
                 <p className=" text-left text-xs font-bold leading-8">
                   우편번호
@@ -90,7 +90,7 @@ export default function MemberInfo() {
               </div>
             </div>
 
-            <div className="mx-auto mt-5 w-4/5 justify-center max-sm:w-screen">
+            <div className="mx-auto mt-5 w-4/5 justify-center max-sm:w-screen max-sm:p-1">
               <p className="text-left text-xs font-bold leading-8">기본주소</p>
               <input
                 type="text"
@@ -98,7 +98,7 @@ export default function MemberInfo() {
               />
             </div>
 
-            <div className="mx-auto mt-5 w-4/5 justify-center max-sm:w-screen">
+            <div className="mx-auto mt-5 w-4/5 justify-center max-sm:w-screen max-sm:p-1">
               <p className="text-left text-xs font-bold leading-8">
                 나머지주소
               </p>
@@ -110,7 +110,7 @@ export default function MemberInfo() {
 
             <div className="mx-auto mt-5 flex w-4/5 gap-2  max-sm:w-screen">
               <div className="flex ">
-                <div className="max-xm:w-1/3 w-2/6">
+                <div className="max-xm:w-1/3 w-2/6 max-sm:p-1">
                   <p className=" text-left text-xs font-bold leading-8">
                     휴대폰
                   </p>
@@ -143,28 +143,33 @@ export default function MemberInfo() {
               </div>
             </div>
 
-            <div className="justify-content max-xm:ml-0 mx-auto ml-20  flex flex-col max-sm:ml-0 ">
-              <p className="max-sm:text-xxs text-left text-xs leading-5 max-sm:text-left">
-                쇼핑몰에서 제공하는 이벤트 소식을 SMS로 받으실 수 있습니다.
+            <div className="mx-auto w-4/5  justify-center max-sm:w-screen max-sm:p-1">
+              <p className="text-left text-xs leading-8">
+                쇼핑몰에서 제공하는 이벤트 소식을 SMS로 받으시겠습니까?
               </p>
-              <div className="flex max-sm:ml-2">
-                <div className="pr-3 pt-1 text-center text-xs">
-                  예{" "}
-                  <label>
-                    <input type="radio" name="radioExample" value="" />
-                  </label>
-                </div>
-
-                <div className="pr-10 pt-1 text-xs">
-                  아니오{" "}
-                  <label>
-                    <input type="radio" name="radioExample" value="" />
-                  </label>
-                </div>
-              </div>
             </div>
 
-            <div className="mx-auto mt-5 flex w-4/5 gap-2  max-sm:w-screen">
+            <div className="mx-auto  w-4/5 justify-center max-sm:w-screen">
+              <p className="text-left text-xs leading-8">
+                <div className="flex max-sm:ml-2">
+                  <div className="ml-0 pr-3 text-center text-xs">
+                    예{" "}
+                    <label>
+                      <input type="radio" name="radioExample" value="" />
+                    </label>
+                  </div>
+
+                  <div className="text-xs">
+                    아니오{" "}
+                    <label>
+                      <input type="radio" name="radioExample" value="" />
+                    </label>
+                  </div>
+                </div>
+              </p>
+            </div>
+
+            <div className="mx-auto mt-5 flex w-4/5 gap-2 max-sm:w-screen  max-sm:p-1">
               <div className="w-1/6 max-sm:w-2/6">
                 <p className="text-left text-xs font-bold leading-8">이메일</p>
                 <input
@@ -184,7 +189,7 @@ export default function MemberInfo() {
               </div>
             </div>
 
-            <div className="mx-auto mt-5 w-4/5 justify-center max-sm:w-screen">
+            <div className="mx-auto mt-5 w-4/5 justify-center max-sm:w-screen max-sm:p-1">
               <p className="text-left text-xs font-bold leading-8">생년월일</p>
               <input
                 type="text"
@@ -192,7 +197,7 @@ export default function MemberInfo() {
               />
             </div>
 
-            <div className="mx-auto mt-5 flex w-4/5 justify-center gap-2 max-sm:w-screen">
+            <div className="mx-auto mt-5 flex w-4/5 justify-center gap-2 max-sm:w-screen max-sm:p-1">
               <div className="w-1/2">
                 <p className=" text-left text-xs font-bold leading-8">
                   페이스북
