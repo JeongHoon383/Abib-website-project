@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import AddressSearch from "./../Signup/AddressSearch";
 import { useSelector } from "react-redux";
@@ -9,94 +9,74 @@ const OrderForm = () => {
     register,
     watch,
     setValue,
-    trigger,
     handleSubmit,
     formState: { errors },
   } = useFormContext();
 
+  const [addressOption, setAddressOption] = useState("sameAsOrderer");
   const deliveryMessageValue = watch("deliveryMessage");
 
   const getOrPostalcode = (postalcode) => {
     setValue("orPostalcode", postalcode);
-    trigger("orPostalcode");
   };
 
   const getOrAddress1 = (address1) => {
     setValue("orAddress1", address1);
-    trigger("orAddress1");
   };
 
   const getDeliveryPostalcode = (postalcode) => {
     setValue("deliveryPostalcode", postalcode);
-    trigger("deliveryPostalcode");
   };
 
   const getDeliveryAddress1 = (address1) => {
     setValue("deliveryAddress1", address1);
-    trigger("deliveryAddress1");
   };
 
   const onSubmit = (data) => {
-    console.log(data);
+    axios
+      .post("http://127.0.0.1:9090/order/", data)
+      .then((result) => console.log(result.data));
   };
 
   const memberInfo = useSelector((state) => state.persistedReducer);
+
+  useEffect(() => {
+    if (addressOption === "sameAsOrderer") {
+      setValue("deliveryName", watch("orName"));
+      setValue("deliveryPostalcode", watch("orPostalcode"));
+      setValue("deliveryAddress1", watch("orAddress1"));
+      setValue("deliveryAddress2", watch("orAddress2"));
+      setValue("deliveryPhone", watch("orPhone"));
+    } else if (addressOption === "newAddress") {
+      setValue("deliveryName", "");
+      setValue("deliveryPostalcode", "");
+      setValue("deliveryAddress1", "");
+      setValue("deliveryAddress2", "");
+      setValue("deliveryPhone", "");
+    }
+  }, [addressOption, watch("orName")]);
 
   useEffect(() => {
     if (memberInfo.isLogin) {
       axios(
         `http://127.0.0.1:9090/order/getOrdererInfo/${memberInfo.memberId}`,
       ).then((result) => {
-        console.log(result.data);
         setValue("orName", result.data.name);
-        trigger("orName");
         setValue("orPostalcode", result.data.postalcode);
-        trigger("orPostalcode");
         setValue("orAddress1", result.data.address1);
-        trigger("orAddress1");
         setValue("orAddress2", result.data.address2);
-        trigger("orAddress2");
         setValue("orPhone", result.data.phone);
-        trigger("orPhone");
         setValue("orEmail", result.data.email);
-        trigger("orEmail");
       });
+    } else {
+      setValue("orName", "");
+      setValue("orPostalcode", "");
+      setValue("orAddress1", "");
+      setValue("orAddress2", "");
+      setValue("orPhone", "");
+      setValue("orEmail", "");
     }
-  }, [memberInfo]);
-
-  // const [count, setCount] = useState(1);
-
-  // const [formData, setFormData] = useState({
-  //   itemName: "",
-  //   postNum: "",
-  //   address: "",
-  //   remainADress: "",
-  //   phone: "",
-  //   email: "",
-  // });
-
-  // const handleChange = (e) => {
-  //   setFormData({
-  //     ...formData,
-  //     [e.target.name]: e.target.value,
-  //   });
-  //   console.log(formData);
-  // };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   // 주문 정보를 처리하는 로직 추가
-  //   console.log("주문 정보:", formData);
-  // };
-
-  // const handleQuantity = (type) => {
-  //   if (type === "plus") {
-  //     setCount(count + 1);
-  //   } else {
-  //     if (count === 1) return;
-  //     setCount(count - 1);
-  //   }
-  // };
+  }, [memberInfo.isLogin]);
 
   return (
     <>
@@ -230,17 +210,21 @@ const OrderForm = () => {
                     id="addressOption1"
                     name="addressOption"
                     type="radio"
+                    value="sameAsOrderer"
                     className=" mr-[3px]"
+                    defaultChecked
+                    onChange={(e) => setAddressOption(e.target.value)}
                   />
-                  <label htmlFor="addressOption">주문자 정보와 동일</label>
+                  <label htmlFor="addressOption1">주문자 정보와 동일</label>
                   <input
                     id="addressOption2"
                     name="addressOption"
                     type="radio"
+                    value="newAddress"
                     className="ml-[20px] mr-[3px]"
-                    defaultChecked
+                    onChange={(e) => setAddressOption(e.target.value)}
                   />
-                  <label htmlFor="addressOption">새로운 배송지</label>
+                  <label htmlFor="addressOption2">새로운 배송지</label>
                   <button className="transition-btn w-30% ml-[20px] h-[40px] md:w-[20%]">
                     배송 주소록 보기
                   </button>
@@ -314,16 +298,16 @@ const OrderForm = () => {
               </div>
 
               <div className="mb-[20px]">
-                <label htmlFor="orAddress2">
+                <label htmlFor="deliveryAddress2">
                   <span>나머지 주소</span>
                   <span className="ml-[3px] text-red-500">*</span>
                 </label>
                 <input
                   type="text"
-                  id="orAddress2"
-                  name="orAddress2"
+                  id="deliveryAddress2"
+                  name="deliveryAddress2"
                   className="form-text-hover h-[40px] w-full border border-solid border-gray-300 p-[5px]"
-                  {...register("orAddress2")}
+                  {...register("deliveryAddress2")}
                 />
               </div>
 
@@ -354,10 +338,11 @@ const OrderForm = () => {
                   id="deliveryMessage"
                   name="deliveryMessage"
                   className="h-[60px] w-full border border-solid border-gray-300 p-[5px]"
+                  maxLength={50}
                   {...register("deliveryMessage")}
                 />
                 <p className="absolute right-0 top-full text-[13px]">
-                  {deliveryMessageValue ? deliveryMessageValue.length : 0} / 200
+                  {deliveryMessageValue ? deliveryMessageValue.length : 0} / 50
                 </p>
               </div>
             </form>

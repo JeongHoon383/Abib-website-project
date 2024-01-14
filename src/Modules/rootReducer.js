@@ -17,9 +17,9 @@ const persistConfig = {
 };
 
 const persistCartConfig = {
-  key: "cart", //리덕스 상태를 저장할 때 사용할 키
-  version: 1, // 저장된 상태의 구조가 변경되었을 때 증가시킬 버전 번호
-  storage, // 리덕스 상태를 실제로 저장할 스토리지 엔진 (storage: 로컬스토리지 storageSession: 세션스토리지)
+  key: "cart",
+  version: 1,
+  storage,
 };
 
 /** 여러개의 reducer를 합치는 기능 */
@@ -29,7 +29,6 @@ const reducer = combineReducers({
   modal: modalSlice.reducer,
   cart: persistReducer(persistCartConfig, cartSlice.reducer),
   persistedReducer: persistReducer(persistConfig, memberSlice.reducer),
-  // member: memberSlice.reducer,
 });
 
 const store = configureStore({
