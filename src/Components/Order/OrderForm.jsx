@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import AddressSearch from "./../Signup/AddressSearch";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { getCart } from "../../Modules/cart.js";
+import { getCart } from "../../Modules/Cart.js";
 
 const OrderForm = () => {
   const {

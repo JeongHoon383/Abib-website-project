@@ -8,8 +8,8 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getCart } from "../../Modules/cart";
-import { addToCart } from "./../../Modules/cart";
+import { getCart } from "../../Modules/Cart";
+import { addToCart } from "./../../Modules/Cart";
 
 const MainPromotion = ({ title, titleArr }) => {
   const [modalOpen, setModalOpen] = useState(false);

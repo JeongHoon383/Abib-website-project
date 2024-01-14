@@ -1,7 +1,7 @@
 import React from "react";
 import CartProduct from "./CartProduct";
 import { useDispatch, useSelector } from "react-redux";
-import { getCart, removeAllFromCart } from "../../Modules/cart";
+import { getCart, removeAllFromCart } from "../../Modules/Cart";
 
 const CartMain = () => {
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ const CartMain = () => {
             </ul>
           </div>
           {cart.map((item) => (
-            <CartProduct item={item} />
+            <CartProduct item={item} key={item.pid} />
           ))}
           <div className="flex flex-row-reverse px-[10px] pb-[17px] pt-[15px] underline">
             <div

@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../Modules/Member";
 import { persistor } from "../../Modules/rootReducer";
 import * as cookies from "../../util/cookie";
-import { getCart } from "../../Modules/cart";
+import { getCart } from "../../Modules/Cart";
 
 const searchVars = {
   //window.innerWidth를 사용 이게 픽셀로 주는것보다 더 좋을듯

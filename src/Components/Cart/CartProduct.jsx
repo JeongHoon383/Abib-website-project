@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { changeQuantity, removeFromCart } from "../../Modules/cart";
+import { changeQuantity, removeFromCart } from "../../Modules/Cart";
 
 const CartProduct = ({ item }) => {
   const navigate = useNavigate();

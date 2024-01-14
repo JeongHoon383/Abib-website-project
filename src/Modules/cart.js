@@ -45,10 +45,9 @@ export const cartSlice = createSlice({
         pid,
         cover,
         title,
-        quantity,
         originalPrice,
         priceSales,
-        quantity: 1,
+        quantity: quantity ? quantity : 1,
       };
 
       return {
