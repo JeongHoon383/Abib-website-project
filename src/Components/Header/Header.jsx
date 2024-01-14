@@ -7,6 +7,7 @@ import HeaderMLink from "./HeaderMLink";
 import { IoSunnySharp, IoMoonSharp } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../Modules/Member";
+import { persistor } from "../../Modules/rootReducer";
 import { useCookies } from "react-cookie";
 const searchVars = {
   //window.innerWidth를 사용 이게 픽셀로 주는것보다 더 좋을듯
@@ -69,17 +70,20 @@ const Header = ({ setDark, dark }) => {
   const [hover, setHover] = useState(false);
   const [cateHover, setCateHover] = useState();
   const [mToggle, setMToggle] = useState(false);
-  const dispatch = useDispatch();
-  const memberInfo = useSelector((state) => state.memberSlice) || {};
-  const [cookies, setCookie, removeCookie] = useCookies();
+  const memberInfo = useSelector((state) => state.persistedReducer);
 
-  const handleLogout = () => {
+  const [cookies, setCookie, removeCookie] = useCookies();
+  const purge = async () => await persistor.purge();
+  const dispatch = useDispatch();
+  const handleLogout = async () => {
     if (window.confirm("로그아웃 하시겠습니까?")) {
-      dispatch(logout());
       removeCookie("prevPage");
       removeCookie("currentPage");
+      await dispatch(logout());
+      await setTimeout(() => purge(), 200);
     }
   };
+
   return (
     <div
       onMouseLeave={() => setHover(false)}
@@ -210,7 +214,7 @@ const Header = ({ setDark, dark }) => {
                 0
               </span>
             </span>
-            {memberInfo.id ? (
+            {memberInfo.isLogin ? (
               <span onClick={handleLogout} className="cursor-pointer">
                 로그아웃
               </span>

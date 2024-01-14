@@ -12,7 +12,6 @@ export default function Login() {
   const [tabSwitch, setTabSwitch] = useState(false);
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
-  const [isKeepLogin, setIsKeepLogin] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [cookies, setCookie, removeCookie] = useCookies();
@@ -33,14 +32,9 @@ export default function Login() {
           if (result.data.isIdExist) {
             if (result.data.isLogin) {
               const memberInfo = jwtDecode(result.data.token);
-              memberInfo.isKeepLogin = isKeepLogin;
-              dispatch(login(memberInfo));
-
-              if (isKeepLogin) {
-                localStorage.setItem("member", JSON.stringify(memberInfo));
-              } else {
-                sessionStorage.setItem("member", JSON.stringify(memberInfo));
-              }
+              dispatch(
+                login({ token: result.data.token, memberId: memberInfo.id }),
+              );
               alert("로그인에 성공했습니다.");
               //쿠키에 저장된 prevPage가 있다면
               const prePage = cookies.prevPage;
@@ -158,7 +152,7 @@ export default function Login() {
             </form>
 
             <div className="font-semibold text-[#999] lg:flex lg:justify-between">
-              <div className="flex items-center">
+              {/* <div className="flex items-center">
                 <input
                   type="checkbox"
                   id="keepLogin"
@@ -167,7 +161,7 @@ export default function Login() {
                   onChange={() => setIsKeepLogin(!isKeepLogin)}
                 />
                 <label htmlFor="keepLogin">로그인 상태 유지</label>
-              </div>
+              </div> */}
               <div className="mt-5 text-center lg:mt-0">
                 <button className="mr-2 border-r border-[#999] pr-2 font-semibold transition duration-300 hover:text-[#DDD]">
                   아이디 찾기

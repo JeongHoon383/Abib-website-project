@@ -22,6 +22,8 @@ import SignupMain from "./Components/Signup/SignupMain";
 import SignupComplete from "./Components/Signup/SignupComplete";
 import SignupSchema from "./Components/Signup/SignupSchema";
 import store from "./Modules/rootReducer";
+import persistor from "./Modules/rootReducer";
+import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Members from "./Components/Admins/Members.jsx";
@@ -138,11 +140,13 @@ const router = createBrowserRouter([
 ]);
 const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
         <CookiesProvider>
+          <PersistGate loading={null} persistor={persistor} />
           <GlobalModal />
           <RouterProvider router={router} />
         </CookiesProvider>
