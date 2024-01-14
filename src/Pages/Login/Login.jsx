@@ -44,7 +44,8 @@ export default function Login() {
               alert("로그인에 성공했습니다.");
               //쿠키에 저장된 prevPage가 있다면
               const prePage = cookies.prevPage;
-              if (prePage === undefined) navigate("/");
+              const currentPage = cookies.currentPage;
+              if (prePage === undefined) navigate(currentPage);
               else navigate(prePage);
             } else {
               alert("비밀번호가 일치하지 않습니다.");

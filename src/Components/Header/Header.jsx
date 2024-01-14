@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import HeaderForm from "./HeaderForm";
 import HeaderLink from "./HeaderLink";
 import HeaderMLink from "./HeaderMLink";
@@ -64,6 +64,7 @@ const Header = ({ setDark, dark }) => {
   const [leave, setLeave] = useState(false);
   const toggleLeave = () => setLeave((prev) => !prev);
   const navigate = useNavigate();
+  const location = useLocation();
   const [search, setSearch] = useState(false);
   const [hover, setHover] = useState(false);
   const [cateHover, setCateHover] = useState();
@@ -76,6 +77,7 @@ const Header = ({ setDark, dark }) => {
     if (window.confirm("로그아웃 하시겠습니까?")) {
       dispatch(logout());
       removeCookie("prevPage");
+      removeCookie("currentPage");
     }
   };
   return (
@@ -215,13 +217,16 @@ const Header = ({ setDark, dark }) => {
             ) : (
               <>
                 <span
-                  onClick={() => navigate("/signup/")}
+                  onClick={() => navigate("/signup")}
                   className="cursor-pointer"
                 >
                   회원가입
                 </span>
                 <span
-                  onClick={() => navigate("/login")}
+                  onClick={() => {
+                    navigate("/login");
+                    setCookie("currentPage", JSON.stringify(location.pathname));
+                  }}
                   className="cursor-pointer"
                 >
                   로그인

@@ -18,6 +18,7 @@ export default function Review() {
   const navigate = useNavigate();
   const textLimit = useRef(150);
   const [cookies, setCookie, removeCookie] = useCookies();
+
   useEffect(() => {
     // 서버에서 데이터를 불러오는 createAsyncThunk 호출
     dispatch(getReview(pid));
@@ -35,10 +36,18 @@ export default function Review() {
     }, {}),
   );
 
-  //페이징 처리
-  const [currentPage, setCurrentPage] = useState(1); //현재 페이지 번호
-  const [totalCount, setTotalCount] = useState(6); //전체 데이터 수
-  const [pageSize, setPageSize] = useState(5); //페이지 당 데이터 수
+  //페이징처리
+  const [page, setPage] = useState(1); //현재 페이지 수
+  const totalReview = reviewList.length; //총 게시물 수
+  const pageRange = 5; //페이지 당 보여줄 게시물 수
+  const btnRange = parseInt(totalReview / pageRange + 1); //보여질 페이지 버튼의 개수
+
+  const currentSet = Math.ceil(page / btnRange); // 현재 버튼이 몇번째 세트인지 나타내는 수
+  const startPage = (currentSet - 1) * btnRange + 1; // 현재 보여질 버튼의 첫번째 수
+  const endPage = startPage + btnRange - 1; // 현재 보여질 끝 버튼의 수
+  const totalSet = Math.ceil(Math.ceil(totalReview / pageRange) / btnRange); // 전체 버튼 세트 수
+  const startPost = (page - 1) * pageRange + 1; // 시작 게시물 번호
+  const endPost = startPost + pageRange - 1; // 끝 게시물 번호
 
   // 별점 평균 계산
   const sum = reviewList.reduce((sum, review) => sum + review.point, 0);
@@ -180,7 +189,7 @@ export default function Review() {
         </div>
       </div>
       {reviewList
-        .slice()
+        .slice(startPost - 1, endPost)
         .reverse()
         .map((item) => (
           <div className="border-y border-gray-200 py-3" key={item.rid}>
@@ -222,15 +231,78 @@ export default function Review() {
             </div>
           </div>
         ))}
-      <Pagination
-        total={totalCount}
-        current={currentPage}
-        pageSize={pageSize}
-        onChange={
-          (page) => setCurrentPage(page) //클릭시 현페이지로 바꾸기
-        }
-        className="flex justify-center"
-      />
+      <nav className="mt-6">
+        <ul className="flex h-8 items-center justify-center -space-x-px text-sm">
+          <li>
+            {currentSet > 1 && (
+              <button
+                onClick={() => setPage(startPage - 1)}
+                className="ms-0 flex h-8 items-center justify-center px-3 leading-tight text-gray-500"
+              >
+                <span className="sr-only">Previous</span>
+                <svg
+                  className="h-2.5 w-2.5 rtl:rotate-180"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 6 10"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M5 1 1 5l4 4"
+                  />
+                </svg>
+              </button>
+            )}
+          </li>
+          {Array(btnRange)
+            .fill(startPage)
+            .map((_, i) => {
+              return (
+                <li key={i}>
+                  <button
+                    className={`flex h-8 items-center justify-center px-3 leading-tight ${
+                      page === startPage + i
+                        ? `font-bold text-black`
+                        : "text-gray-500"
+                    }`}
+                    onClick={() => setPage(startPage + i)}
+                  >
+                    {startPage + i}
+                  </button>
+                </li>
+              );
+            })}
+          <li>
+            {totalSet > currentSet && (
+              <button
+                className="flex h-8 items-center justify-center px-3 leading-tight text-gray-500"
+                onClick={() => setPage(endPage + 1)}
+              >
+                <span className="sr-only">Next</span>
+                <svg
+                  className="h-2.5 w-2.5 rtl:rotate-180"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 6 10"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="m1 9 4-4-4-4"
+                  />
+                </svg>
+              </button>
+            )}
+          </li>
+        </ul>
+      </nav>
     </div>
   );
 }
