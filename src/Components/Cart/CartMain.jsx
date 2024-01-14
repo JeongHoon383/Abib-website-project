@@ -1,7 +1,7 @@
 import React from "react";
 import CartProduct from "./CartProduct";
 import { useDispatch, useSelector } from "react-redux";
-import { getCart } from "../../Modules/cart";
+import { getCart, removeAllFromCart } from "../../Modules/cart";
 
 const CartMain = () => {
   const dispatch = useDispatch();
@@ -9,7 +9,7 @@ const CartMain = () => {
   const totalOriginalPrice = cart.reduce((acc, obj) => {
     return acc + obj.originalPrice * obj.quantity;
   }, 0);
-  const totlalPriceSales = cart.reduce((acc, obj) => {
+  const totalPriceSales = cart.reduce((acc, obj) => {
     return acc + obj.priceSales * obj.quantity;
   }, 0);
 
@@ -36,7 +36,10 @@ const CartMain = () => {
             <CartProduct item={item} />
           ))}
           <div className="flex flex-row-reverse px-[10px] pb-[17px] pt-[15px] underline">
-            <div className="transition-text hover:underline">
+            <div
+              className="transition-text hover:underline"
+              onClick={() => dispatch(removeAllFromCart())}
+            >
               장바구니비우기
             </div>
             <div className="transition-text mr-[15px] hover:underline">
@@ -51,12 +54,10 @@ const CartMain = () => {
               <li className="ml-[5px] mr-[5px]">-</li>
               <li>
                 상품할인금액{" "}
-                {(totalOriginalPrice - totlalPriceSales).toLocaleString()}
+                {(totalOriginalPrice - totalPriceSales).toLocaleString()}
               </li>
               <li className="ml-[5px] mr-[5px]">=</li>
-              <li className="font-bold">
-                ₩{totlalPriceSales.toLocaleString()}
-              </li>
+              <li className="font-bold">₩{totalPriceSales.toLocaleString()}</li>
             </ul>
           </div>
           <div className="flex flex-col items-center justify-center">

@@ -29,11 +29,12 @@ export const cartSlice = createSlice({
       };
     },
     removeFromCart: (state, action) => {
-      const { pid } = action.payload;
-      console.log(pid);
       return {
-        list: state.list.filter((item) => item.pid !== pid),
+        list: state.list.filter((item) => item.pid !== action.payload),
       };
+    },
+    removeAllFromCart: (state, action) => {
+      return { list: [] };
     },
   },
   extraReducers: (builder) => {
@@ -62,6 +63,7 @@ export const cartSlice = createSlice({
 
 export const getCart = (state) => state.cart;
 
-export const { changeQuantity, removeFromCart } = cartSlice.actions;
+export const { changeQuantity, removeFromCart, removeAllFromCart } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;
