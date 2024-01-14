@@ -8,7 +8,7 @@ import { IoSunnySharp, IoMoonSharp } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../Modules/Member";
 import { persistor } from "../../Modules/rootReducer";
-import * as cookie from "../../util/cookie";
+import * as cookies from "../../util/cookie";
 import { getCart } from "../../Modules/cart";
 
 const searchVars = {
@@ -73,13 +73,9 @@ const Header = ({ setDark, dark }) => {
   const [cateHover, setCateHover] = useState();
   const [mToggle, setMToggle] = useState(false);
   const memberInfo = useSelector((state) => state.persistedReducer);
-  const location = useLocation();
-
-  //카트 상품 목록
-  const cart = useSelector(getCart).list;
-
   const purge = async () => await persistor.purge();
   const dispatch = useDispatch();
+  const cart = useSelector(getCart).list;
 
   const handleLogout = async () => {
     if (window.confirm("로그아웃 하시겠습니까?")) {
@@ -88,11 +84,6 @@ const Header = ({ setDark, dark }) => {
       await dispatch(logout());
       await setTimeout(() => purge(), 200);
     }
-  };
-
-  const handleLogin = () => {
-    cookie.setCookie("recentPath", JSON.stringify(location.pathname));
-    navigate("/login");
   };
 
   return (
