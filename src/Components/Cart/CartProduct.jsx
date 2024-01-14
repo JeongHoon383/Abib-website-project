@@ -6,7 +6,6 @@ import { getCart } from "../../Modules/cart";
 const CartProduct = () => {
   const navigate = useNavigate();
   const [count, setCount] = useState(1);
-  const [discountPrice, setDiscountPrice] = useState(0);
 
   useEffect(() => {}, []);
 
@@ -81,12 +80,16 @@ const CartProduct = () => {
             />
           </div>
         </li>
-        <li className="w-[99px]">₩1,680</li>
+        <li className="w-[99px]">
+          ₩{(cart[0].priceSales * 0.1).toLocaleString()}
+        </li>
         <li className="w-[58px] text-center">
           <p>2,500</p>
           <p>조건</p>
         </li>
-        <li className="hidden w-[102px] font-bold lg:block">33,600</li>
+        <li className="hidden w-[102px] font-bold lg:block">
+          {cart[0].priceSales.toLocaleString()}
+        </li>
         <li className="w-[101px]">
           <button
             type="button"

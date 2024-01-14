@@ -18,10 +18,14 @@ export const cartSlice = createSlice({
 
       state.push(newItem);
     },
+    removeCart: (state, action) => {
+      const pidToRemove = action.payload;
+      return state.filter((item) => item.pid !== pidToRemove);
+    },
   },
 });
 
-export const { insert } = cartSlice.actions;
+export const { insert, removeCart } = cartSlice.actions;
 
 export const getCart = (state) => state.cart;
 
