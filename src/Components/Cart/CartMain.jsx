@@ -1,7 +1,18 @@
 import React from "react";
 import CartProduct from "./CartProduct";
+import { useDispatch, useSelector } from "react-redux";
+import { getCart } from "../../Modules/cart";
 
 const CartMain = () => {
+  const dispatch = useDispatch();
+  const cart = useSelector(getCart).list;
+  const totalOriginalPrice = cart.reduce((acc, obj) => {
+    return acc + obj.originalPrice * obj.quantity;
+  }, 0);
+  const totlalPriceSales = cart.reduce((acc, obj) => {
+    return acc + obj.priceSales * obj.quantity;
+  }, 0);
+
   return (
     <div className="pb-[70px]">
       <div className="mx-auto max-w-[900px] pt-[90px] text-xs">
@@ -21,7 +32,9 @@ const CartMain = () => {
               <li className="w-[101px]"></li>
             </ul>
           </div>
-          <CartProduct />
+          {cart.map((item) => (
+            <CartProduct item={item} />
+          ))}
           <div className="flex flex-row-reverse px-[10px] pb-[17px] pt-[15px] underline">
             <div className="transition-text hover:underline">
               장바구니비우기
@@ -32,13 +45,18 @@ const CartMain = () => {
           </div>
           <div className="mb-[50px]">
             <ul className="flex justify-center px-[10px] pb-[17px] pt-[15px]">
-              <li>상품구매금액 48,000</li>
+              <li>상품구매금액 {totalOriginalPrice.toLocaleString()}</li>
               <li className="ml-[5px] mr-[5px]">+</li>
-              <li>배송비 2,500</li>
+              <li>배송비 {totalOriginalPrice >= 50000 ? "무료" : "2,500"}</li>
               <li className="ml-[5px] mr-[5px]">-</li>
-              <li>상품할인금액 14,400</li>
+              <li>
+                상품할인금액{" "}
+                {(totalOriginalPrice - totlalPriceSales).toLocaleString()}
+              </li>
               <li className="ml-[5px] mr-[5px]">=</li>
-              <li className="font-bold">₩36,100</li>
+              <li className="font-bold">
+                ₩{totlalPriceSales.toLocaleString()}
+              </li>
             </ul>
           </div>
           <div className="flex flex-col items-center justify-center">
