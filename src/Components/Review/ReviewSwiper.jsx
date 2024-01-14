@@ -14,7 +14,7 @@ import "swiper/css/grid";
 export default function ReviewSwiper({ photoReview }) {
   const dispatch = useDispatch();
 
-  const handleOpenPhotoReviewModal = (pid, review) => {
+  const handleOpenReviewPhotoModal = (pid, review) => {
     dispatch(
       openModal({
         modalType: "ReviewPhotoModal",
@@ -43,39 +43,36 @@ export default function ReviewSwiper({ photoReview }) {
         }}
       >
         <>
-          {photoReview
-            .slice()
-            .reverse()
-            .map((v) => (
-              <SwiperSlide key={v.rid}>
-                <div
-                  onClick={() => handleOpenPhotoReviewModal(v.pid, v)}
-                  className="w-full cursor-pointer border border-gray-200"
-                >
-                  {v.rcover && (
-                    <div className="">
-                      <img
-                        className="h-full w-full"
-                        src={`/${v.rcover}`}
-                        alt=""
-                      />
-                    </div>
-                  )}
-                  <div className="p-3">
-                    <ReviewListStar rate={v.point} />
-                    <p className="... mb-1 mt-1 truncate font-thin text-neutral-700 sm:text-sm">
-                      {v.content}
-                    </p>
-                    <span className="... mr-3 inline-block w-10 truncate align-bottom font-thin text-gray-500 sm:align-text-top sm:text-sm">
-                      {v.mid.substring(0, 3) + "..."}
-                    </span>
-                    <span className="font-thin text-gray-500 sm:text-sm">
-                      {v.rdate.split("T")[0]}
-                    </span>
+          {photoReview.map((v) => (
+            <SwiperSlide key={v.rid}>
+              <div
+                onClick={() => handleOpenReviewPhotoModal(v.pid, v)}
+                className="w-full cursor-pointer border border-gray-200"
+              >
+                {v.rcover && (
+                  <div className="h-44 w-full md:h-32 xl:h-44">
+                    <img
+                      className="h-full w-full object-cover"
+                      src={`/${v.rcover}`}
+                      alt=""
+                    />
                   </div>
+                )}
+                <div className="p-3">
+                  <ReviewListStar rate={v.point} />
+                  <p className="... mb-1 mt-1 truncate font-thin text-neutral-700 sm:text-sm">
+                    {v.content}
+                  </p>
+                  <span className="... mr-3 inline-block w-10 truncate align-bottom font-thin text-gray-500 sm:align-text-top sm:text-sm">
+                    {v.mid.substring(0, 3) + "..."}
+                  </span>
+                  <span className="font-thin text-gray-500 sm:text-sm">
+                    {v.rdate.split("T")[0]}
+                  </span>
                 </div>
-              </SwiperSlide>
-            ))}
+              </div>
+            </SwiperSlide>
+          ))}
         </>
       </Swiper>
     </div>

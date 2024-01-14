@@ -31,6 +31,7 @@ export default function GlobalModal() {
         className="fixed h-full w-full bg-black/70"
         onClick={() => {
           dispatch(closeModal());
+          document.body.style.overflow = "unset";
         }}
       />
       <ModalComponent {...modalData} />

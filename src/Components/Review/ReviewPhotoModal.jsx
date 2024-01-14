@@ -5,7 +5,7 @@ import { closeModal } from "../../Modules/Modal";
 import { getReview } from "../../Modules/Review";
 import ReviewListStar from "./ReviewListStar";
 
-export default function ReviewPhotoModal({ review, pid }) {
+export default function ReviewPhotoModal({ review, pid, modalTop }) {
   const dispatch = useDispatch();
   const reviewList = useSelector((state) => state.review.list);
   const product = useSelector((state) => state.product.productDetail.data);
@@ -26,11 +26,16 @@ export default function ReviewPhotoModal({ review, pid }) {
   };
 
   return (
-    <div className="absolute top-[158rem] flex h-96 w-[22rem] flex-col rounded bg-white text-black min-[390px]:top-[170rem] sm:w-[30rem] md:top-[177rem] md:w-[45rem] md:flex-row lg:top-[188rem] lg:w-[55rem] xl:top-[230rem] xl:w-[62rem]">
+    <div
+      style={{
+        top: "50%",
+      }}
+      className="fixed left-1/2 flex h-96 w-64 -translate-x-1/2 -translate-y-1/2 transform flex-col rounded bg-white text-black sm:w-[30rem] md:w-[45rem] md:flex-row lg:w-[55rem] xl:w-[62rem]"
+    >
       {/* photo */}
-      <div className="bg-black">
+      <div className="h-48 bg-black md:h-auto">
         <img
-          className="mx-auto object-contain md:h-full"
+          className="mx-auto h-full w-full object-contain"
           src={`/${review.rcover}`}
           alt=""
         />
@@ -45,7 +50,7 @@ export default function ReviewPhotoModal({ review, pid }) {
               alt=""
             />
           </div>
-          <div className="">
+          <div>
             <span className="block text-sm">
               {product.title.includes("/")
                 ? product.title.replace("/", " ")
@@ -82,7 +87,7 @@ export default function ReviewPhotoModal({ review, pid }) {
       <button
         onClick={handleModalClose}
         type="button"
-        className="min-[390px]: absolute -top-4 right-4 bg-transparent text-sm text-white md:right-0 md:top-[-2rem] lg:right-0 lg:top-[-2rem]"
+        className="min-[390px]: absolute -top-4 right-0 bg-transparent text-sm text-white md:right-0 md:top-[-2rem] lg:right-0 lg:top-[-2rem]"
       >
         <svg
           className="h-3 w-3"

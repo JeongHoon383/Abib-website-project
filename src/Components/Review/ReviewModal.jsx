@@ -5,7 +5,7 @@ import { closeModal } from "../../Modules/Modal";
 import { getProductDetail } from "../../Modules/Products";
 import ReviewModalStar from "./ReviewModalStar";
 
-export default function ReviewModal({ pid }) {
+export default function ReviewModal({ pid, modalTop }) {
   const [rate, setRate] = useState(0);
   const [textCount, setTextCount] = useState(0);
   const [uploadedImg, setUploadedImg] = useState({ preview: "", data: "" });
@@ -65,7 +65,12 @@ export default function ReviewModal({ pid }) {
   };
 
   return (
-    <div className="fixed left-1/2 top-1/2 w-[22rem] -translate-x-1/2 -translate-y-1/2 rounded-md bg-white p-5 sm:w-[30rem] md:w-[45rem] lg:w-[60rem]">
+    <div
+      style={{
+        top: "calc(50% + 50px)",
+      }}
+      className="fixed left-1/2 w-[22rem] -translate-x-1/2 -translate-y-1/2 transform rounded-md bg-white p-5 sm:w-[30rem] md:w-[45rem] lg:w-[60rem]"
+    >
       <div className="flex border-b-2 border-black pb-2">
         <h3>리뷰 작성</h3>
         <button
@@ -109,8 +114,8 @@ export default function ReviewModal({ pid }) {
         onSubmit={handleSubmit}
         encType="multipart/form-data"
       >
-        <div className="border-b p-2 sm:flex sm:justify-between">
-          <div className="mb-1 mt-2 text-sm">
+        <div className="border-b p-2 min-[360px]:flex min-[360px]:flex-wrap min-[360px]:justify-center md:flex-nowrap md:justify-between">
+          <div className="min-[360px]:align-center mb-1 mt-2 text-sm">
             <span className="mr-1 font-semibold">상품은 어떠셨나요?</span>
             <span className="text-stone-700">별점을 매겨주세요</span>
           </div>
