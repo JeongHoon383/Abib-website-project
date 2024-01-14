@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { getCart } from "../../Modules/cart";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { changeQuantity, removeFromCart } from "../../Modules/cart";
 
 const CartProduct = ({ item }) => {
   const navigate = useNavigate();
-  const [count, setCount] = useState(1);
+  const dispatch = useDispatch();
 
   const handleQuantity = (type) => {
     if (type === "plus") {
-      setCount(count + 1);
+      dispatch(changeQuantity({ pid: item.pid, quantity: item.quantity + 1 }));
     } else {
-      if (count === 1) return;
-      setCount(count - 1);
+      if (item.quantity === 1) return;
+      dispatch(changeQuantity({ pid: item.pid, quantity: item.quantity - 1 }));
     }
+  };
+
+  const handleDelete = () => {
+    dispatch(removeFromCart(item.pid));
   };
 
   return (
@@ -62,7 +65,7 @@ const CartProduct = ({ item }) => {
 
             <div className="absolute left-1/2 top-1/2 w-[56px] -translate-x-1/2 -translate-y-1/2 transform border border-b-0 border-t-0 border-solid border-gray-400">
               <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
-                {count}
+                {item.quantity}
               </span>
             </div>
 
@@ -82,12 +85,13 @@ const CartProduct = ({ item }) => {
           <p>조건</p>
         </li>
         <li className="hidden w-[102px] font-bold lg:block">
-          {item.priceSales.toLocaleString()}
+          {(item.priceSales * item.quantity).toLocaleString()}
         </li>
         <li className="w-[101px]">
           <button
             type="button"
             className="h-[35px] w-[60px] border border-solid border-black font-bold transition duration-500 hover:bg-gray-100"
+            onClick={handleDelete}
           >
             삭제
           </button>

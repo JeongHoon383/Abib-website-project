@@ -17,21 +17,24 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState: { list: [] },
   reducers: {
-    // insert: (state, action) => {
-    //   const { pid, title, quantity, originalPrice, priceSales, cover } =
-    //     action.payload;
-    //   const newItem = {
-    //     pid,
-    //     cover,
-    //     title,
-    //     quantity,
-    //     originalPrice,
-    //     priceSales,
-    //   };
-    //   return {
-    //     list: [...state.list, newItem],
-    //   };
-    // },
+    changeQuantity: (state, action) => {
+      const { pid, quantity } = action.payload;
+      return {
+        list: state.list.map((item) => {
+          if (item.pid === pid) {
+            return { ...item, quantity: quantity };
+          }
+          return item;
+        }),
+      };
+    },
+    removeFromCart: (state, action) => {
+      const { pid } = action.payload;
+      console.log(pid);
+      return {
+        list: state.list.filter((item) => item.pid !== pid),
+      };
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(addToCart.fulfilled, (state, action) => {
@@ -44,6 +47,7 @@ export const cartSlice = createSlice({
         quantity,
         originalPrice,
         priceSales,
+        quantity: 1,
       };
 
       return {
@@ -56,7 +60,8 @@ export const cartSlice = createSlice({
   },
 });
 
-
 export const getCart = (state) => state.cart;
+
+export const { changeQuantity, removeFromCart } = cartSlice.actions;
 
 export default cartSlice.reducer;
