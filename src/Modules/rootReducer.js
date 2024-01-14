@@ -2,7 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import productReducer from "./Products";
 import { reviewSlice } from "./Review";
 import { modalSlice } from "./Modal";
-import { cartSlice } from "./Cart";
+import { cartSlice } from "./cart";
 import { memberSlice } from "./Member";
 import { persistReducer, PERSIST, PURGE } from "redux-persist";
 import { persistStore } from "redux-persist";

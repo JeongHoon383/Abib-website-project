@@ -1,7 +1,7 @@
 import React from "react";
 import CartProduct from "./CartProduct";
 import { useDispatch, useSelector } from "react-redux";
-import { getCart, removeAllFromCart } from "../../Modules/Cart";
+import { getCart, removeAllFromCart } from "../../Modules/cart";
 
 const CartMain = () => {
   const dispatch = useDispatch();
