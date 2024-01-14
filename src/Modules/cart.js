@@ -56,7 +56,6 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { insert } = cartSlice.actions;
 
 export const getCart = (state) => state.cart;
 
