@@ -16,7 +16,7 @@ const MainPromotion = ({ title, titleArr }) => {
 
   const dispatch = useDispatch();
 
-  const cart = useSelector(getCart);
+  const cart = useSelector(getCart).list;
 
   console.log(cart);
 

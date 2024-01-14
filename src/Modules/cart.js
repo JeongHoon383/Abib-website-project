@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const cartSlice = createSlice({
   name: "cart",
-  initialState: [],
+  initialState: { list: [] },
   reducers: {
     insert: (state, action) => {
       const { pid, title, quantity, originalPrice, priceSales, cover } =
@@ -16,7 +16,9 @@ export const cartSlice = createSlice({
         priceSales,
       };
 
-      state.push(newItem);
+      return {
+        list: [...state.list, newItem],
+      };
     },
     removeCart: (state, action) => {
       const pidToRemove = action.payload;

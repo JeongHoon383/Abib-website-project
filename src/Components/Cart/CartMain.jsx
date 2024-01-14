@@ -1,7 +1,12 @@
 import React from "react";
 import CartProduct from "./CartProduct";
+import { useDispatch, useSelector } from "react-redux";
+import { getCart } from "../../Modules/cart";
 
 const CartMain = () => {
+  const dispatch = useDispatch();
+  const cart = useSelector(getCart).list;
+
   return (
     <div className="pb-[70px]">
       <div className="mx-auto max-w-[900px] pt-[90px] text-xs">
@@ -21,7 +26,9 @@ const CartMain = () => {
               <li className="w-[101px]"></li>
             </ul>
           </div>
-          <CartProduct />
+          {cart.map((item) => (
+            <CartProduct item={item} />
+          ))}
           <div className="flex flex-row-reverse px-[10px] pb-[17px] pt-[15px] underline">
             <div className="transition-text hover:underline">
               장바구니비우기
