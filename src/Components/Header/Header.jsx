@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import HeaderForm from "./HeaderForm";
 import HeaderLink from "./HeaderLink";
 import HeaderMLink from "./HeaderMLink";
@@ -67,6 +67,7 @@ const Header = ({ setDark, dark }) => {
   const [leave, setLeave] = useState(false);
   const toggleLeave = () => setLeave((prev) => !prev);
   const navigate = useNavigate();
+  const location = useLocation();
   const [search, setSearch] = useState(false);
   const [hover, setHover] = useState(false);
   const [cateHover, setCateHover] = useState();
@@ -79,8 +80,11 @@ const Header = ({ setDark, dark }) => {
 
   const purge = async () => await persistor.purge();
   const dispatch = useDispatch();
+
   const handleLogout = async () => {
     if (window.confirm("로그아웃 하시겠습니까?")) {
+      cookies.removeCookie("prevPage");
+      cookies.removeCookie("currentPage");
       await dispatch(logout());
       await setTimeout(() => purge(), 200);
     }
@@ -228,12 +232,21 @@ const Header = ({ setDark, dark }) => {
             ) : (
               <>
                 <span
-                  onClick={() => navigate("/signup/")}
+                  onClick={() => navigate("/signup")}
                   className="cursor-pointer"
                 >
                   회원가입
                 </span>
-                <span onClick={handleLogin} className="cursor-pointer">
+                <span
+                  onClick={() => {
+                    navigate("/login");
+                    cookies.setCookie(
+                      "currentPage",
+                      JSON.stringify(location.pathname),
+                    );
+                  }}
+                  className="cursor-pointer"
+                >
                   로그인
                 </span>
               </>
