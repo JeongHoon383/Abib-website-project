@@ -37,7 +37,8 @@ export default function ReviewModal({ pid, modalTop }) {
     formData.append("mid", memberInfo.memberId);
     if (rate !== 0) formData.append("point", rate);
     else return alert("별점을 매겨주세요");
-    formData.append("content", reviewText);
+    if (reviewText !== "") formData.append("content", reviewText);
+    else return alert("리뷰를 남겨주세요!");
 
     axios
       .post("http://127.0.0.1:9090/review/save-review", formData, {
