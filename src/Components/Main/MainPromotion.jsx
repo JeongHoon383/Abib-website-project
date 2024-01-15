@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Scrollbar } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import CartModal from "../Cart/CartModal";
@@ -6,9 +6,9 @@ import "swiper/css";
 import "swiper/css/scrollbar";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getCart } from "../../Modules/cart";
+import { getCart, insert } from "../../Modules/cart";
 import { addToCart } from "./../../Modules/cart";
 
 const MainPromotion = ({ title, titleArr }) => {
