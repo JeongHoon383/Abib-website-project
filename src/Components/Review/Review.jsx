@@ -1,5 +1,5 @@
 import Pagination from "rc-pagination";
-import React, { createContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ReviewSwiper from "./ReviewSwiper";
@@ -10,26 +10,30 @@ import { openModal } from "../../Modules/Modal";
 import "rc-pagination/assets/index.css";
 import "../../custom.css";
 
-export const ReviewContext = createContext({});
-
 export default function Review() {
   const { pid } = useParams();
   const dispatch = useDispatch();
   const textLimit = useRef(150);
+  useEffect(() => {
+    // 서버에서 데이터를 불러오는 createAsyncThunk 호출
+    dispatch(getReview(pid));
+  }, [dispatch, pid]);
+  //data 가져오기
   const reviewList = useSelector((state) => state.review.list);
+  //사진이 있는 리뷰만 가져오기
+  const photoReview = reviewList.filter((review) => review.rcover !== null);
+
   const [isShowMores, setIsShowMores] = useState(
     reviewList.reduce((acc, item) => {
       acc[item.rid] = false;
       return acc;
     }, {}),
   );
-  const [selectedReview, setSelectedReview] = useState(null);
+
   //페이징 처리
   const [currentPage, setCurrentPage] = useState(1); //현재 페이지 번호
   const [totalCount, setTotalCount] = useState(6); //전체 데이터 수
   const [pageSize, setPageSize] = useState(5); //페이지 당 데이터 수
-
-  const photoReview = reviewList.filter((review) => review.rcover !== null);
 
   // 별점 평균 계산
   const sum = reviewList.reduce((sum, review) => sum + review.point, 0);
@@ -62,11 +66,6 @@ export default function Review() {
     ratio: parseInt((pointInfo.count / totalReviews) * 100),
   }));
 
-  useEffect(() => {
-    // 서버에서 데이터를 불러오는 createAsyncThunk 호출
-    dispatch(getReview(pid));
-  }, [dispatch, pid]);
-
   const toggleShowMore = (id) => {
     setIsShowMores((prevIsShowMores) => ({
       ...prevIsShowMores,
@@ -74,11 +73,24 @@ export default function Review() {
     }));
   };
 
-  const handleOpenReviewModal = () => {
+  const handleOpenReviewModal = (pid) => {
     dispatch(
       openModal({
         modalType: "ReviewModal",
         isOpen: true,
+        pid,
+      }),
+    );
+    document.body.style.overflow = "hidden";
+  };
+
+  const handleOpenReviewPhotoModal = (pid, review) => {
+    dispatch(
+      openModal({
+        modalType: "ReviewPhotoModal",
+        isOpen: true,
+        pid,
+        review,
       }),
     );
     document.body.style.overflow = "hidden";
@@ -134,7 +146,7 @@ export default function Review() {
           <div>
             <button
               type="button"
-              onClick={handleOpenReviewModal}
+              onClick={() => handleOpenReviewModal(pid)}
               className="me-2 rounded-md border border-gray-200 bg-white px-5 py-1 text-xs font-light text-neutral-400 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
             >
               리뷰 작성하기
@@ -142,9 +154,7 @@ export default function Review() {
           </div>
         </div>
       </div>
-      <ReviewContext.Provider value={{ reviewList, average }}>
-        <ReviewSwiper photoReview={photoReview} />
-      </ReviewContext.Provider>
+      <ReviewSwiper photoReview={photoReview} />
       <div className="my-5 flex items-center">
         <div className="mr-4 text-xs">
           <span className="mr-1 font-semibold">상품평수</span>
@@ -193,25 +203,11 @@ export default function Review() {
               {item.rcover && (
                 <div
                   className="size-14 cursor-pointer"
-                  // onClick={}
+                  onClick={() => handleOpenReviewPhotoModal(pid, item)}
                 >
                   <img src={`/${item.rcover}`} alt="" className="w-full" />
                 </div>
               )}
-              {/* {modalOpen && (
-                <>
-                  {showPhotoModal ? (
-                    <ReviewContext.Provider value={{ reviewList, average }}>
-                      <ReviewPhotoModal
-                        review={selectedReview}
-                        closeModal={closeModal}
-                        setSelectedReview={setSelectedReview}
-                        ReviewListStar={ReviewListStar}
-                      />
-                    </ReviewContext.Provider>
-                  ) : }
-                </>
-              )} */}
             </div>
           </div>
         ))}

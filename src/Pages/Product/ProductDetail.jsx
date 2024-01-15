@@ -45,7 +45,11 @@ export default function ProductDetail() {
             />
           </div>
           <div className="m-auto mb-36 w-11/12">
-            <p className="mb-2">{product.title}</p>
+            <p className="mb-2">
+              {product.title && product.title.includes("/")
+                ? product.title.replace("/", " ")
+                : product.title}
+            </p>
             <p className="mb-4 text-xs font-medium text-neutral-400">
               {product.productVolume}
             </p>
