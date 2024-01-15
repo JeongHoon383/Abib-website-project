@@ -1,35 +1,64 @@
-import Pagination from "rc-pagination";
-import React, { createContext, useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ReviewSwiper from "./ReviewSwiper";
 import ReviewListStar from "./ReviewListStar";
 import { getReview } from "../../Modules/Review";
 import { openModal } from "../../Modules/Modal";
+import * as cookies from "../../util/cookie.js";
 
 import "rc-pagination/assets/index.css";
 import "../../custom.css";
 
-export const ReviewContext = createContext({});
-
 export default function Review() {
   const { pid } = useParams();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
   const textLimit = useRef(150);
-  const reviewList = useSelector((state) => state.review.list);
+
+  useEffect(() => {
+    // 서버에서 데이터를 불러오는 createAsyncThunk 호출
+    dispatch(getReview(pid));
+  }, [dispatch, pid]);
+
+  //data 가져오기
+  const reviewList = useSelector((state) => state.review.list) || [];
+  const memberInfo = useSelector((state) => state.persistedReducer);
+  //사진이 있는 리뷰만 가져오기
+  const photoReview = reviewList.filter((review) => review.rcover !== null);
+
   const [isShowMores, setIsShowMores] = useState(
     reviewList.reduce((acc, item) => {
       acc[item.rid] = false;
       return acc;
     }, {}),
   );
-  const [selectedReview, setSelectedReview] = useState(null);
-  //페이징 처리
-  const [currentPage, setCurrentPage] = useState(1); //현재 페이지 번호
-  const [totalCount, setTotalCount] = useState(6); //전체 데이터 수
-  const [pageSize, setPageSize] = useState(5); //페이지 당 데이터 수
 
-  const photoReview = reviewList.filter((review) => review.rcover !== null);
+  const [sortList, setSortList] = useState([]);
+  const [sortOption, setSortOption] = useState("");
+
+  useEffect(() => {
+    const sortedData = [...reviewList];
+    if (sortOption === "point") {
+      setSortList(sortedData.sort((a, b) => b.point - a.point));
+    } else {
+      setSortList(sortedData);
+    }
+  }, [reviewList, sortOption]);
+
+  //페이징처리
+  const [page, setPage] = useState(1); //현재 페이지 수
+  const totalReview = reviewList.length; //총 게시물 수
+  const pageRange = 5; //페이지 당 보여줄 게시물 수
+  const btnRange = parseInt(totalReview / pageRange + 1); //보여질 페이지 버튼의 개수
+
+  const currentSet = Math.ceil(page / btnRange); // 현재 버튼이 몇번째 세트인지 나타내는 수
+  const startPage = (currentSet - 1) * btnRange + 1; // 현재 보여질 버튼의 첫번째 수
+  const endPage = startPage + btnRange - 1; // 현재 보여질 끝 버튼의 수
+  const totalSet = Math.ceil(Math.ceil(totalReview / pageRange) / btnRange); // 전체 버튼 세트 수
+  const startPost = (page - 1) * pageRange + 1; // 시작 게시물 번호
+  const endPost = startPost + pageRange - 1; // 끝 게시물 번호
 
   // 별점 평균 계산
   const sum = reviewList.reduce((sum, review) => sum + review.point, 0);
@@ -62,11 +91,6 @@ export default function Review() {
     ratio: parseInt((pointInfo.count / totalReviews) * 100),
   }));
 
-  useEffect(() => {
-    // 서버에서 데이터를 불러오는 createAsyncThunk 호출
-    dispatch(getReview(pid));
-  }, [dispatch, pid]);
-
   const toggleShowMore = (id) => {
     setIsShowMores((prevIsShowMores) => ({
       ...prevIsShowMores,
@@ -75,14 +99,20 @@ export default function Review() {
   };
 
   const handleOpenReviewModal = (pid) => {
-    dispatch(
-      openModal({
-        modalType: "ReviewModal",
-        isOpen: true,
-        pid,
-      }),
-    );
-    document.body.style.overflow = "hidden";
+    if (memberInfo.isLogin) {
+      dispatch(
+        openModal({
+          modalType: "ReviewModal",
+          isOpen: true,
+          pid,
+        }),
+      );
+      document.body.style.overflow = "hidden";
+    } else {
+      alert("로그인 후 작성 가능합니다.");
+      cookies.setCookie("prevPage", JSON.stringify(location.pathname));
+      navigate("/login");
+    }
   };
 
   const handleOpenReviewPhotoModal = (pid, review) => {
@@ -162,65 +192,129 @@ export default function Review() {
           <span className="text-neutral-400">{`${reviewList.length}개`}</span>
         </div>
         <div className="selectFilter ml-auto">
-          <select id="order" defaultValue="최신순" className="text-xs">
-            <option value="추천순">추천순</option>
-            <option value="별점순">별점순</option>
-            <option value="최신순">최신순</option>
+          <select
+            id="order"
+            defaultValue="date"
+            className="text-xs"
+            onChange={(e) => setSortOption(e.target.value)}
+          >
+            <option value="date">최신순</option>
+            <option value="point">별점순</option>
           </select>
         </div>
       </div>
-      {reviewList
-        .slice()
-        .reverse()
-        .map((item) => (
-          <div className="border-y border-gray-200 py-3" key={item.rid}>
-            <div className="flex">
-              <ReviewListStar rate={item.point} />
-              <span className="ml-2 text-sm font-thin">{item.point}.0</span>
-              <span className="ml-auto text-sm text-gray-400">
-                {item.rdate.split("T")[0]}
-              </span>
-            </div>
-            <span className="text-sm text-gray-400">
-              {item.mid.slice(0, -3) + "*".repeat(3)}
+      {sortList.slice(startPost - 1, endPost).map((item) => (
+        <div className="border-y border-gray-200 py-3" key={item.rid}>
+          <div className="flex">
+            <ReviewListStar rate={item.point} />
+            <span className="ml-2 text-sm font-thin">{item.point}.0</span>
+            <span className="ml-auto text-sm text-gray-400">
+              {item.rdate.split("T")[0]}
             </span>
-            <div>
-              <span className="mb-1 inline-block text-sm">
-                {item.content.length > textLimit.current
-                  ? isShowMores[item.rid]
-                    ? item.content
-                    : item.content.slice(0, textLimit.current)
-                  : item.content}
-                <span
-                  id="content-toggle"
-                  className="mb-2 cursor-pointer text-sm text-gray-400"
-                  onClick={() => toggleShowMore(item.rid)}
-                >
-                  {item.content.length > textLimit.current &&
-                    (isShowMores[item.rid] ? "[접기]" : " ...[더보기]")}
-                </span>
-              </span>
-
-              {item.rcover && (
-                <div
-                  className="size-14 cursor-pointer"
-                  onClick={() => handleOpenReviewPhotoModal(pid, item)}
-                >
-                  <img src={`/${item.rcover}`} alt="" className="w-full" />
-                </div>
-              )}
-            </div>
           </div>
-        ))}
-      <Pagination
-        total={totalCount}
-        current={currentPage}
-        pageSize={pageSize}
-        onChange={
-          (page) => setCurrentPage(page) //클릭시 현페이지로 바꾸기
-        }
-        className="flex justify-center"
-      />
+          <span className="text-sm text-gray-400">
+            {item.mid.slice(0, -3) + "*".repeat(3)}
+          </span>
+          <div>
+            <span className="mb-1 inline-block text-sm">
+              {item.content.length > textLimit.current
+                ? isShowMores[item.rid]
+                  ? item.content
+                  : item.content.slice(0, textLimit.current)
+                : item.content}
+              <span
+                id="content-toggle"
+                className="mb-2 cursor-pointer text-sm text-gray-400"
+                onClick={() => toggleShowMore(item.rid)}
+              >
+                {item.content.length > textLimit.current &&
+                  (isShowMores[item.rid] ? "[접기]" : " ...[더보기]")}
+              </span>
+            </span>
+
+            {item.rcover && (
+              <div
+                className="size-14 cursor-pointer"
+                onClick={() => handleOpenReviewPhotoModal(pid, item)}
+              >
+                <img src={`/${item.rcover}`} alt="" className="h-full w-full" />
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
+      <nav className="mt-6">
+        <ul className="flex h-8 items-center justify-center -space-x-px text-sm">
+          <li>
+            {currentSet > 1 && (
+              <button
+                onClick={() => setPage(startPage - 1)}
+                className="ms-0 flex h-8 items-center justify-center px-3 leading-tight text-gray-500"
+              >
+                <span className="sr-only">Previous</span>
+                <svg
+                  className="h-2.5 w-2.5 rtl:rotate-180"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 6 10"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M5 1 1 5l4 4"
+                  />
+                </svg>
+              </button>
+            )}
+          </li>
+          {Array(btnRange)
+            .fill(startPage)
+            .map((_, i) => {
+              return (
+                <li key={i}>
+                  <button
+                    className={`flex h-8 items-center justify-center px-3 leading-tight ${
+                      page === startPage + i
+                        ? `font-bold text-black`
+                        : "text-gray-500"
+                    }`}
+                    onClick={() => setPage(startPage + i)}
+                  >
+                    {startPage + i}
+                  </button>
+                </li>
+              );
+            })}
+          <li>
+            {totalSet > currentSet && (
+              <button
+                className="flex h-8 items-center justify-center px-3 leading-tight text-gray-500"
+                onClick={() => setPage(endPage + 1)}
+              >
+                <span className="sr-only">Next</span>
+                <svg
+                  className="h-2.5 w-2.5 rtl:rotate-180"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 6 10"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="m1 9 4-4-4-4"
+                  />
+                </svg>
+              </button>
+            )}
+          </li>
+        </ul>
+      </nav>
     </div>
   );
 }

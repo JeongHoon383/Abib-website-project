@@ -1,12 +1,16 @@
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import HeaderForm from "./HeaderForm";
 import HeaderLink from "./HeaderLink";
 import HeaderMLink from "./HeaderMLink";
 import { IoSunnySharp, IoMoonSharp } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../Modules/Member";
+import { persistor } from "../../Modules/rootReducer";
+import * as cookies from "../../util/cookie";
+import { getCart } from "../../Modules/cart";
+
 const searchVars = {
   //window.innerWidth를 사용 이게 픽셀로 주는것보다 더 좋을듯
   start: {
@@ -63,16 +67,25 @@ const Header = ({ setDark, dark }) => {
   const [leave, setLeave] = useState(false);
   const toggleLeave = () => setLeave((prev) => !prev);
   const navigate = useNavigate();
+  const location = useLocation();
   const [search, setSearch] = useState(false);
   const [hover, setHover] = useState(false);
   const [cateHover, setCateHover] = useState();
   const [mToggle, setMToggle] = useState(false);
+  const memberInfo = useSelector((state) => state.persistedReducer);
+  const purge = async () => await persistor.purge();
   const dispatch = useDispatch();
-  const memberInfo = useSelector((state) => state.memberSlice) || {};
+  const cart = useSelector(getCart).list;
 
-  const handleLogout = () => {
-    if (window.confirm("로그아웃 하시겠습니까?")) dispatch(logout());
+  const handleLogout = async () => {
+    if (window.confirm("로그아웃 하시겠습니까?")) {
+      cookies.removeCookie("prevPage");
+      cookies.removeCookie("currentPage");
+      await dispatch(logout());
+      await setTimeout(() => purge(), 200);
+    }
   };
+
   return (
     <div
       onMouseLeave={() => setHover(false)}
@@ -86,7 +99,7 @@ const Header = ({ setDark, dark }) => {
         </div>
         <div className="flex h-[11vh] w-full items-center justify-between   px-8 py-4">
           <div className="hidden w-[33%] space-x-[15px] text-[12px] font-medium lg:block">
-            <span 
+            <span
               className="cursor-pointer"
               onMouseOver={() => {
                 setHover(true);
@@ -144,7 +157,7 @@ const Header = ({ setDark, dark }) => {
               <span className="flex h-full items-center">
                 카트
                 <span className="relative bottom-[0.5px] flex h-4 w-4   items-center justify-center rounded-full   bg-font text-xs font-bold text-white">
-                  0
+                  {cart.length}
                 </span>
               </span>
             </span>
@@ -200,23 +213,29 @@ const Header = ({ setDark, dark }) => {
             >
               <span>카트</span>
               <span className="flex h-4 w-4 items-center justify-center rounded-full bg-font text-xs font-bold text-white">
-                0
+                {cart.length}
               </span>
             </span>
-            {memberInfo.id ? (
+            {memberInfo.isLogin ? (
               <span onClick={handleLogout} className="cursor-pointer">
                 로그아웃
               </span>
             ) : (
               <>
                 <span
-                  onClick={() => navigate("/signup/")}
+                  onClick={() => navigate("/signup")}
                   className="cursor-pointer"
                 >
                   회원가입
                 </span>
                 <span
-                  onClick={() => navigate("/login")}
+                  onClick={() => {
+                    navigate("/login");
+                    cookies.setCookie(
+                      "currentPage",
+                      JSON.stringify(location.pathname),
+                    );
+                  }}
                   className="cursor-pointer"
                 >
                   로그인
@@ -277,7 +296,7 @@ const Header = ({ setDark, dark }) => {
             initial="start"
             animate="end"
             exit="exit"
-            className="fixed hidden h-[11vh] w-screen  justify-center bg-back  lg:flex dark:bg-black dark:text-white"
+            className="fixed z-50 hidden h-[11vh] w-screen  justify-center bg-back  dark:bg-black dark:text-white lg:flex"
           >
             <HeaderForm setSearch={setSearch} />
           </motion.div>
@@ -303,7 +322,7 @@ const Header = ({ setDark, dark }) => {
             initial="start"
             animate="end"
             exit="exit"
-            className="fixed z-10 h-[85vh] w-screen bg-back lg:hidden dark:bg-black"
+            className="fixed z-10 h-[85vh] w-screen bg-back dark:bg-black lg:hidden"
           >
             <HeaderMLink setMToggle={setMToggle} />
           </motion.div>

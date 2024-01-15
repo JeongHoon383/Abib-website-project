@@ -33,7 +33,7 @@ export default function AddressSearch({ getAddress1, getPostalcode }) {
       onClick={handleClick}
       className={"transition-btn h-10 w-full font-normal dark:bg-slate-400"}
     >
-      우편 번호 찾기
+      POSTAL CODE
     </button>
   );
 }

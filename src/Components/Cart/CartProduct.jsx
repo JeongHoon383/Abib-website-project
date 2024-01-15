@@ -1,26 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { getCart } from "../../Modules/cart";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { changeQuantity, removeFromCart } from "../../Modules/cart";
 
-const CartProduct = () => {
+const CartProduct = ({ item }) => {
   const navigate = useNavigate();
-  const [count, setCount] = useState(1);
-  const [discountPrice, setDiscountPrice] = useState(0);
-
-  useEffect(() => {}, []);
-
-  const cart = useSelector(getCart);
-
-  console.log(cart);
+  const dispatch = useDispatch();
 
   const handleQuantity = (type) => {
     if (type === "plus") {
-      setCount(count + 1);
+      dispatch(changeQuantity({ pid: item.pid, quantity: item.quantity + 1 }));
     } else {
-      if (count === 1) return;
-      setCount(count - 1);
+      if (item.quantity === 1) return;
+      dispatch(changeQuantity({ pid: item.pid, quantity: item.quantity - 1 }));
     }
+  };
+
+  const handleDelete = () => {
+    dispatch(removeFromCart(item.pid));
   };
 
   return (
@@ -33,7 +29,7 @@ const CartProduct = () => {
           <img
             onClick={() => navigate("/product/detail/:pid")}
             /* src="../../../cart/cartCover.jpeg" */
-            src={`http://127.0.0.1:9090/uploads/${cart[0].cover}`}
+            src={`http://127.0.0.1:9090/uploads/${item.cover}`}
             className="ml-[30px] h-[60px] w-[60px] cursor-pointer"
             alt=""
           />
@@ -43,7 +39,7 @@ const CartProduct = () => {
             onClick={() => navigate("/product/detail/:pid")}
             className="transition-text flex flex-col items-center"
           >
-            <p className="ml-[10px]">{cart[0].title}</p>
+            <p className="ml-[10px]">{item.title}</p>
             {/* <p className="ml-[10px]">카밍 터치</p> */}
             <div>
               <img
@@ -55,8 +51,8 @@ const CartProduct = () => {
           </div>
         </li>
         <li className="w-[108px]">
-          <p>₩{cart[0].originalPrice.toLocaleString()}</p>
-          <p className="font-bold">₩{cart[0].priceSales.toLocaleString()}</p>
+          <p>₩{item.originalPrice.toLocaleString()}</p>
+          <p className="font-bold">₩{item.priceSales.toLocaleString()}</p>
         </li>
         <li className="hidden w-[165px] lg:block">
           <div className="relative ml-[52px] h-[30px] w-[70px] rounded-[5px] border border-solid border-gray-400">
@@ -69,7 +65,7 @@ const CartProduct = () => {
 
             <div className="absolute left-1/2 top-1/2 w-[56px] -translate-x-1/2 -translate-y-1/2 transform border border-b-0 border-t-0 border-solid border-gray-400">
               <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
-                {count}
+                {item.quantity}
               </span>
             </div>
 
@@ -81,16 +77,21 @@ const CartProduct = () => {
             />
           </div>
         </li>
-        <li className="w-[99px]">₩1,680</li>
+        <li className="w-[99px]">
+          ₩{(item.priceSales * 0.1).toLocaleString()}
+        </li>
         <li className="w-[58px] text-center">
           <p>2,500</p>
           <p>조건</p>
         </li>
-        <li className="hidden w-[102px] font-bold lg:block">33,600</li>
+        <li className="hidden w-[102px] font-bold lg:block">
+          {(item.priceSales * item.quantity).toLocaleString()}
+        </li>
         <li className="w-[101px]">
           <button
             type="button"
             className="h-[35px] w-[60px] border border-solid border-black font-bold transition duration-500 hover:bg-gray-100"
+            onClick={handleDelete}
           >
             삭제
           </button>
