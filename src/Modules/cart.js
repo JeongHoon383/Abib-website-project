@@ -16,7 +16,27 @@ export const addToCart = createAsyncThunk(
 export const cartSlice = createSlice({
   name: "cart",
   initialState: { list: [] },
-  reducers: {},
+  reducers: {
+    changeQuantity: (state, action) => {
+      const { pid, quantity } = action.payload;
+      return {
+        list: state.list.map((item) => {
+          if (item.pid === pid) {
+            return { ...item, quantity: quantity };
+          }
+          return item;
+        }),
+      };
+    },
+    removeFromCart: (state, action) => {
+      return {
+        list: state.list.filter((item) => item.pid !== action.payload),
+      };
+    },
+    removeAllFromCart: (state, action) => {
+      return { list: [] };
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(addToCart.fulfilled, (state, action) => {
       const { pid, title, quantity, originalPrice, priceSales, cover } =
@@ -25,9 +45,9 @@ export const cartSlice = createSlice({
         pid,
         cover,
         title,
-        quantity,
         originalPrice,
         priceSales,
+        quantity: quantity ? quantity : 1,
       };
 
       return {
@@ -41,5 +61,8 @@ export const cartSlice = createSlice({
 });
 
 export const getCart = (state) => state.cart;
+
+export const { changeQuantity, removeFromCart, removeAllFromCart } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

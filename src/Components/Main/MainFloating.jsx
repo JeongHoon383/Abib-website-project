@@ -1,7 +1,9 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { BsFillSendFill } from "react-icons/bs";
 import React, { useState } from "react";
-
+import { MdOutlineNavigateBefore } from "react-icons/md";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 const MainFloating = ({ constraintsRef }) => {
   const [toggle, setToggle] = useState(true);
   const [toggleQna, setToggleQna] = useState(false);
@@ -11,14 +13,16 @@ const MainFloating = ({ constraintsRef }) => {
   function cls(...a) {
     return a.join(" ");
   }
+  const memberInfo = useSelector((state) => state.persistedReducer);
+  /* 
+  3. memberInfo의 값
+  - 로그인 했을 때 : {isLogin: true, token: (토큰값), memberId: (로그인한 아이디)}*/
   return (
     <div>
       <AnimatePresence>
         {toggle ? (
           <motion.div
             key={1}
-            drag
-            dragConstraints={constraintsRef}
             transition={{ duration: 1, ease: "linear" }}
             layoutId="qna"
             onClick={() => setToggle(false)}
@@ -31,18 +35,16 @@ const MainFloating = ({ constraintsRef }) => {
         ) : (
           <motion.div
             key={1}
-            dragConstraints={constraintsRef}
             layoutId="qna"
             transition={{ duration: 1, ease: "linear" }}
-            drag
             className={cls(
               `fixed bottom-5 right-5 z-50 mx-auto h-[510px] w-[375px] cursor-pointer  space-y-3 rounded-2xl   border-[0.5px]   border-gray-300 bg-gray-300 px-5 py-4 text-xl font-bold shadow-md`,
             )}
           >
             {toggleQna ? (
               <motion.div
-                drag
-                dragConstraints={constraintsRef}
+                /*             drag
+                dragConstraints={constraintsRef} */
                 key={3}
                 layoutId="3"
                 className="flex h-full w-full flex-col rounded-2xl bg-white p-5"
@@ -57,24 +59,26 @@ const MainFloating = ({ constraintsRef }) => {
                 }}
               >
                 <div className="flex items-center justify-between">
-                  <span onClick={handleToggleQna}>이전으로 </span>
+                  <span onClick={handleToggleQna}>
+                    <MdOutlineNavigateBefore className="text-3xl" />{" "}
+                  </span>
                   <span
                     onClick={() => {
                       setToggle(true);
                       setToggleQna(false);
                     }}
                   >
-                    엑스
+                    X
                   </span>
                 </div>
                 <div className="mt-4">
                   <fieldset>
-                    <legend className="text-center text-3xl">문의하기</legend>
+                    {/*       <legend className="text-center text-3xl">문의하기</legend> */}
                     <form method="post" action="">
                       <label>
                         제목
                         <input
-                          className="w-full p-1 outline-none focus:border-b-[1px]"
+                          className="mb-3 w-full border-b p-1 outline-none focus:border-b-[1px]"
                           type="text"
                           placeholder="제목을 입력해주세요"
                         />
@@ -184,25 +188,48 @@ const MainFloating = ({ constraintsRef }) => {
                       </div>
                     </div>
                   </>
-                  <div
-                    onClick={() => handleToggleQna()}
-                    className="col-span-5 w-full"
-                  >
-                    <motion.button
-                      type="button"
-                      key={3}
-                      layoutId="3"
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      exit={{
-                        scale: 10,
-                        transition: { duration: 1, ease: "linear" },
-                      }}
-                      className="flex w-full items-center justify-center rounded-2xl bg-black px-1 py-3 text-center font-semibold text-white"
-                    >
-                      문의하기
-                      <BsFillSendFill className="ml-2" />
-                    </motion.button>
+                  <div className="col-span-5 w-full">
+                    {memberInfo.isLogin ? (
+                      <Link
+                        to={"/privateinquiry"}
+                        onClick={() => setToggle(true)}
+                      >
+                        <motion.button
+                          /*    onClick={() => handleToggleQna()} */
+                          type="button"
+                          key={3}
+                          layoutId="3"
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          exit={{
+                            scale: 10,
+                            transition: { duration: 1, ease: "linear" },
+                          }}
+                          className="flex w-full items-center justify-center rounded-2xl bg-black px-1 py-3 text-center font-semibold text-white"
+                        >
+                          문의하기
+                          <BsFillSendFill className="ml-2" />
+                        </motion.button>
+                      </Link>
+                    ) : (
+                      <Link to={"/login"} onClick={() => setToggle(true)}>
+                        <motion.button
+                          type="button"
+                          key={3}
+                          layoutId="3"
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          exit={{
+                            scale: 10,
+                            transition: { duration: 1, ease: "linear" },
+                          }}
+                          className="flex w-full items-center justify-center rounded-2xl bg-black px-1 py-3 text-center font-semibold text-white"
+                        >
+                          문의하기
+                          <BsFillSendFill className="ml-2" />
+                        </motion.button>
+                      </Link>
+                    )}
                   </div>
                 </motion.div>
               </>

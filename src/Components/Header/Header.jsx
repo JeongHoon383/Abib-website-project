@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import HeaderForm from "./HeaderForm";
 import HeaderLink from "./HeaderLink";
 import HeaderMLink from "./HeaderMLink";
@@ -8,23 +8,26 @@ import { IoSunnySharp, IoMoonSharp } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../Modules/Member";
 import { persistor } from "../../Modules/rootReducer";
-import * as cookie from "../../util/cookie";
+import * as cookies from "../../util/cookie";
 import { getCart } from "../../Modules/cart";
 
 const searchVars = {
   //window.innerWidth를 사용 이게 픽셀로 주는것보다 더 좋을듯
   start: {
-    y: "-10vh",
+    /*     y: "-15vh", */
+    height: "0vh",
     opacity: 0,
   },
   end: {
-    y: 0,
+    /*     y: 0, */
     opacity: 1,
+    height: "11vh",
     transition: { duration: 0.5, type: "tween", ease: "linear" },
   },
   exit: {
-    y: "-15vh",
+    /*     y: "-15vh", */
     opacity: 0,
+    height: "0",
     transition: { duration: 0.5, type: "tween", ease: "linear" },
   },
 };
@@ -67,34 +70,29 @@ const Header = ({ setDark, dark }) => {
   const [leave, setLeave] = useState(false);
   const toggleLeave = () => setLeave((prev) => !prev);
   const navigate = useNavigate();
+  const location = useLocation();
   const [search, setSearch] = useState(false);
   const [hover, setHover] = useState(false);
   const [cateHover, setCateHover] = useState();
   const [mToggle, setMToggle] = useState(false);
   const memberInfo = useSelector((state) => state.persistedReducer);
-  const location = useLocation();
-
-  //카트 상품 목록
-  const cart = useSelector(getCart).list;
-
   const purge = async () => await persistor.purge();
   const dispatch = useDispatch();
+  const cart = useSelector(getCart).list;
+
   const handleLogout = async () => {
     if (window.confirm("로그아웃 하시겠습니까?")) {
+      cookies.removeCookie("prevPage");
+      cookies.removeCookie("currentPage");
       await dispatch(logout());
       await setTimeout(() => purge(), 200);
     }
   };
 
-  const handleLogin = () => {
-    cookie.setCookie("recentPath", JSON.stringify(location.pathname));
-    navigate("/login");
-  };
-
   return (
     <div
       onMouseLeave={() => setHover(false)}
-      className=" relative mt-[15vh] w-full overflow-x-hidden transition ease-in-out dark:bg-black dark:text-white "
+      className="relative z-[101] mt-[15vh] w-full overflow-x-hidden transition ease-in-out dark:bg-black dark:text-white "
     >
       <div className=" fixed top-0   z-20 h-[15vh] w-full border-b border-gray-300 bg-back dark:bg-black dark:text-white">
         <div className="flex   h-[4vh] items-center justify-center bg-font text-back">
@@ -199,8 +197,7 @@ const Header = ({ setDark, dark }) => {
                 />
               </svg>
             </span>
-            <motion.span
-              layout
+            <span
               onClick={() => {
                 setDark((dark) => !dark);
               }}
@@ -211,7 +208,7 @@ const Header = ({ setDark, dark }) => {
               ) : (
                 <IoSunnySharp style={{ fontSize: "15px" }} />
               )}
-            </motion.span>
+            </span>
             <span
               onClick={() => navigate("/cart")}
               className=" flex cursor-pointer items-center justify-center space-x-0.5 text-[12px]"
@@ -222,18 +219,32 @@ const Header = ({ setDark, dark }) => {
               </span>
             </span>
             {memberInfo.isLogin ? (
-              <span onClick={handleLogout} className="cursor-pointer">
-                로그아웃
-              </span>
+              <>
+                <span onClick={handleLogout} className="cursor-pointer">
+                  로그아웃
+                </span>
+                <span>
+                  <Link to={"/mypage"}>마이페이지</Link>
+                </span>
+              </>
             ) : (
               <>
                 <span
-                  onClick={() => navigate("/signup/")}
+                  onClick={() => navigate("/signup")}
                   className="cursor-pointer"
                 >
                   회원가입
                 </span>
-                <span onClick={handleLogin} className="cursor-pointer">
+                <span
+                  onClick={() => {
+                    navigate("/login");
+                    cookies.setCookie(
+                      "currentPage",
+                      JSON.stringify(location.pathname),
+                    );
+                  }}
+                  className="cursor-pointer"
+                >
                   로그인
                 </span>
               </>
@@ -284,7 +295,7 @@ const Header = ({ setDark, dark }) => {
         </div>
       </div>
 
-      <AnimatePresence onExitComplete={toggleLeave}>
+      <AnimatePresence>
         {search && (
           <motion.div
             key={1}
@@ -292,7 +303,7 @@ const Header = ({ setDark, dark }) => {
             initial="start"
             animate="end"
             exit="exit"
-            className="fixed z-50 hidden h-[11vh] w-screen  justify-center bg-back  dark:bg-black dark:text-white lg:flex"
+            className="fixed z-[100] hidden h-[11vh] w-screen  justify-center bg-back  lg:flex dark:bg-black dark:text-white"
           >
             <HeaderForm setSearch={setSearch} />
           </motion.div>

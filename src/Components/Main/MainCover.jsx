@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const MainCover = () => {
   return (
@@ -13,8 +14,8 @@ const MainCover = () => {
           <span>23.12.27 - 24.01.15</span>
         </div>
       </div>
-      <div className="w-10/12 border border-back px-16 py-3 text-center text-[15px] font-medium text-back md:w-[200px] dark:border-black dark:text-black">
-        shop now
+      <div className="w-10/12 cursor-pointer border border-back px-16 py-3 text-center text-[15px] font-medium text-back md:w-[200px] dark:border-black dark:text-black">
+        <Link to={"product/list/스킨케어"}> shop now</Link>
       </div>
     </div>
   );
