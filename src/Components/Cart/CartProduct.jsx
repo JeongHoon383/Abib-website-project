@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { changeQuantity, removeFromCart } from "../../Modules/cart";
 
-const CartProduct = ({ item }) => {
+const CartProduct = ({ item, handleCheckList }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -23,7 +23,13 @@ const CartProduct = ({ item }) => {
     <div>
       <ul className="flex w-full items-center justify-between border-b border-solid border-gray-300 py-[12px] text-center text-xs">
         <li>
-          <input type="checkbox" className="ml-[8px] flex-1" />
+          <input
+            type="checkbox"
+            className="ml-[8px] flex-1"
+            onChange={(e) => {
+              handleCheckList(e.currentTarget.checked, item.pid);
+            }}
+          />
         </li>
         <li className="w-[105px]">
           <img
