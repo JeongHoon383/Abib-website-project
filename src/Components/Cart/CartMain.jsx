@@ -1,20 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
 import CartProduct from "./CartProduct";
 import { useDispatch, useSelector } from "react-redux";
 import { getCart } from "../../Modules/cart";
 
 const CartMain = () => {
   const dispatch = useDispatch();
+
+  // 비워두기
+  // 비워두기
+  // 비워두기
+  // 비워두기
+  // 비워두기
+  // 비워두기
+
   const cart = useSelector(getCart).list;
 
+  const [checkLists, setCheckLists] = useState([]);
+
+  const handleCheckList = (checked, pid) => {
+    if (checked) {
+      setCheckLists([...checkLists, pid]);
+    } else {
+      setCheckLists(checkLists.map((check) => check !== pid));
+    }
+  };
+
+  const handleAllCheck = (checked) => {
+    if (checked) {
+      const checkItems = [];
+      cart.map((cart) => checkItems.push(cart.pid));
+      setCheckLists(checkItems);
+    } else {
+      setCheckLists([]);
+    }
+  };
   return (
-    <div className="pb-[70px]">
+    <div className="pb-[40px]">
       <div className="mx-auto max-w-[900px] pt-[90px] text-xs">
         <div>
           <div>
             <ul className="flex w-full items-center justify-between border-b border-solid border-gray-300 text-center font-bold">
               <li className="px-[5px] py-[12px]">
-                <input className="mx-[3px] mb-[7px] mt-[5px]" type="checkbox" />
+                <input
+                  className="mx-[3px] mb-[7px] mt-[5px]"
+                  type="checkbox"
+                  onChange={(e) => {
+                    handleAllCheck(e.currentTarget.checked);
+                  }}
+                />
               </li>
               <li className="w-[105px]"></li>
               <li className="hidden w-[129px] lg:block">PRODUCT</li>
@@ -27,7 +60,7 @@ const CartMain = () => {
             </ul>
           </div>
           {cart.map((item) => (
-            <CartProduct item={item} />
+            <CartProduct item={item} handleCheckList={handleCheckList} />
           ))}
           <div className="flex flex-row-reverse px-[10px] pb-[17px] pt-[15px] underline">
             <div className="transition-text hover:underline">
@@ -47,11 +80,6 @@ const CartMain = () => {
               <li className="ml-[5px] mr-[5px]">=</li>
               <li className="font-bold">₩36,100</li>
             </ul>
-          </div>
-          <div className="flex flex-col items-center justify-center">
-            <div className="mb-[3px] font-bold">총 할인금액 상세내역</div>
-            <div className="mb-[3px] text-[11px]">₩7,200원</div>
-            <div className="text-[11px]">기간할인 ₩7,200</div>
           </div>
         </div>
       </div>

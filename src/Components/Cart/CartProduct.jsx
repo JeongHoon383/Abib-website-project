@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { getCart } from "../../Modules/cart";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const CartProduct = ({ item }) => {
+const CartProduct = ({ item, handleCheckList }) => {
   const navigate = useNavigate();
   const [count, setCount] = useState(1);
 
@@ -20,7 +18,13 @@ const CartProduct = ({ item }) => {
     <div>
       <ul className="flex w-full items-center justify-between border-b border-solid border-gray-300 py-[12px] text-center text-xs">
         <li>
-          <input type="checkbox" className="ml-[8px] flex-1" />
+          <input
+            type="checkbox"
+            className="ml-[8px] flex-1"
+            onChange={(e) => {
+              handleCheckList(e.currentTarget.checked, item.pid);
+            }}
+          />
         </li>
         <li className="w-[105px]">
           <img
