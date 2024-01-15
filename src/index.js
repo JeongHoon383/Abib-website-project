@@ -30,10 +30,8 @@ import Members from "./Components/Admins/Members.jsx";
 import Shipping from "./Components/Admins/Shipping.jsx";
 import GlobalModal from "./Components/GlobalModal.jsx";
 import Products from "./Components/Admins/Products.jsx";
-import Dashboard from "./Components/Admins/Dashboard.jsx";
-import GlobalModal from "./Components/GlobalModal.jsx";
-import { CookiesProvider } from "react-cookie";
 import DashboardView from "./Components/Admins/DashboardView.jsx";
+import { CookiesProvider } from "react-cookie";
 
 const router = createBrowserRouter([
   {
@@ -100,6 +98,7 @@ const router = createBrowserRouter([
         path: "dashboardview",
         element: <DashboardView />,
       },
+
       {
         path: "/shipping",
         element: <Shipping />,
