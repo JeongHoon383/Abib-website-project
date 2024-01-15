@@ -190,22 +190,27 @@ const MainFloating = ({ constraintsRef }) => {
                   </>
                   <div className="col-span-5 w-full">
                     {memberInfo.isLogin ? (
-                      <motion.button
-                        onClick={() => handleToggleQna()}
-                        type="button"
-                        key={3}
-                        layoutId="3"
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        exit={{
-                          scale: 10,
-                          transition: { duration: 1, ease: "linear" },
-                        }}
-                        className="flex w-full items-center justify-center rounded-2xl bg-black px-1 py-3 text-center font-semibold text-white"
+                      <Link
+                        to={"/privateinquiry"}
+                        onClick={() => setToggle(true)}
                       >
-                        문의하기
-                        <BsFillSendFill className="ml-2" />
-                      </motion.button>
+                        <motion.button
+                          /*    onClick={() => handleToggleQna()} */
+                          type="button"
+                          key={3}
+                          layoutId="3"
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          exit={{
+                            scale: 10,
+                            transition: { duration: 1, ease: "linear" },
+                          }}
+                          className="flex w-full items-center justify-center rounded-2xl bg-black px-1 py-3 text-center font-semibold text-white"
+                        >
+                          문의하기
+                          <BsFillSendFill className="ml-2" />
+                        </motion.button>
+                      </Link>
                     ) : (
                       <Link to={"/login"} onClick={() => setToggle(true)}>
                         <motion.button

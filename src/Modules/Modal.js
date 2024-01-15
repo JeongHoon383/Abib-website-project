@@ -13,10 +13,10 @@ export const modalSlice = createSlice({
   reducers: {
     //dispatch로 부르는 액션 함수의 이름
     openModal: (state, actions) => {
-      const { modalType, pid, review } = actions.payload;
+      const { modalType, pid, review, modalTop } = actions.payload;
       state.modalType = modalType;
       state.isOpen = true;
-      state.modalData = { pid, review };
+      state.modalData = { pid, review, modalTop };
     },
     closeModal: (state) => {
       state.isOpen = false;

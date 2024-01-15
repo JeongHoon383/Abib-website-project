@@ -1,102 +1,90 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import AddressSearch from "./../Signup/AddressSearch";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { getCart } from "../../Modules/cart.js";
 
 const OrderForm = () => {
   const {
     register,
     watch,
     setValue,
-    trigger,
     handleSubmit,
     formState: { errors },
   } = useFormContext();
 
+  const memberInfo = useSelector((state) => state.persistedReducer);
+  const cart = useSelector(getCart).list;
+  const [addressOption, setAddressOption] = useState("sameAsOrderer");
   const deliveryMessageValue = watch("deliveryMessage");
+
+  const totalOriginalPrice = cart.reduce((acc, obj) => {
+    return acc + obj.originalPrice * obj.quantity;
+  }, 0);
+  const totalPriceSales = cart.reduce((acc, obj) => {
+    return acc + obj.priceSales * obj.quantity;
+  }, 0);
 
   const getOrPostalcode = (postalcode) => {
     setValue("orPostalcode", postalcode);
-    trigger("orPostalcode");
   };
 
   const getOrAddress1 = (address1) => {
     setValue("orAddress1", address1);
-    trigger("orAddress1");
   };
 
   const getDeliveryPostalcode = (postalcode) => {
     setValue("deliveryPostalcode", postalcode);
-    trigger("deliveryPostalcode");
   };
 
   const getDeliveryAddress1 = (address1) => {
     setValue("deliveryAddress1", address1);
-    trigger("deliveryAddress1");
   };
 
   const onSubmit = (data) => {
-    console.log(data);
+    axios
+      .post("http://127.0.0.1:9090/order/", data)
+      .then((result) => console.log(result.data));
   };
 
-  const memberInfo = useSelector((state) => state.persistedReducer);
+  useEffect(() => {
+    if (addressOption === "sameAsOrderer") {
+      setValue("deliveryName", watch("orName"));
+      setValue("deliveryPostalcode", watch("orPostalcode"));
+      setValue("deliveryAddress1", watch("orAddress1"));
+      setValue("deliveryAddress2", watch("orAddress2"));
+      setValue("deliveryPhone", watch("orPhone"));
+    } else if (addressOption === "newAddress") {
+      setValue("deliveryName", "");
+      setValue("deliveryPostalcode", "");
+      setValue("deliveryAddress1", "");
+      setValue("deliveryAddress2", "");
+      setValue("deliveryPhone", "");
+    }
+  }, [addressOption, watch("orName")]);
 
   useEffect(() => {
     if (memberInfo.isLogin) {
       axios(
         `http://127.0.0.1:9090/order/getOrdererInfo/${memberInfo.memberId}`,
       ).then((result) => {
-        console.log(result.data);
         setValue("orName", result.data.name);
-        trigger("orName");
         setValue("orPostalcode", result.data.postalcode);
-        trigger("orPostalcode");
         setValue("orAddress1", result.data.address1);
-        trigger("orAddress1");
         setValue("orAddress2", result.data.address2);
-        trigger("orAddress2");
         setValue("orPhone", result.data.phone);
-        trigger("orPhone");
         setValue("orEmail", result.data.email);
-        trigger("orEmail");
       });
+    } else {
+      setValue("orName", "");
+      setValue("orPostalcode", "");
+      setValue("orAddress1", "");
+      setValue("orAddress2", "");
+      setValue("orPhone", "");
+      setValue("orEmail", "");
     }
-  }, [memberInfo]);
-
-  // const [count, setCount] = useState(1);
-
-  // const [formData, setFormData] = useState({
-  //   itemName: "",
-  //   postNum: "",
-  //   address: "",
-  //   remainADress: "",
-  //   phone: "",
-  //   email: "",
-  // });
-
-  // const handleChange = (e) => {
-  //   setFormData({
-  //     ...formData,
-  //     [e.target.name]: e.target.value,
-  //   });
-  //   console.log(formData);
-  // };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   // 주문 정보를 처리하는 로직 추가
-  //   console.log("주문 정보:", formData);
-  // };
-
-  // const handleQuantity = (type) => {
-  //   if (type === "plus") {
-  //     setCount(count + 1);
-  //   } else {
-  //     if (count === 1) return;
-  //     setCount(count - 1);
-  //   }
-  // };
+  }, [memberInfo.isLogin]);
 
   return (
     <>
@@ -230,17 +218,21 @@ const OrderForm = () => {
                     id="addressOption1"
                     name="addressOption"
                     type="radio"
+                    value="sameAsOrderer"
                     className=" mr-[3px]"
+                    defaultChecked
+                    onChange={(e) => setAddressOption(e.target.value)}
                   />
-                  <label htmlFor="addressOption">주문자 정보와 동일</label>
+                  <label htmlFor="addressOption1">주문자 정보와 동일</label>
                   <input
                     id="addressOption2"
                     name="addressOption"
                     type="radio"
+                    value="newAddress"
                     className="ml-[20px] mr-[3px]"
-                    defaultChecked
+                    onChange={(e) => setAddressOption(e.target.value)}
                   />
-                  <label htmlFor="addressOption">새로운 배송지</label>
+                  <label htmlFor="addressOption2">새로운 배송지</label>
                   <button className="transition-btn w-30% ml-[20px] h-[40px] md:w-[20%]">
                     배송 주소록 보기
                   </button>
@@ -314,16 +306,16 @@ const OrderForm = () => {
               </div>
 
               <div className="mb-[20px]">
-                <label htmlFor="orAddress2">
+                <label htmlFor="deliveryAddress2">
                   <span>나머지 주소</span>
                   <span className="ml-[3px] text-red-500">*</span>
                 </label>
                 <input
                   type="text"
-                  id="orAddress2"
-                  name="orAddress2"
+                  id="deliveryAddress2"
+                  name="deliveryAddress2"
                   className="form-text-hover h-[40px] w-full border border-solid border-gray-300 p-[5px]"
-                  {...register("orAddress2")}
+                  {...register("deliveryAddress2")}
                 />
               </div>
 
@@ -354,10 +346,11 @@ const OrderForm = () => {
                   id="deliveryMessage"
                   name="deliveryMessage"
                   className="h-[60px] w-full border border-solid border-gray-300 p-[5px]"
+                  maxLength={50}
                   {...register("deliveryMessage")}
                 />
                 <p className="absolute right-0 top-full text-[13px]">
-                  {deliveryMessageValue ? deliveryMessageValue.length : 0} / 200
+                  {deliveryMessageValue ? deliveryMessageValue.length : 0} / 50
                 </p>
               </div>
             </form>
@@ -380,25 +373,31 @@ const OrderForm = () => {
                 </ul>
               </div>
               <div>
-                <ul className="flex h-[133px] w-full items-center justify-between py-[5px] pl-[10px] text-center">
-                  <li className="">
-                    <img
-                      src="../../../cart/cartCover.jpeg"
-                      alt=""
-                      className="h-[60px] max-w-[60px]"
-                    />
-                  </li>
-                  <li className="transition-text w-[409px] pl-[10px] text-left">
-                    여성초 스팟 패드 카밍 터치
-                  </li>
-                  <li className="w-[105px] min-w-[60px]">
-                    <div>24,000</div>
-                    <div>₩16,800</div>
-                  </li>
-                  <li className="w-[99px] min-w-[85px]">2</li>
-                  <li className="hidden w-[96px] lg:block">₩1,680</li>
-                  <li className="w-[99px] min-w-[88px]">33,600</li>
-                </ul>
+                {cart.map((item) => (
+                  <ul className="flex h-[133px] w-full items-center justify-between py-[5px] pl-[10px] text-center">
+                    <li>
+                      <img
+                        src={`http://127.0.0.1:9090/uploads/${item.cover}`}
+                        alt=""
+                        className="h-[60px] max-w-[60px]"
+                      />
+                    </li>
+                    <li className="transition-text w-[409px] pl-[10px] text-left">
+                      {item.title}
+                    </li>
+                    <li className="w-[105px] min-w-[60px]">
+                      <div>₩{item.originalPrice.toLocaleString()}</div>
+                      <div>₩{item.priceSales.toLocaleString()}</div>
+                    </li>
+                    <li className="w-[99px] min-w-[85px]">{item.quantity}</li>
+                    <li className="hidden w-[96px] lg:block">
+                      {(item.priceSales * 0.1).toLocaleString()}
+                    </li>
+                    <li className="w-[99px] min-w-[88px]">
+                      ₩{(item.priceSales * item.quantity).toLocaleString()}
+                    </li>
+                  </ul>
+                ))}
               </div>
             </div>
           </div>
@@ -411,13 +410,13 @@ const OrderForm = () => {
                 <div className="flex">
                   <div className="basis-[30%] py-[15px] ">상품금액</div>
                   <div className="basis-[70%] py-[15px] text-right">
-                    ₩48,000
+                    ₩{totalOriginalPrice.toLocaleString()}
                   </div>
                 </div>
                 <div className="flex">
                   <div className="basis-[30%] py-[15px] ">배송비</div>
                   <div className="basis-[70%] py-[15px] text-right">
-                    + ₩2,500
+                    {totalPriceSales >= 50000 ? "무료" : "+ ₩2,500"}
                   </div>
                 </div>
               </div>
@@ -425,7 +424,7 @@ const OrderForm = () => {
                 <div className="flex">
                   <div className="basis-[30%] py-[15px] ">총 할인금액</div>
                   <div className="basis-[70%] py-[15px] text-right">
-                    - ₩14,400
+                    - ₩{(totalOriginalPrice - totalPriceSales).toLocaleString()}
                   </div>
                 </div>
               </div>
@@ -436,7 +435,12 @@ const OrderForm = () => {
                   </div>
                   <div className="basis-[70%] py-[15px] text-right text-[16px]">
                     <span>₩</span>
-                    <span className="ml-[20px]">36,100</span>
+                    <span className="ml-[20px]">
+                      {(totalPriceSales > 50000
+                        ? totalPriceSales + 2500
+                        : totalPriceSales
+                      ).toLocaleString()}
+                    </span>
                   </div>
                 </div>
               </div>

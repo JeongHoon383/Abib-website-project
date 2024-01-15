@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ProductAccordion from "../../Components/Product/ProductAccordion";
 import Review from "../../Components//Review/Review";
 import ProductRecommendSwiper from "../../Components/Product/ProductRecommendSwiper";
-import ProductCounter from "../../Components/Product/ProductCounter";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductDetail } from "../../Modules/Products";
 
 export default function ProductDetail() {
-  const [quantity, setQuantity] = useState(1);
-  const [total, setTotal] = useState(0);
   const dispatch = useDispatch();
   const { pid } = useParams();
   const product = useSelector((state) => state.product.productDetail.data);
@@ -18,20 +15,6 @@ export default function ProductDetail() {
     // 서버에서 데이터를 불러오는 createAsyncThunk 호출
     dispatch(getProductDetail(pid));
   }, [dispatch, pid]);
-
-  const handleClickCounter = (num) => {
-    setQuantity((prev) => prev + num);
-    if (product.priceSales) setTotal((prev) => prev + product.priceSales * num);
-    else setTotal((prev) => prev + product.originalPrice * num);
-  };
-
-  // input이 포커스를 상실했을 때 상태값을 업데이트하기 위한 이벤트 핸들러 함수
-  const handleBlurInput = (quantity) => {
-    const newQuantity = quantity;
-    setQuantity(newQuantity);
-    if (product.priceSales) setTotal(product.priceSales * quantity);
-    else setTotal(product.originalPrice * quantity);
-  };
 
   return (
     <>
@@ -79,13 +62,8 @@ export default function ProductDetail() {
             )}
 
             <p className="my-4 text-xs">{product.engTitle}</p>
-            <ProductCounter
-              quantity={quantity}
-              onClick={handleClickCounter}
-              onBlur={handleBlurInput}
-            />
             <button className="mb-2 me-2 w-full border border-black bg-white px-5 py-2.5 text-xs font-medium text-gray-900 lg:hover:bg-gray-100 lg:focus:outline-none lg:focus:ring-4 lg:focus:ring-gray-200 lg:dark:border-gray-600 lg:dark:bg-gray-800 lg:dark:text-white lg:dark:hover:border-gray-600 lg:dark:hover:bg-gray-700 lg:dark:focus:ring-gray-700">
-              장바구니 담기 - ₩{total.toLocaleString()} ({quantity}개)
+              장바구니 담기 - ₩16,100 (1개)
             </button>
             <button className="mb-2 me-2 w-full border border-black bg-black px-5 py-2.5 text-xs font-medium text-white lg:dark:border-gray-600 lg:dark:bg-gray-800 lg:dark:text-white lg:dark:hover:border-gray-600 lg:dark:hover:bg-gray-700 lg:dark:focus:ring-gray-700">
               구매하기

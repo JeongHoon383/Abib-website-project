@@ -9,6 +9,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getCart, insert } from "../../Modules/cart";
+import { addToCart } from "./../../Modules/cart";
 
 const MainPromotion = ({ title, titleArr }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -16,13 +17,17 @@ const MainPromotion = ({ title, titleArr }) => {
 
   const dispatch = useDispatch();
 
-  const cart = useSelector(getCart);
+  const cart = useSelector(getCart).list;
 
-  const { pid } = useParams();
-
-  const showModal = (value) => {
-    setModalOpen(true);
-    dispatch(insert(value));
+  const showModal = async (value) => {
+    const isProductAdded = cart.some((item) => item.pid === value.pid);
+    if (isProductAdded) {
+      alert("이미 추가한 상품입니다.");
+    } else {
+      dispatch(addToCart(value));
+      setModalOpen(true);
+      // await dispatch(insert(value));
+    }
   };
 
   const navigate = useNavigate();
