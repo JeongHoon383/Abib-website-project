@@ -112,14 +112,7 @@ const router = createBrowserRouter([
         path: "members",
         element: <Members />,
       },
-      {
-        path: "/create",
-        element: <MembersCreate />,
-      },
-      {
-        path: "/update",
-        element: <MembersUpdate />,
-      },
+
       {
         path: "mypage",
         element: <MyPageMain />,
