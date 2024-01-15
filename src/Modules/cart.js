@@ -38,13 +38,11 @@ export const cartSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(addToCart.fulfilled, (state, action) => {
-      const { pid, title, quantity, originalPrice, priceSales, cover } =
-        action.payload;
+      const { pid, title, originalPrice, priceSales, cover } = action.payload;
       const newItem = {
         pid,
         cover,
         title,
-        quantity,
         originalPrice,
         priceSales,
         quantity: 1,

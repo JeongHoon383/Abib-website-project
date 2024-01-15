@@ -27,7 +27,7 @@ const CartProduct = ({ item }) => {
         </li>
         <li className="w-[105px]">
           <img
-            onClick={() => navigate("/product/detail/:pid")}
+            onClick={() => navigate(`/product/detail/${item.pid}`)}
             /* src="../../../cart/cartCover.jpeg" */
             src={`http://127.0.0.1:9090/uploads/${item.cover}`}
             className="ml-[30px] h-[60px] w-[60px] cursor-pointer"
@@ -36,7 +36,7 @@ const CartProduct = ({ item }) => {
         </li>
         <li className="hidden w-[129px] lg:block">
           <div
-            onClick={() => navigate("/product/detail/:pid")}
+            onClick={() => navigate(`/product/detail/${item.pid}`)}
             className="transition-text flex flex-col items-center"
           >
             <p className="ml-[10px]">{item.title}</p>
