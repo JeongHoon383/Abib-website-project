@@ -329,7 +329,7 @@ const Header = ({ setDark, dark }) => {
             initial="start"
             animate="end"
             exit="exit"
-            className="fixed z-10 h-[85vh] w-screen bg-back lg:hidden dark:bg-black"
+            className="fixed z-10 h-[85vh] w-screen bg-back dark:bg-black lg:hidden"
           >
             <HeaderMLink setMToggle={setMToggle} />
           </motion.div>
