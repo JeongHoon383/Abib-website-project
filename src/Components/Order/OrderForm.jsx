@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import AddressSearch from "./../Signup/AddressSearch";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { getCart } from "../../Modules/cart.js";
+import { getCart, removeAllFromCart } from "../../Modules/cart.js";
+import { useNavigate } from "react-router-dom";
 
 const OrderForm = () => {
   const {
@@ -14,10 +15,12 @@ const OrderForm = () => {
     formState: { errors },
   } = useFormContext();
 
+  const navigate = useNavigate();
   const memberInfo = useSelector((state) => state.persistedReducer);
   const cart = useSelector(getCart).list;
   const [addressOption, setAddressOption] = useState("sameAsOrderer");
   const deliveryMessageValue = watch("deliveryMessage");
+  const dispatch = useDispatch();
 
   const totalOriginalPrice = cart.reduce((acc, obj) => {
     return acc + obj.originalPrice * obj.quantity;
@@ -44,8 +47,20 @@ const OrderForm = () => {
 
   const onSubmit = (data) => {
     axios
-      .post("http://127.0.0.1:9090/order/", data)
-      .then((result) => console.log(result.data));
+      .post("http://127.0.0.1:9090/order/", {
+        ...data,
+        cart: cart,
+        memberId: memberInfo.memberId,
+      })
+      .then((result) => {
+        if (result.data.result === "success") {
+          alert("주문이 완료되었습니다.");
+          dispatch(removeAllFromCart());
+          navigate("/mypage");
+        } else {
+          alert(result.data.error);
+        }
+      });
   };
 
   useEffect(() => {
@@ -437,8 +452,8 @@ const OrderForm = () => {
                     <span>₩</span>
                     <span className="ml-[20px]">
                       {(totalPriceSales > 50000
-                        ? totalPriceSales + 2500
-                        : totalPriceSales
+                        ? totalPriceSales
+                        : totalPriceSales + 2500
                       ).toLocaleString()}
                     </span>
                   </div>
@@ -454,7 +469,12 @@ const OrderForm = () => {
             onClick={handleSubmit(onSubmit)}
             className="transition-btn h-[60px] w-full md:w-[600px]"
           >
-            ₩36,100 결제하기
+            ₩{" "}
+            {(totalPriceSales > 50000
+              ? totalPriceSales
+              : totalPriceSales + 2500
+            ).toLocaleString()}
+            결제하기
           </button>
           <p className="mt-[12px] text-xs">
             *증정품은 총 실결제금액(쿠폰, 배송비 제외) 기준으로 증정됩니다.
