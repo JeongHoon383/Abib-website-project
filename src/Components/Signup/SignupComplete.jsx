@@ -17,7 +17,7 @@ export default function SignupComplete() {
         to={"/"}
         className="block h-8 w-full border border-black text-[13px] leading-8 transition duration-500 hover:bg-back dark:border dark:border-white dark:hover:text-black"
       >
-        메인 페이지
+        메인 페이지y
       </Link>
     </div>
   );

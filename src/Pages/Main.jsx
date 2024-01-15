@@ -11,7 +11,7 @@ import { motion } from "framer-motion";
 const Main = () => {
   const [title] = useState(["프로모션", "베스트", "추천제품"]);
   return (
-    <motion.div className="m-0 box-border w-full overflow-x-hidden p-0 dark:bg-black dark:text-white ">
+    <motion.div className="m-0 box-border w-full overflow-x-hidden p-0 dark:bg-black dark:text-white dark:transition-all ">
       <MainCover />
       <MainPromotion title={title[0]} titleArr={title} />
       <MainVideo />
