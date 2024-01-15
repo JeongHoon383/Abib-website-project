@@ -4,6 +4,7 @@ import AddressSearch from "./../Signup/AddressSearch";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { getCart } from "../../Modules/cart.js";
+import { useNavigate } from "react-router-dom";
 
 const OrderForm = () => {
   const {
@@ -14,6 +15,7 @@ const OrderForm = () => {
     formState: { errors },
   } = useFormContext();
 
+  const navigate = useNavigate();
   const memberInfo = useSelector((state) => state.persistedReducer);
   const cart = useSelector(getCart).list;
   const [addressOption, setAddressOption] = useState("sameAsOrderer");
@@ -52,6 +54,7 @@ const OrderForm = () => {
       .then((result) => {
         if (result.data.result === "success") {
           alert("주문이 완료되었습니다.");
+          navigate("/mypage");
         } else {
           alert(result.data.error);
         }
@@ -447,8 +450,8 @@ const OrderForm = () => {
                     <span>₩</span>
                     <span className="ml-[20px]">
                       {(totalPriceSales > 50000
-                        ? totalPriceSales + 2500
-                        : totalPriceSales
+                        ? totalPriceSales
+                        : totalPriceSales + 2500
                       ).toLocaleString()}
                     </span>
                   </div>
@@ -466,8 +469,8 @@ const OrderForm = () => {
           >
             ₩{" "}
             {(totalPriceSales > 50000
-              ? totalPriceSales + 2500
-              : totalPriceSales
+              ? totalPriceSales
+              : totalPriceSales + 2500
             ).toLocaleString()}
             결제하기
           </button>
