@@ -44,8 +44,18 @@ const OrderForm = () => {
 
   const onSubmit = (data) => {
     axios
-      .post("http://127.0.0.1:9090/order/", data)
-      .then((result) => console.log(result.data));
+      .post("http://127.0.0.1:9090/order/", {
+        ...data,
+        cart: cart,
+        memberId: memberInfo.memberId,
+      })
+      .then((result) => {
+        if (result.data.result === "success") {
+          alert("주문이 완료되었습니다.");
+        } else {
+          alert(result.data.error);
+        }
+      });
   };
 
   useEffect(() => {
@@ -454,7 +464,12 @@ const OrderForm = () => {
             onClick={handleSubmit(onSubmit)}
             className="transition-btn h-[60px] w-full md:w-[600px]"
           >
-            ₩36,100 결제하기
+            ₩{" "}
+            {(totalPriceSales > 50000
+              ? totalPriceSales + 2500
+              : totalPriceSales
+            ).toLocaleString()}
+            결제하기
           </button>
           <p className="mt-[12px] text-xs">
             *증정품은 총 실결제금액(쿠폰, 배송비 제외) 기준으로 증정됩니다.
