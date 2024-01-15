@@ -1,0 +1,14 @@
+/* rc-pagination */
+.rc-pagination {
+  margin: 16px;
+}
+
+.rc-pagination-prev .rc-pagination-item-link,
+.rc-pagination-next .rc-pagination-item-link {
+  border: none;
+  font-size: 16px;
+}
+
+.rc-pagination-item {
+  border: none;
+}

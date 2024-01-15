@@ -1,13 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.my-custom-swiper .swiper-scrollbar {
+  width: 50% !important;
+  left: 25% !important;
+  margin: 0 auto !important;
+}
+
+.transition-input {
+  @apply h-10 border border-[#CCC] px-3 text-[12px] transition duration-500 hover:border-black focus:border-black focus:outline-none;
+}
+
+.transition-btn {
+  @apply border border-black bg-black text-white transition duration-500 hover:bg-white hover:text-black;
+}
+
+.transition-text {
+  @apply cursor-pointer transition duration-500 hover:text-gray-300;
+}
+
+.form-text-hover {
+  @apply transition duration-500 hover:border-black;
 }
