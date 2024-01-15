@@ -1,11 +1,12 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { BsFillSendFill } from "react-icons/bs";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdOutlineNavigateBefore } from "react-icons/md";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const MainFloating = ({ constraintsRef }) => {
   const [toggle, setToggle] = useState(true);
+  const navigate = useNavigate();
   const [toggleQna, setToggleQna] = useState(false);
   const handleToggleQna = () => {
     return setToggleQna((prev) => !prev);
@@ -17,6 +18,9 @@ const MainFloating = ({ constraintsRef }) => {
   /* 
   3. memberInfo의 값
   - 로그인 했을 때 : {isLogin: true, token: (토큰값), memberId: (로그인한 아이디)}*/
+  useEffect(() => {
+    if (!memberInfo.isLogin) navigate("/login");
+  }, []);
   return (
     <div>
       <AnimatePresence>

@@ -1,7 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function MyPageMain() {
+  const memberInfo = useSelector((state) => state.persistedReducer);
+  const navigate = useNavigate();
+  /* 
+  3. memberInfo의 값
+  - 로그인 했을 때 : {isLogin: true, token: (토큰값), memberId: (로그인한 아이디)}*/
+  if (!memberInfo.isLogin) navigate("/login");
   return (
     <div className="justify-content mx-auto mb-20 flex ">
       <div className="mx-auto ">
@@ -32,7 +39,11 @@ export default function MyPageMain() {
             <div className="w-9/10">
               <div className="max-sm:w-9/10 flex gap-5 max-sm:flex-col">
                 <div className="pb-20 max-sm:pb-0">
-                  <Link to="/orderlist">
+                  <Link
+                    to={
+                      memberInfo.isLogin && `/orderlist/${memberInfo.memberId}`
+                    }
+                  >
                     <div className="h-25 box-border cursor-pointer border border-gray-600 p-4 text-center text-xs leading-6 hover:bg-gray-100 max-sm:mx-auto ">
                       주문내역
                     </div>

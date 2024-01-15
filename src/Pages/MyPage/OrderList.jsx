@@ -1,13 +1,25 @@
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import React from "react";
 import { useState } from "react";
+import { Table } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 
 export default function OrderList() {
   const [date, setDate] = useState();
-
-  console.log("date", date);
+  const params = useParams();
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["orderData"],
+    queryFn: () =>
+      axios
+        .get(`http://127.0.0.1:9090/orderlist/${params.id}`)
+        .then((res) => res.data)
+        .catch((err) => console.log(err)),
+  });
+  console.log(data, params);
   return (
-    <div className="mx-auto text-center">
-      <div className="@media (min-width: 768px)  @media (min-width: 1024px) text-bold mx-auto mb-20 border-b border-black p-16 text-center text-3xl">
+    <div className="mx-auto w-[80%]   text-center">
+      <div className="  text-bold mx-auto mb-20 border-b border-black p-16 text-center text-3xl">
         주문내역
       </div>
 
@@ -81,15 +93,46 @@ export default function OrderList() {
         </p>
       </div>
 
-      <div className="mb-4 mt-8 flex justify-center gap-20  pt-20 max-sm:gap-5 ">
+      <Table striped bordered hover className="mt-5 w-full space-y-3 ">
+        <thead className="border-b-2 border-gray-400">
+          <tr className="text-xs md:text-sm">
+            <th className="border border-gray-400">#DATE</th>
+            <th className="border border-gray-400">ORDER</th>
+            <th className="border border-gray-400">PRODUCT</th>
+            <th className="border border-gray-400">PRICE</th>
+            <th className="border border-gray-400">STATUS</th>
+          </tr>
+        </thead>
+        <tbody className="text-xs md:text-sm">
+          <tr className="border-b border-gray-400">
+            <td>2024-01-15</td>
+            <td> 3</td>
+            <td>어성초 패드 크림</td>
+            <td>83,000</td>
+            <td>
+              배송 <br className="block md:hidden" />
+              준비중
+            </td>
+          </tr>
+        </tbody>
+      </Table>
+
+      {/* <div className=" mt-8 flex justify-center gap-20 border-b border-gray-200  pb-5  pt-20 max-sm:gap-5 ">
         <div className="text-xs font-bold">DATE</div>
         <div className="text-xs font-bold">ORDER #</div>
         <div className="text-xs font-bold">PRODUCT</div>
         <div className="text-xs font-bold">PRICE</div>
         <div className="text-xs font-bold">STATUS</div>
       </div>
-
-      <div className="w-110  mx-auto h-40  w-1/2 border-b border-t border-gray-200 pb-4 pt-20 text-xs">
+      <div className="  mt-4 flex justify-center gap-20 text-xs   max-sm:gap-5 ">
+        <div>2024-01-15</div>
+        <div>ORDER #</div>
+        <div>PRODUCT</div>
+        <div>PRICE</div>
+        <div>STATUS</div>
+      </div>
+ */}
+      <div className="w-110  mx-auto h-40  w-1/2 border-b   border-gray-200 pb-4 pt-20 text-xs">
         주문내역이 없습니다
       </div>
 
