@@ -45,7 +45,7 @@ export default function ReviewPhotoModal({ review, pid, modalTop }) {
         <div className="flex border-b p-2">
           <div className="mr-1 h-[50px] w-[50px]">
             <img
-              src={`http://127.0.0.1:9090/uploads/${product.cover}`}
+              src={`http://192.168.50.16:9090/uploads/${product.cover}`}
               className="rounded-full"
               alt=""
             />

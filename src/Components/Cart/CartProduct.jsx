@@ -35,7 +35,7 @@ const CartProduct = ({ item, handleCheckList }) => {
           <img
             onClick={() => navigate("/product/detail/:pid")}
             /* src="../../../cart/cartCover.jpeg" */
-            src={`http://127.0.0.1:9090/uploads/${item.cover}`}
+            src={`http://192.168.50.16:9090/uploads/${item.cover}`}
             className="ml-[30px] h-[60px] w-[60px] cursor-pointer"
             alt=""
           />
@@ -58,7 +58,9 @@ const CartProduct = ({ item, handleCheckList }) => {
         </li>
         <li className="w-[108px]">
           <p>₩{item.originalPrice.toLocaleString()}</p>
-          <p className="font-bold">₩{item.priceSales.toLocaleString()}</p>
+          {item.priceSales && (
+            <p className="font-bold">₩{item.priceSales.toLocaleString()}</p>
+          )}
         </li>
         <li className="hidden w-[165px] lg:block">
           <div className="relative ml-[52px] h-[30px] w-[70px] rounded-[5px] border border-solid border-gray-400">
@@ -84,14 +86,20 @@ const CartProduct = ({ item, handleCheckList }) => {
           </div>
         </li>
         <li className="w-[99px]">
-          ₩{(item.priceSales * 0.1).toLocaleString()}
+          ₩
+          {(
+            (item.priceSales ? item.priceSales : item.originalPrice) * 0.1
+          ).toLocaleString()}
         </li>
         <li className="w-[58px] text-center">
           <p>2,500</p>
           <p>조건</p>
         </li>
         <li className="hidden w-[102px] font-bold lg:block">
-          {(item.priceSales * item.quantity).toLocaleString()}
+          {(
+            (item.priceSales ? item.priceSales : item.originalPrice) *
+            item.quantity
+          ).toLocaleString()}
         </li>
         <li className="w-[101px]">
           <button

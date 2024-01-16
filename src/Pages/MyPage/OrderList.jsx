@@ -14,7 +14,7 @@ export default function OrderList() {
     queryKey: ["repoData"],
     queryFn: () =>
       axios
-        .get(`http://127.0.0.1:9090/orderlist/${params.id}`)
+        .get(`http://192.168.50.16:9090/orderlist/${params.id}`)
         .then((res) => res.data),
   });
   console.log(data);

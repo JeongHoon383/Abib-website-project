@@ -18,7 +18,7 @@ export default function PrivateInquiry() {
   - 로그인 했을 때 : {isLogin: true, token: (토큰값), memberId: (로그인한 아이디)}*/
   const onValid = (data) => {
     const { qTitle, qContent } = data;
-    axios.post("http://127.0.0.1:9090", {
+    axios.post("http://192.168.50.16:9090", {
       qTitle: qTitle,
       qContent: qContent,
       mid: memberInfo.memberId,

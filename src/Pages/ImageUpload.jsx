@@ -14,7 +14,7 @@ export default function ImageUpload({ getImage }) {
 
     //선택한 파일을 서버로 전송
     axios
-      .post("http://127.0.0.1:9090/upload/admin", formData)
+      .post("http://192.168.50.16:9090/upload/admin", formData)
       .then((result) => {
         getImage(result.data);
       });

@@ -23,7 +23,7 @@ export default function Login() {
       alert("비밀번호를 입력해주세요.");
     } else {
       axios
-        .post("http://127.0.0.1:9090/member/login", {
+        .post("http://192.168.50.16:9090/member/login", {
           id: id,
           password: password,
         })

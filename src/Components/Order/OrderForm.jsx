@@ -26,7 +26,9 @@ const OrderForm = () => {
     return acc + obj.originalPrice * obj.quantity;
   }, 0);
   const totalPriceSales = cart.reduce((acc, obj) => {
-    return acc + obj.priceSales * obj.quantity;
+    return (
+      acc + (obj.priceSales ? obj.priceSales : obj.originalPrice) * obj.quantity
+    );
   }, 0);
 
   const getOrPostalcode = (postalcode) => {
@@ -47,7 +49,7 @@ const OrderForm = () => {
 
   const onSubmit = (data) => {
     axios
-      .post("http://127.0.0.1:9090/order/", {
+      .post("http://192.168.50.16:9090/order/", {
         ...data,
         cart: cart,
         memberId: memberInfo.memberId,
@@ -82,7 +84,7 @@ const OrderForm = () => {
   useEffect(() => {
     if (memberInfo.isLogin) {
       axios(
-        `http://127.0.0.1:9090/order/getOrdererInfo/${memberInfo.memberId}`,
+        `http://192.168.50.16:9090/order/getOrdererInfo/${memberInfo.memberId}`,
       ).then((result) => {
         setValue("orName", result.data.name);
         setValue("orPostalcode", result.data.postalcode);
@@ -392,7 +394,7 @@ const OrderForm = () => {
                   <ul className="flex h-[133px] w-full items-center justify-between py-[5px] pl-[10px] text-center">
                     <li>
                       <img
-                        src={`http://127.0.0.1:9090/uploads/${item.cover}`}
+                        src={`http://192.168.50.16:9090/uploads/${item.cover}`}
                         alt=""
                         className="h-[60px] max-w-[60px]"
                       />
@@ -402,14 +404,25 @@ const OrderForm = () => {
                     </li>
                     <li className="w-[105px] min-w-[60px]">
                       <div>₩{item.originalPrice.toLocaleString()}</div>
-                      <div>₩{item.priceSales.toLocaleString()}</div>
+                      {item.priceSales && (
+                        <div>₩{item.priceSales.toLocaleString()}</div>
+                      )}
                     </li>
                     <li className="w-[99px] min-w-[85px]">{item.quantity}</li>
                     <li className="hidden w-[96px] lg:block">
-                      {(item.priceSales * 0.1).toLocaleString()}
+                      {(
+                        (item.priceSales
+                          ? item.priceSales
+                          : item.originalPrice) * 0.1
+                      ).toLocaleString()}
                     </li>
                     <li className="w-[99px] min-w-[88px]">
-                      ₩{(item.priceSales * item.quantity).toLocaleString()}
+                      ₩
+                      {(
+                        (item.priceSales
+                          ? item.priceSales
+                          : item.originalPrice) * item.quantity
+                      ).toLocaleString()}
                     </li>
                   </ul>
                 ))}
