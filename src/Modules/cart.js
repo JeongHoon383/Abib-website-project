@@ -29,23 +29,25 @@ export const cartSlice = createSlice({
       };
     },
     removeFromCart: (state, action) => {
-      const { pid } = action.payload;
-      console.log(pid);
       return {
-        list: state.list.filter((item) => item.pid !== pid),
+        list: state.list.filter((item) => item.pid !== action.payload),
       };
+    },
+    removeAllFromCart: (state, action) => {
+      return { list: [] };
     },
   },
   extraReducers: (builder) => {
     builder.addCase(addToCart.fulfilled, (state, action) => {
-      const { pid, title, originalPrice, priceSales, cover } = action.payload;
+      const { pid, title, quantity, originalPrice, priceSales, cover } =
+        action.payload;
       const newItem = {
         pid,
         cover,
         title,
         originalPrice,
         priceSales,
-        quantity: 1,
+        quantity: quantity ? quantity : 1,
       };
 
       return {
@@ -60,6 +62,7 @@ export const cartSlice = createSlice({
 
 export const getCart = (state) => state.cart;
 
-export const { changeQuantity, removeFromCart } = cartSlice.actions;
+export const { changeQuantity, removeFromCart, removeAllFromCart } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

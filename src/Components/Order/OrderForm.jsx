@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import AddressSearch from "./../Signup/AddressSearch";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import { getCart, removeAllFromCart } from "../../Modules/cart.js";
+import { useNavigate } from "react-router-dom";
 
 const OrderForm = () => {
   const {
@@ -13,8 +15,19 @@ const OrderForm = () => {
     formState: { errors },
   } = useFormContext();
 
+  const navigate = useNavigate();
+  const memberInfo = useSelector((state) => state.persistedReducer);
+  const cart = useSelector(getCart).list;
   const [addressOption, setAddressOption] = useState("sameAsOrderer");
   const deliveryMessageValue = watch("deliveryMessage");
+  const dispatch = useDispatch();
+
+  const totalOriginalPrice = cart.reduce((acc, obj) => {
+    return acc + obj.originalPrice * obj.quantity;
+  }, 0);
+  const totalPriceSales = cart.reduce((acc, obj) => {
+    return acc + obj.priceSales * obj.quantity;
+  }, 0);
 
   const getOrPostalcode = (postalcode) => {
     setValue("orPostalcode", postalcode);
@@ -34,11 +47,21 @@ const OrderForm = () => {
 
   const onSubmit = (data) => {
     axios
-      .post("http://127.0.0.1:9090/order/", data)
-      .then((result) => console.log(result.data));
+      .post("http://127.0.0.1:9090/order/", {
+        ...data,
+        cart: cart,
+        memberId: memberInfo.memberId,
+      })
+      .then((result) => {
+        if (result.data.result === "success") {
+          alert("주문이 완료되었습니다.");
+          dispatch(removeAllFromCart());
+          navigate("/mypage");
+        } else {
+          alert(result.data.error);
+        }
+      });
   };
-
-  const memberInfo = useSelector((state) => state.persistedReducer);
 
   useEffect(() => {
     if (addressOption === "sameAsOrderer") {
@@ -365,25 +388,31 @@ const OrderForm = () => {
                 </ul>
               </div>
               <div>
-                <ul className="flex h-[133px] w-full items-center justify-between py-[5px] pl-[10px] text-center">
-                  <li className="">
-                    <img
-                      src="../../../cart/cartCover.jpeg"
-                      alt=""
-                      className="h-[60px] max-w-[60px]"
-                    />
-                  </li>
-                  <li className="transition-text w-[409px] pl-[10px] text-left">
-                    여성초 스팟 패드 카밍 터치
-                  </li>
-                  <li className="w-[105px] min-w-[60px]">
-                    <div>24,000</div>
-                    <div>₩16,800</div>
-                  </li>
-                  <li className="w-[99px] min-w-[85px]">2</li>
-                  <li className="hidden w-[96px] lg:block">₩1,680</li>
-                  <li className="w-[99px] min-w-[88px]">33,600</li>
-                </ul>
+                {cart.map((item) => (
+                  <ul className="flex h-[133px] w-full items-center justify-between py-[5px] pl-[10px] text-center">
+                    <li>
+                      <img
+                        src={`http://127.0.0.1:9090/uploads/${item.cover}`}
+                        alt=""
+                        className="h-[60px] max-w-[60px]"
+                      />
+                    </li>
+                    <li className="transition-text w-[409px] pl-[10px] text-left">
+                      {item.title}
+                    </li>
+                    <li className="w-[105px] min-w-[60px]">
+                      <div>₩{item.originalPrice.toLocaleString()}</div>
+                      <div>₩{item.priceSales.toLocaleString()}</div>
+                    </li>
+                    <li className="w-[99px] min-w-[85px]">{item.quantity}</li>
+                    <li className="hidden w-[96px] lg:block">
+                      {(item.priceSales * 0.1).toLocaleString()}
+                    </li>
+                    <li className="w-[99px] min-w-[88px]">
+                      ₩{(item.priceSales * item.quantity).toLocaleString()}
+                    </li>
+                  </ul>
+                ))}
               </div>
             </div>
           </div>
@@ -396,13 +425,13 @@ const OrderForm = () => {
                 <div className="flex">
                   <div className="basis-[30%] py-[15px] ">상품금액</div>
                   <div className="basis-[70%] py-[15px] text-right">
-                    ₩48,000
+                    ₩{totalOriginalPrice.toLocaleString()}
                   </div>
                 </div>
                 <div className="flex">
                   <div className="basis-[30%] py-[15px] ">배송비</div>
                   <div className="basis-[70%] py-[15px] text-right">
-                    + ₩2,500
+                    {totalPriceSales >= 50000 ? "무료" : "+ ₩2,500"}
                   </div>
                 </div>
               </div>
@@ -410,7 +439,7 @@ const OrderForm = () => {
                 <div className="flex">
                   <div className="basis-[30%] py-[15px] ">총 할인금액</div>
                   <div className="basis-[70%] py-[15px] text-right">
-                    - ₩14,400
+                    - ₩{(totalOriginalPrice - totalPriceSales).toLocaleString()}
                   </div>
                 </div>
               </div>
@@ -421,7 +450,12 @@ const OrderForm = () => {
                   </div>
                   <div className="basis-[70%] py-[15px] text-right text-[16px]">
                     <span>₩</span>
-                    <span className="ml-[20px]">36,100</span>
+                    <span className="ml-[20px]">
+                      {(totalPriceSales > 50000
+                        ? totalPriceSales
+                        : totalPriceSales + 2500
+                      ).toLocaleString()}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -435,7 +469,12 @@ const OrderForm = () => {
             onClick={handleSubmit(onSubmit)}
             className="transition-btn h-[60px] w-full md:w-[600px]"
           >
-            ₩36,100 결제하기
+            ₩{" "}
+            {(totalPriceSales > 50000
+              ? totalPriceSales
+              : totalPriceSales + 2500
+            ).toLocaleString()}
+            결제하기
           </button>
           <p className="mt-[12px] text-xs">
             *증정품은 총 실결제금액(쿠폰, 배송비 제외) 기준으로 증정됩니다.

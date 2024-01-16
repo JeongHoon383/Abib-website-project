@@ -7,7 +7,6 @@ import { memberSlice } from "./Member";
 import { persistReducer, PERSIST, PURGE } from "redux-persist";
 import { persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import logger from "redux-logger";
 
 //react-persist를 설정하는 persistConfig 객체 정의
 const persistConfig = {
@@ -42,7 +41,7 @@ const store = configureStore({
         // 무시할 액션 유형 (redux-persist 관련)
         ignoredActions: [PERSIST, PURGE],
       },
-    }).concat(logger), //액션과 상태의 변화를 콘솔에 로깅
+    }),
 });
 
 export default store;

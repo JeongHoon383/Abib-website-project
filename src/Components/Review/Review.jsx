@@ -16,7 +16,6 @@ export default function Review() {
   const location = useLocation();
   const navigate = useNavigate();
   const textLimit = useRef(150);
-
   useEffect(() => {
     // 서버에서 데이터를 불러오는 createAsyncThunk 호출
     dispatch(getReview(pid));
