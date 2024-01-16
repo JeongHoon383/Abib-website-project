@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import AddressSearch from "./../Signup/AddressSearch";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { getCart } from "../../Modules/cart.js";
+import { getCart, removeAllFromCart } from "../../Modules/cart.js";
 import { useNavigate } from "react-router-dom";
 
 const OrderForm = () => {
@@ -20,6 +20,7 @@ const OrderForm = () => {
   const cart = useSelector(getCart).list;
   const [addressOption, setAddressOption] = useState("sameAsOrderer");
   const deliveryMessageValue = watch("deliveryMessage");
+  const dispatch = useDispatch();
 
   const totalOriginalPrice = cart.reduce((acc, obj) => {
     return acc + obj.originalPrice * obj.quantity;
@@ -54,6 +55,7 @@ const OrderForm = () => {
       .then((result) => {
         if (result.data.result === "success") {
           alert("주문이 완료되었습니다.");
+          dispatch(removeAllFromCart());
           navigate("/mypage");
         } else {
           alert(result.data.error);

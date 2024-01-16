@@ -126,7 +126,7 @@ const router = createBrowserRouter([
         element: <MemberInfo />,
       },
       {
-        path: "orderlist",
+        path: "orderlist/:id",
         element: <OrderList />,
       },
       {
