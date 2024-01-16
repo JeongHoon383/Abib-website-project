@@ -44,8 +44,8 @@ export default function SignupMobileForm() {
   const onSubmit = (data) => {
     if (!isIdAvailable) {
       alert("아이디 중복 확인을 해주세요.");
-      // } else if (!isCertificated) {
-      //   alert("휴대전화 인증을 해주세요.");
+    } else if (!isCertificated) {
+      alert("휴대전화 인증을 해주세요.");
     } else {
       axios
         .post("http://127.0.0.1:9090/member/insertMember", data)
