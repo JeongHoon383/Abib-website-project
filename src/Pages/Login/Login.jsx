@@ -23,7 +23,7 @@ export default function Login() {
       alert("비밀번호를 입력해주세요.");
     } else {
       axios
-        .post("http://192.168.50.16:9090/member/login", {
+        .post("http://192.168.50.16:9091/member/login", {
           id: id,
           password: password,
         })
@@ -36,10 +36,11 @@ export default function Login() {
               );
               alert("로그인에 성공했습니다.");
               //쿠키에 저장된 prevPage가 있다면
-              const prePage = cookies.getCookie("prevPage");
-              const currentPage = cookies.getCookie("currentPage");
-              if (prePage === undefined) navigate(currentPage);
-              else navigate(prePage);
+              // const prePage = cookies.getCookie("prevPage");
+              // const currentPage = cookies.getCookie("currentPage");
+              // if (prePage === undefined) navigate(currentPage);
+              // else navigate(prePage);
+              navigate("/");
             } else {
               alert("비밀번호가 일치하지 않습니다.");
             }

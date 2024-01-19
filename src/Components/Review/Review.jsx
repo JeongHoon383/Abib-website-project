@@ -236,7 +236,11 @@ export default function Review() {
                 className="size-14 cursor-pointer"
                 onClick={() => handleOpenReviewPhotoModal(pid, item)}
               >
-                <img src={`/${item.rcover}`} alt="" className="h-full w-full" />
+                <img
+                  src={`http://192.168.50.16:9091/${item.rcover}`}
+                  alt=""
+                  className="h-full w-full"
+                />
               </div>
             )}
           </div>

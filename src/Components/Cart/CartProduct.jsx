@@ -35,7 +35,7 @@ const CartProduct = ({ item, handleCheckList }) => {
           <img
             onClick={() => navigate("/product/detail/:pid")}
             /* src="../../../cart/cartCover.jpeg" */
-            src={`http://192.168.50.16:9090/uploads/${item.cover}`}
+            src={`http://192.168.50.16:9091/uploads/${item.cover}`}
             className="ml-[30px] h-[60px] w-[60px] cursor-pointer"
             alt=""
           />

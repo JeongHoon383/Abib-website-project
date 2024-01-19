@@ -48,7 +48,7 @@ export default function SignupMobileForm() {
       alert("휴대전화 인증을 해주세요.");
     } else {
       axios
-        .post("http://192.168.50.16:9090/member/insertMember", data)
+        .post("http://192.168.50.16:9091/member/insertMember", data)
         .then((result) => {
           if (result.data === "success") {
             alert("회원가입이 완료되었습니다.");

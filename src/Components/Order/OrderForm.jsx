@@ -49,7 +49,7 @@ const OrderForm = () => {
 
   const onSubmit = (data) => {
     axios
-      .post("http://192.168.50.16:9090/order/", {
+      .post("http://192.168.50.16:9091/order/", {
         ...data,
         cart: cart,
         memberId: memberInfo.memberId,
@@ -84,7 +84,7 @@ const OrderForm = () => {
   useEffect(() => {
     if (memberInfo.isLogin) {
       axios(
-        `http://192.168.50.16:9090/order/getOrdererInfo/${memberInfo.memberId}`,
+        `http://192.168.50.16:9091/order/getOrdererInfo/${memberInfo.memberId}`,
       ).then((result) => {
         setValue("orName", result.data.name);
         setValue("orPostalcode", result.data.postalcode);
@@ -394,7 +394,7 @@ const OrderForm = () => {
                   <ul className="flex h-[133px] w-full items-center justify-between py-[5px] pl-[10px] text-center">
                     <li>
                       <img
-                        src={`http://192.168.50.16:9090/uploads/${item.cover}`}
+                        src={`http://192.168.50.16:9091/uploads/${item.cover}`}
                         alt=""
                         className="h-[60px] max-w-[60px]"
                       />

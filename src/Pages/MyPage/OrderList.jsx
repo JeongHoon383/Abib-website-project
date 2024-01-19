@@ -5,7 +5,7 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 import { Table } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export default function OrderList() {
   const [date, setDate] = useState();
@@ -14,7 +14,7 @@ export default function OrderList() {
     queryKey: ["repoData"],
     queryFn: () =>
       axios
-        .get(`http://192.168.50.16:9090/orderlist/${params.id}`)
+        .get(`http://192.168.50.16:9091/orderlist/${params.id}`)
         .then((res) => res.data),
   });
   console.log(data);
@@ -114,7 +114,9 @@ export default function OrderList() {
                   <tr key={i}>
                     <td>{v.orderDate.split("T")[0]}</td>
                     <td>{v.orid}</td>
-                    <td>{v.title}</td>
+                    <td>
+                      <Link to={`/product/detail/${v.pid}`}>{v.title}</Link>
+                    </td>
                     <td>{Number(v.orderTotalPrice).toLocaleString()}원</td>
                     <td>
                       <Badge color="orange">{v.deliveryStatus}</Badge>

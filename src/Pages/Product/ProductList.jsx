@@ -46,7 +46,7 @@ export default function ProductList() {
                     />
                   )}
                   <img
-                    src={`http://192.168.50.16:9090/uploads/${item.cover}`}
+                    src={`http://192.168.50.16:9091/uploads/${item.cover}`}
                     alt=""
                     className="mb-7"
                   />

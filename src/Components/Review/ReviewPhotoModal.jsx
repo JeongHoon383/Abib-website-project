@@ -36,7 +36,7 @@ export default function ReviewPhotoModal({ review, pid, modalTop }) {
       <div className="h-48 bg-black md:h-auto">
         <img
           className="mx-auto h-full w-full object-contain"
-          src={`/${review.rcover}`}
+          src={`http://192.168.50.16:9091/${review.rcover}`}
           alt=""
         />
       </div>
@@ -45,7 +45,7 @@ export default function ReviewPhotoModal({ review, pid, modalTop }) {
         <div className="flex border-b p-2">
           <div className="mr-1 h-[50px] w-[50px]">
             <img
-              src={`http://192.168.50.16:9090/uploads/${product.cover}`}
+              src={`http://192.168.50.16:9091/uploads/${product.cover}`}
               className="rounded-full"
               alt=""
             />
