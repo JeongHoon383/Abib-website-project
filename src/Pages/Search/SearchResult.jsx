@@ -71,7 +71,7 @@ export default function SearchResult() {
                   </span>
                 )}
               </div>
-              <button className="visible mb-12 mt-3 w-full border border-gray-300 px-5 py-1.5 text-center text-xs font-medium text-gray-700 hover:bg-gray-900 hover:text-white focus:outline-none focus:ring-4 focus:ring-gray-300 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-800 sm:invisible sm:py-2.5 sm:hover:transition-all sm:group-hover/btn:visible sm:group-hover/list:transition-all">
+              <button className="visible mb-12 mt-3 w-full border border-gray-300 px-5 py-1.5 text-center text-xs font-medium text-gray-700 hover:bg-gray-900 hover:text-white focus:outline-none focus:ring-4 focus:ring-gray-300 sm:invisible sm:py-2.5 sm:hover:transition-all sm:group-hover/btn:visible sm:group-hover/list:transition-all dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-800">
                 카트에 담기
               </button>
             </div>
