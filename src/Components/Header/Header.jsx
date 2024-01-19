@@ -82,6 +82,7 @@ const Header = ({ setDark, dark }) => {
 
   const handleLogout = async () => {
     if (window.confirm("로그아웃 하시겠습니까?")) {
+      navigate("/");
       cookies.removeCookie("prevPage");
       cookies.removeCookie("currentPage");
       await dispatch(logout());
@@ -303,7 +304,7 @@ const Header = ({ setDark, dark }) => {
             initial="start"
             animate="end"
             exit="exit"
-            className="fixed z-[100] hidden h-[11vh] w-screen  justify-center bg-back  lg:flex dark:bg-black dark:text-white"
+            className="fixed z-[100] hidden h-[11vh] w-screen  justify-center bg-back  dark:bg-black dark:text-white lg:flex"
           >
             <HeaderForm setSearch={setSearch} />
           </motion.div>

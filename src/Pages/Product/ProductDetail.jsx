@@ -50,7 +50,7 @@ export default function ProductDetail() {
           <div className="imgBox sm:mr-4">
             <img
               className="mb-8 w-full sm:m-0"
-              src={`http://127.0.0.1:9090/uploads/${product.cover}`}
+              src={`http://192.168.50.16:9091/uploads/${product.cover}`}
               alt=""
             />
           </div>

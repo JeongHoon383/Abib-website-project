@@ -39,7 +39,7 @@ const MainPromotion = ({ title, titleArr }) => {
     queryKey: ["promotionData", title],
     queryFn: () =>
       axios
-        .get(`http://127.0.0.1:9090`, {
+        .get(`http://192.168.50.16:9091`, {
           params: {
             data: title,
           },
@@ -92,7 +92,7 @@ const MainPromotion = ({ title, titleArr }) => {
                               <img
                                 alt=""
                                 className="h-full w-full  cursor-pointer"
-                                src={`http://127.0.0.1:9090/uploads/${value.cover}`}
+                                src={`http://192.168.50.16:9091/uploads/${value.cover}`}
                               />
                             </figure>
                             <figcaption className="mt-6 flex cursor-pointer flex-col text-xs md:text-sm">
@@ -148,7 +148,7 @@ const MainPromotion = ({ title, titleArr }) => {
                             <figure className=" mt-14 h-[50vw] w-full md:h-[30vw]   lg:h-[25vw] ">
                               <img
                                 className="h-full w-full  cursor-pointer"
-                                src={`http://127.0.0.1:9090/uploads/${value.cover}`}
+                                src={`http://192.168.50.16:9091/uploads/${value.cover}`}
                               />
                             </figure>
                             <figcaption className="mt-6 flex cursor-pointer flex-col text-xs md:text-sm">
@@ -207,7 +207,7 @@ const MainPromotion = ({ title, titleArr }) => {
                             <figure className=" mt-14 h-[50vw] w-full md:h-[30vw]   lg:h-[25vw] ">
                               <img
                                 className="h-full w-full  cursor-pointer"
-                                src={`http://127.0.0.1:9090/uploads/${value.cover}`}
+                                src={`http://192.168.50.16:9091/uploads/${value.cover}`}
                               />
                             </figure>
                             <figcaption className="mt-6 flex cursor-pointer flex-col text-xs md:text-sm">

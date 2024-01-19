@@ -21,7 +21,7 @@ export default function Inquiry() {
       </div>
 
       <div className="w-110 mx-auto  h-40 w-1/2  border-b border-t border-gray-200 pb-4 pt-20 text-center text-xs">
-        주문내역이 없습니다
+        문의내역이 없습니다
       </div>
 
       <div className="mb-6 mt-4 flex justify-center text-center max-sm:p-2">

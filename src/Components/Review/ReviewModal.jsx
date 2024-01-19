@@ -41,7 +41,7 @@ export default function ReviewModal({ pid, modalTop }) {
     else return alert("리뷰를 남겨주세요!");
 
     axios
-      .post("http://127.0.0.1:9090/review/save-review", formData, {
+      .post("http://192.168.50.16:9091/review/save-review", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -99,7 +99,7 @@ export default function ReviewModal({ pid, modalTop }) {
       <div className="mt-2 flex items-center border-b p-2">
         <div className="mr-2 w-1/6 md:w-1/12">
           <img
-            src={`http://127.0.0.1:9090/uploads/${product.cover}`}
+            src={`http://192.168.50.16:9091/uploads/${product.cover}`}
             className="w-full"
             alt=""
           />

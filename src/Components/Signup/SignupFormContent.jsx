@@ -23,7 +23,7 @@ export default function SignupFormContent({
   const idValue = watch("id");
 
   const checkIdAvailable = () => {
-    axios(`http://127.0.0.1:9090/member/isIdAvailable/${idValue}`).then(
+    axios(`http://192.168.50.16:9091/member/isIdAvailable/${idValue}`).then(
       (result) => {
         if (result.data === 1) {
           alert("이미 사용 중인 아이디입니다.");
@@ -38,7 +38,7 @@ export default function SignupFormContent({
 
   const sendCertificationCode = () => {
     axios
-      .post("http://127.0.0.1:9090/member/certification", { phoneValue })
+      .post("http://192.168.50.16:9091/member/certification", { phoneValue })
       .then((result) => {
         if (result.data === "failure") {
           alert("인증 번호 전송에 실패했습니다. 다시 시도해주세요.");

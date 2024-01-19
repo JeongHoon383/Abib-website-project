@@ -53,7 +53,7 @@ export default function ReviewSwiper({ photoReview }) {
                   <div className="h-44 w-full md:h-32 xl:h-44">
                     <img
                       className="h-full w-full object-cover"
-                      src={`/${v.rcover}`}
+                      src={`http://192.168.50.16:9091/${v.rcover}`}
                       alt=""
                     />
                   </div>

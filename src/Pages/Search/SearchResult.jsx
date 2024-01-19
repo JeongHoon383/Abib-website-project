@@ -6,7 +6,7 @@ import CartModal from "../../Components/Cart/CartModal";
 export default function SearchResult() {
   const { query } = useParams();
   const [searchList, setSearchList] = useState([]);
-  const url = `http://127.0.0.1:9090/search/${query}`;
+  const url = `http://192.168.50.16:9091/search/${query}`;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,7 +41,7 @@ export default function SearchResult() {
                     />
                   )}
                   <img
-                    src={`http://127.0.0.1:9090/uploads/${item.cover}`}
+                    src={`http://192.168.50.16:9091/uploads/${item.cover}`}
                     alt=""
                     className="mb-7"
                   />

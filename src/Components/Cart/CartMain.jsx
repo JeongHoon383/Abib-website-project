@@ -18,7 +18,9 @@ const CartMain = () => {
     return acc + obj.originalPrice * obj.quantity;
   }, 0);
   const totalPriceSales = cart.reduce((acc, obj) => {
-    return acc + obj.priceSales * obj.quantity;
+    return (
+      acc + (obj.priceSales ? obj.priceSales : obj.originalPrice) * obj.quantity
+    );
   }, 0);
 
   const [checkLists, setCheckLists] = useState([]);
@@ -83,14 +85,19 @@ const CartMain = () => {
             <ul className="flex justify-center px-[10px] pb-[17px] pt-[15px]">
               <li>상품구매금액 {totalOriginalPrice.toLocaleString()}</li>
               <li className="ml-[5px] mr-[5px]">+</li>
-              <li>배송비 {totalOriginalPrice >= 50000 ? "무료" : "2,500"}</li>
+              <li>배송비 {totalPriceSales >= 50000 ? "무료" : "2,500"}</li>
               <li className="ml-[5px] mr-[5px]">-</li>
               <li>
                 상품할인금액{" "}
                 {(totalOriginalPrice - totalPriceSales).toLocaleString()}
               </li>
               <li className="ml-[5px] mr-[5px]">=</li>
-              <li className="font-bold">₩{totalPriceSales.toLocaleString()}</li>
+              <li className="font-bold">
+                ₩
+                {(
+                  totalPriceSales + (totalPriceSales >= 50000 ? 0 : 2500)
+                ).toLocaleString()}
+              </li>
             </ul>
           </div>
         </div>

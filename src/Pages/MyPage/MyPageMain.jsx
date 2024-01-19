@@ -90,7 +90,7 @@ export default function MyPageMain() {
                   <div>
                     <Link to="/privateinquiry">
                       <div className="h-25 box-border cursor-pointer border border-gray-600 p-4 text-center text-xs leading-6 hover:bg-gray-100 max-sm:text-center">
-                        1:1 문의내역
+                        1:1 문의하기
                       </div>
                     </Link>
                     <p className="mx-sm:p-0 mx-sm:p-0 mx-xs:m-0 justify-end pl-12 pr-12 pt-8 text-center text-xs  max-sm:text-xs">

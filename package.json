@@ -2,7 +2,7 @@
   "name": "kim",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:9090/",
+  "proxy": "http://192.168.50.16:9091/",
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
     "@radix-ui/themes": "^2.0.3",

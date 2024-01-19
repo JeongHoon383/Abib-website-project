@@ -4,7 +4,7 @@ import axios from "axios";
 export const getReview = createAsyncThunk(
   "reviews/fetchProductsStatus", //action name
   async (pid) => {
-    const result = await axios.get(`http://127.0.0.1:9090/review/${pid}`);
+    const result = await axios.get(`http://192.168.50.16:9091/review/${pid}`);
     return result.data; //action payload return
   },
 );

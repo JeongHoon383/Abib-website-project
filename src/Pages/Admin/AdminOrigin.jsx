@@ -79,10 +79,10 @@ export default function Admin() {
     if (registerConfirm) {
       axios({
         method: "post",
-        url: "http://localhost:9090/newproducts",
+        url: "http://192.168.50.16:9091/newproducts",
         data: formData,
       })
-        // .post("http://localhost:9090/newproducts", formData)
+        // .post("http://192.168.50.16:9091/newproducts", formData)
 
         .then((result) => {
           console.log("Response from server:", result.data);

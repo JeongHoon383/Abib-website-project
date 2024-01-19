@@ -9,7 +9,7 @@ export const getProduct = createAsyncThunk(
   "products/fetchProductsStatus", //action name
   async (category) => {
     const result = await axios.get(
-      `http://127.0.0.1:9090/product/list/${category}`,
+      `http://192.168.50.16:9091/product/list/${category}`,
     );
     return result.data; //action payload return
   },
@@ -19,7 +19,7 @@ export const getProductDetail = createAsyncThunk(
   "productDetail/fetchProductsStatus",
   async (pid) => {
     const result = await axios.get(
-      `http://127.0.0.1:9090/product/detail/${pid}`,
+      `http://192.168.50.16:9091/product/detail/${pid}`,
     );
     return result.data;
   },
