@@ -12,3 +12,5 @@
 - tailwind 설치 공식 문서 참고 https://tailwindcss.com/docs/installation
 
 - swiper
+
+- 오오오!@
